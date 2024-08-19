@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       data: MediaQuery.of(context)
           .copyWith(textScaler: const TextScaler.linear(1)),
       child: MaterialApp(
-        title: 'UNIZIK Portal',
+        title: 'SIMAP',
         debugShowCheckedModeBanner: false,
         onGenerateRoute: _appRoutes.onGenerateRoute,
         theme: ThemeData(),

@@ -16,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    //appUtils.openApp(context);
+    appUtils.openApp(context);
     super.initState();
   }
 

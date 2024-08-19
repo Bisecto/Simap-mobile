@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simap/view/widgets/not_found_page.dart';
 
+import '../view/app_screens/landing_page/landing_page.dart';
 import '../view/app_screens/splash_screen/splash_screen.dart';
 
 
@@ -39,7 +40,7 @@ class AppRouter {
 
 
         return MaterialPageRoute(
-            builder: (_) => LandingPage(
+            builder: (_) => LandingPage(selectedIndex: 0,
                 ));
 
 
