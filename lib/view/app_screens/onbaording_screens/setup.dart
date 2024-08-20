@@ -5,9 +5,13 @@ import 'package:simap/view/widgets/form_input.dart';
 
 import '../../../res/app_colors.dart';
 import '../../../res/app_images.dart';
+import '../../../utills/app_navigator.dart';
 import '../../../utills/app_validator.dart';
+import '../../../utills/enums/toast_mesage.dart';
 import '../../widgets/app_custom_text.dart';
 import '../../widgets/form_button.dart';
+import '../../widgets/show_toast.dart';
+import '../auth/sign_page.dart';
 import 'list_of_schools.dart';
 import 'onbaord_auth_background.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart' as modalSheet;
@@ -241,7 +245,24 @@ class _AppSetUpState extends State<AppSetUp> {
                   children: [
                     FormButton(
                       onPressed: () {
-                        //AppNavigator.pushAndStackPage(context, page: SignPage());
+                        if (selectedPreference != '') {
+                          if (schNameController.text.isNotEmpty) {
+                            AppNavigator.pushAndStackPage(context,
+                                page: SignPage());
+                          } else {
+                            showToast(
+                                context: context,
+                                title: "Info",
+                                subtitle: 'Select school to complete setup',
+                                type: ToastMessageType.info);
+                          }
+                        } else {
+                          showToast(
+                              context: context,
+                              title: "Info",
+                              subtitle: 'Select who is using this app',
+                              type: ToastMessageType.info);
+                        }
                       },
                       text: 'Continue',
                       height: 60,
