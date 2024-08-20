@@ -66,7 +66,7 @@ class CustomTextFormField extends StatefulWidget {
 }
 
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
-  bool _obscureText = false;
+  bool _obscureText = true;
 
   void _togglePasswordVisibility() {
     setState(() {
@@ -84,7 +84,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         CustomText(
           text: widget.label,
           color: AppColors.black,
-          size: 14,
+          size: 16,
           weight: FontWeight.w600,
         ),
         if (widget.label != '')
@@ -164,7 +164,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                     validator: widget.validator,
                     maxLines: widget.maxLines,
                     maxLength: widget.maxLength,
-                    obscureText: _obscureText,
+                    obscureText: widget.isPasswordField?_obscureText:false,
                     onFieldSubmitted: (val) {
                       widget.onFieldSubmitted?.call(val);
                     },

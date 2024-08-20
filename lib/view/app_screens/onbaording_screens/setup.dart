@@ -90,7 +90,7 @@ class _AppSetUpState extends State<AppSetUp> {
                                 border: Border.all(
                                     width: 1,
                                     color: selectedPreference == 'student'
-                                        ? AppColors.blue
+                                        ? AppColors.green
                                         : AppColors.white)),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -152,7 +152,7 @@ class _AppSetUpState extends State<AppSetUp> {
                                 border: Border.all(
                                     width: 1,
                                     color: selectedPreference == 'guardian'
-                                        ? AppColors.blue
+                                        ? AppColors.green
                                         : AppColors.white)),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
