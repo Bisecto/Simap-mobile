@@ -6,6 +6,7 @@ import 'package:simap/view/widgets/app_custom_text.dart';
 
 import '../../../res/app_colors.dart';
 import '../../widgets/appBar_widget.dart';
+import 'billboard.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -54,7 +55,17 @@ class _HomePageState extends State<HomePage> {
                       QuickAccessContainer(text: 'Store', img: AppImages.store,),
                       QuickAccessContainer(text: 'Library', img: AppImages.library,)
                     ],
-                  )
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  CustomText(
+                    text: 'Billboard',
+                    size: 18,
+                    weight: FontWeight.bold,
+                    color: AppColors.black,
+                  ),
+                  Billboard()
                 ],
               ),
             )

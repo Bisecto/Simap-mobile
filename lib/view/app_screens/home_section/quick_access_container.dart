@@ -33,7 +33,7 @@ class QuickAccessContainer extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(img,height: 40,width: 40,),
-            CustomText(text: text,)
+            CustomText(text: text,weight: FontWeight.w400,)
           ],
         ),
       ),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:simap/res/app_colors.dart';
 import 'package:simap/view/widgets/app_custom_text.dart';
 
+import '../../res/app_icons.dart';
 import '../../res/app_images.dart';
 
 class MainAppBar extends StatelessWidget {
@@ -23,13 +25,13 @@ class MainAppBar extends StatelessWidget {
         color: AppColors.white,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: const Padding(
-        padding: EdgeInsets.fromLTRB(10.0,0,10,0),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(10.0,0,10,0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Icon(Icons.notifications_active_outlined),
-            Row(children: [
+            SvgPicture.asset(AppIcons.notification),
+            const Row(children: [
               CustomText(text:"#UHS20220147"),
               SizedBox(width: 5,),
               CircleAvatar(
