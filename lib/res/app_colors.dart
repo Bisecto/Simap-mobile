@@ -11,6 +11,7 @@ class AppColors{
   static const Color disableButtonColor =Color(0xFFF5F5F5);
   static const Color greyAccent=Color(0xFFF6EDE9);
   static const Color black = Colors.black;
+  static const Color textColor = Color(0xFF808080);
   static const Color lightShadowGreenColor = Color(0xffF0FAF0);
   static const Color green = Color(0xff4A8C4D);
   static const Color white = Color(0xFFFFFFFF);

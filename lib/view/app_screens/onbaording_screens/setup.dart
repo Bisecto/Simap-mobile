@@ -53,7 +53,7 @@ class _AppSetUpState extends State<AppSetUp> {
                     ),
                     const CustomText(
                       text: '',
-                      color: AppColors.black,
+                      color: AppColors.textColor,
                       size: 18,
                       maxLines: 3,
                       weight: FontWeight.w400,
@@ -125,7 +125,7 @@ class _AppSetUpState extends State<AppSetUp> {
                                       padding: EdgeInsets.all(10.0),
                                       child: CustomText(
                                         text: 'Student',
-                                        color: AppColors.black,
+                                        color: AppColors.textColor,
                                         size: 16,
                                         maxLines: 6,
                                         textAlign: TextAlign.center,
@@ -187,7 +187,7 @@ class _AppSetUpState extends State<AppSetUp> {
                                       padding: EdgeInsets.all(10.0),
                                       child: CustomText(
                                         text: 'Guardian',
-                                        color: AppColors.black,
+                                        color: AppColors.textColor,
                                         size: 16,
                                         maxLines: 6,
                                         textAlign: TextAlign.center,
@@ -281,7 +281,7 @@ class _AppSetUpState extends State<AppSetUp> {
                         children: [
                           const CustomText(
                             text: 'Powered by',
-                            color: AppColors.black,
+                            color: AppColors.textColor,
                             size: 10,
                           ),
                           Image.asset(

@@ -113,7 +113,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                               padding: const EdgeInsets.all(10.0),
                               child: CustomText(
                                 text: onBoardingSubText[index],
-                                color: AppColors.black,
+                                color: AppColors.textColor,
                                 size: 16,
                                 maxLines: 6,
                                 textAlign: TextAlign.center,
@@ -148,7 +148,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         children: [
                           const CustomText(
                             text: 'Powered by',
-                            color: AppColors.black,
+                            color: AppColors.textColor,
                             size: 10,
                           ),
                           Image.asset(

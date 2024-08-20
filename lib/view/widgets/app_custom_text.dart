@@ -53,7 +53,7 @@ class CustomText extends StatelessWidget {
           decorationColor: AppColors.green,
           letterSpacing: spacing!,
           fontSize: size ?? 16,
-          color: color ?? Colors.black,
+          color: color ?? Color(0xff808080),
           fontWeight: weight ?? FontWeight.normal,
         ),
         );

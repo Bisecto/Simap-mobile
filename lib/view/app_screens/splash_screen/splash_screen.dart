@@ -84,7 +84,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   children: [
                     const CustomText(
                       text: 'Powered by',
-                      color: AppColors.black,
+                      color: AppColors.textColor,
                       size: 10,
                     ),
                     Image.asset(
