@@ -8,4 +8,6 @@ class AppImages {
   static const itemPack = '${_imageBaseUrl}item_pack.png';
   static const girlBoy = '${_imageBaseUrl}girl_boy.png';
   static const backPack = '${_imageBaseUrl}backpack.png';
+  static const studentSetup = '${_imageBaseUrl}student_setup.png';
+  static const guardianSetup = '${_imageBaseUrl}guardian_setup.png';
 }
