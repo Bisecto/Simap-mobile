@@ -66,12 +66,13 @@ class _LandingPageState extends State<LandingPage> {
         }
       },
       child: Scaffold(
+        backgroundColor: Color(0xFFFCFCFC),
         body: IndexedStack(
           index: selectedIndex,
           children: views,
         ),
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: AppColors.white,
+          backgroundColor: const Color(0xFFFCFCFC),
           showUnselectedLabels: true,
           currentIndex: selectedIndex,
           selectedItemColor: AppColors.mainAppColor,
