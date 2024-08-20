@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:simap/res/app_router.dart';
-import 'package:simap/view/app_screens/onbaording_screens/on_boarding_screen.dart';
 import 'package:simap/view/app_screens/splash_screen/splash_screen.dart';
 
 void main() async {
@@ -30,7 +29,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         onGenerateRoute: _appRoutes.onGenerateRoute,
         theme: ThemeData(),
-        home: const OnBoardingScreen(),
+        home: const SplashScreen(),
       ),
     );
   }

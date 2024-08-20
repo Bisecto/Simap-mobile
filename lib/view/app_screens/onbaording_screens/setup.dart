@@ -211,18 +211,15 @@ class _AppSetUpState extends State<AppSetUp> {
                                     ),
                                     context: context,
                                     builder: (context) => const Padding(
-                                          padding:
-                                              EdgeInsets.only(top: 100.0),
+                                          padding: EdgeInsets.only(top: 100.0),
                                           child: ListOfSchools(),
                                         )) ??
                                 '';
-                        if(selectedSchool==''){
-
-                        }else{
+                        if (selectedSchool == '') {
+                        } else {
                           setState(() {
-                            schNameController.text=selectedSchool;
+                            schNameController.text = selectedSchool;
                           });
-
                         }
                       },
                       child: CustomTextFormField(

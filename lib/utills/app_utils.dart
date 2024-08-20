@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:simap/utills/shared_preferences.dart';
 import 'package:simap/view/app_screens/landing_page/landing_page.dart';
+import 'package:simap/view/app_screens/onbaording_screens/on_boarding_screen.dart';
 
 import '../res/app_router.dart';
 import 'app_navigator.dart';
@@ -73,7 +74,7 @@ class AppUtils {
     // }
     Future.delayed(const Duration(seconds: 3), () {
       AppNavigator.pushAndRemovePreviousPages(context,
-          page: LandingPage(selectedIndex: 0,));
+          page: OnBoardingScreen());
     });
   }
 
