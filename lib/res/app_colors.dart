@@ -23,6 +23,7 @@ class AppColors{
   static const Color lightShadowRed=Color(0xFFFAECE5);
   static const Color grey=Color(0xFFE8E8E8);
 
-
+///Containers Colors
+  static const Color quickAccessContainerColor=Color(0xFFEEECEC);
 
   }

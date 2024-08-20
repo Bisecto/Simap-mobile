@@ -4,6 +4,10 @@ class AppImages {
   static const signal = '${_imageBaseUrl}signa.png';
   static const Abacus = '${_imageBaseUrl}abacus.png';
   static const logo = '${_imageBaseUrl}logo.png';
+  static const fees = '${_imageBaseUrl}fees.png';
+  static const learn = '${_imageBaseUrl}learn.png';
+  static const library = '${_imageBaseUrl}library.png';
+  static const store = '${_imageBaseUrl}store.png';
   static const person = '${_imageBaseUrl}person.png';
   static const appleadLogo = '${_imageBaseUrl}appleadLogo.png';
   static const simapLogo = '${_imageBaseUrl}simap_logo.png';
