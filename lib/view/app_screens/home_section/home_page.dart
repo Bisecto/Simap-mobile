@@ -52,8 +52,14 @@ class _HomePageState extends State<HomePage> {
                         text: 'Fees',
                         img: AppImages.fees,
                       ),
-                      QuickAccessContainer(text: 'Store', img: AppImages.store,),
-                      QuickAccessContainer(text: 'Library', img: AppImages.library,)
+                      QuickAccessContainer(
+                        text: 'Store',
+                        img: AppImages.store,
+                      ),
+                      QuickAccessContainer(
+                        text: 'Library',
+                        img: AppImages.library,
+                      )
                     ],
                   ),
                   SizedBox(
@@ -65,13 +71,38 @@ class _HomePageState extends State<HomePage> {
                     weight: FontWeight.bold,
                     color: AppColors.black,
                   ),
-                  Billboard()
+                  Billboard(),
+                  //moreActionsContainer(AppImages.appleadLogo,"Library")
                 ],
               ),
             )
           ],
         ),
       )),
+    );
+  }
+
+  Widget moreActionsContainer(String icon,String text, String num) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10.0),
+      child: Container(
+        height: 50,
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.15),
+              spreadRadius: 0,
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: const Row(
+          children: [],
+        ),
+      ),
     );
   }
 }
