@@ -6,4 +6,6 @@ class AppImages {
   static const simapLogo = '${_imageBaseUrl}simap_logo.png';
   static const back2School = '${_imageBaseUrl}back2school.png';
   static const itemPack = '${_imageBaseUrl}item_pack.png';
+  static const girlBoy = '${_imageBaseUrl}girl_boy.png';
+  static const backPack = '${_imageBaseUrl}backpack.png';
 }
