@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../res/app_colors.dart';
 import '../../widgets/appBar_widget.dart';
 import '../../widgets/app_custom_text.dart';
-import 'list_result_session.dart';
+import 'result_section_screens/list_result_session.dart';
 
 class ResultPage extends StatefulWidget {
   const ResultPage({super.key});

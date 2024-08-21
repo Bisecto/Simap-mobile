@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:simap/res/app_images.dart';
 import 'package:simap/utills/app_utils.dart';
 
-import '../../../res/app_colors.dart';
+import '../../../../res/app_colors.dart';
 
 class ListResultSession extends StatelessWidget {
   ListResultSession({super.key});

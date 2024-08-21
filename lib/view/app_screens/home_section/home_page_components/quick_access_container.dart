@@ -3,7 +3,7 @@ import 'package:simap/res/app_images.dart';
 import 'package:simap/utills/app_utils.dart';
 import 'package:simap/view/widgets/app_custom_text.dart';
 
-import '../../../res/app_colors.dart';
+import '../../../../res/app_colors.dart';
 
 class QuickAccessContainer extends StatelessWidget {
   final String img;

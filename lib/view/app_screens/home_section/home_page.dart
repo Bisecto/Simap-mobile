@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:simap/res/app_images.dart';
-import 'package:simap/view/app_screens/home_section/quick_access_container.dart';
-import 'package:simap/view/app_screens/home_section/welcome_container.dart';
+import 'package:simap/view/app_screens/home_section/home_page_components/quick_access_container.dart';
 import 'package:simap/view/widgets/app_custom_text.dart';
 
 import '../../../res/app_colors.dart';
 import '../../widgets/appBar_widget.dart';
-import 'billboard.dart';
+import 'home_page_components/billboard.dart';
+import 'home_page_components/welcome_container.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

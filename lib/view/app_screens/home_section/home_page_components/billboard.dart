@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../res/app_colors.dart';
-import '../../../utills/app_utils.dart';
+import '../../../../res/app_colors.dart';
+import '../../../../utills/app_utils.dart';
 
 class Billboard extends StatelessWidget {
   const Billboard({super.key});

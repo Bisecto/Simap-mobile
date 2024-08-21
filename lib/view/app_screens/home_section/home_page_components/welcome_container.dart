@@ -3,8 +3,8 @@ import 'package:simap/res/app_icons.dart';
 import 'package:simap/utills/app_utils.dart';
 import 'package:simap/view/widgets/app_custom_text.dart';
 
-import '../../../res/app_colors.dart';
-import '../../../res/app_images.dart';
+import '../../../../res/app_colors.dart';
+import '../../../../res/app_images.dart';
 
 class WelcomeContainer extends StatelessWidget {
   const WelcomeContainer({super.key});
