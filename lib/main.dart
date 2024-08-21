@@ -1,21 +1,23 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:simap/res/app_router.dart';
 import 'package:simap/view/app_screens/splash_screen/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(
-    MyApp(),
-  );
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitDown])
+      .then((_) {
+    runApp(MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
   MyApp({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final AppRouter _appRoutes = AppRouter();
 

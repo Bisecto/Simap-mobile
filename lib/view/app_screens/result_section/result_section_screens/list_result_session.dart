@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:simap/res/app_images.dart';
+import 'package:simap/utills/app_navigator.dart';
 import 'package:simap/utills/app_utils.dart';
+import 'package:simap/view/app_screens/result_section/result_section_screens/single_session_result.dart';
 
 import '../../../../res/app_colors.dart';
 
@@ -20,12 +22,16 @@ class ListResultSession extends StatelessWidget {
       itemCount: sessions.length,
       padding: EdgeInsets.zero,
       itemBuilder: (context, index) {
-        return SessionContainer(session: sessions[index], context: context);
+        return GestureDetector(onTap: () {
+          AppNavigator.pushAndStackPage(context, page: SingleSessionResult(session: sessions[index],
+
+          ));
+        }, child: SessionContainer(session: sessions[index], context: context));
       },
     );
   }
 
-  Widget SessionContainer({required String session,required context}) {
+  Widget SessionContainer({required String session, required context}) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -49,7 +55,9 @@ class ListResultSession extends StatelessWidget {
             children: [
               Container(
                 height: 190,
-                width: AppUtils.deviceScreenSize(context).width,
+                width: AppUtils
+                    .deviceScreenSize(context)
+                    .width,
                 decoration: BoxDecoration(
                   color: AppColors.quickAccessContainerColor,
                   boxShadow: [
@@ -62,7 +70,8 @@ class ListResultSession extends StatelessWidget {
                   ],
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Image.asset(AppImages.testPassed,height: 150,width: 150,),
+                child: Image.asset(
+                  AppImages.testPassed, height: 150, width: 150,),
               ),
               Text(
                 session,
