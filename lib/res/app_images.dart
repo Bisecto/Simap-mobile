@@ -3,6 +3,7 @@ class AppImages {
 
   static const signal = '${_imageBaseUrl}signa.png';
   static const Abacus = '${_imageBaseUrl}abacus.png';
+  static const testPassed = '${_imageBaseUrl}test_passed.png';
   static const logo = '${_imageBaseUrl}logo.png';
   static const quiz = '${_imageBaseUrl}quiz.png';
   static const book = '${_imageBaseUrl}book.png';
