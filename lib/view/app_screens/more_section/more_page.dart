@@ -1,8 +1,10 @@
 import 'package:animated_icon/animated_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:simap/res/app_images.dart';
+import 'package:simap/view/app_screens/more_section/child_pages/profile_page.dart';
 
 import '../../../res/app_colors.dart';
+import '../../../utills/app_navigator.dart';
 import '../../widgets/app_custom_text.dart';
 
 class MorePage extends StatefulWidget {
@@ -42,9 +44,15 @@ class _MorePageState extends State<MorePage> {
                   ],
                 ),
               ),
-              itemContainer(
-                Icons.perm_identity,
-                'Profile',
+              InkWell(
+                onTap: () {
+                  AppNavigator.pushAndStackPage(context,
+                      page: const ProfilePage());
+                },
+                child: itemContainer(
+                  Icons.perm_identity,
+                  'Profile',
+                ),
               ),
               // itemContainer(Icons.shopping_cart,'Stores',),
               // itemContainer(Icons.pie_chart_outline,'My Performance',),
@@ -78,7 +86,32 @@ class _MorePageState extends State<MorePage> {
               const SizedBox(
                 height: 20,
               ),
-              logOutContainer()
+              logOutContainer(),
+              const SizedBox(
+                height: 20,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Column(
+                  //mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const CustomText(
+                      text: 'Powered by',
+                      color: AppColors.textColor,
+                      size: 12,
+                    ),
+                    Image.asset(
+                      AppImages.appleadLogo,
+                      height: 40,
+                      width: 130,
+                      //color: AppColors.darkModeBlack,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    )
+                  ],
+                ),
+              )
             ],
           ),
         ),

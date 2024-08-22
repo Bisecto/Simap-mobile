@@ -21,4 +21,5 @@ class AppImages {
   static const backPack = '${_imageBaseUrl}backpack.png';
   static const studentSetup = '${_imageBaseUrl}student_setup.png';
   static const guardianSetup = '${_imageBaseUrl}guardian_setup.png';
+  static const studentImage = '${_imageBaseUrl}student_image.png';
 }
