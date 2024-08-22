@@ -56,7 +56,7 @@ class _MorePageState extends State<MorePage> {
                   'Profile',
                 ),
               ),
-              // itemContainer(Icons.shopping_cart,'Stores',),
+               itemContainer(Icons.shopping_cart,'Stores',),
               InkWell(
                   onTap: () {
                     AppNavigator.pushAndStackPage(context,
@@ -66,10 +66,10 @@ class _MorePageState extends State<MorePage> {
                     Icons.pie_chart_outline,
                     'My Performance',
                   )),
-              // itemContainer(Icons.archive_outlined,'Archive',),
-              // itemContainer(Icons.menu_book_sharp,'Profile',),
-              // itemContainer(Icons.videogame_asset_rounded,'Games',),
-              // const SizedBox(height: 20,),
+              itemContainer(Icons.archive_outlined,'Archive',),
+              itemContainer(Icons.menu_book_sharp,'Library',),
+              itemContainer(Icons.videogame_asset_rounded,'Games',),
+              const SizedBox(height: 20,),
               itemContainer(
                 Icons.help,
                 'Help',
@@ -100,7 +100,7 @@ class _MorePageState extends State<MorePage> {
                 'About SIMAP',
               ),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               InkWell(
                   onTap: () {
@@ -145,22 +145,23 @@ class _MorePageState extends State<MorePage> {
     String title,
   ) {
     return Padding(
-      padding: const EdgeInsets.only(top: 15.0),
+      padding: const EdgeInsets.only(top: 10.0),
       child: Container(
         height: 50,
         padding: const EdgeInsets.all(5),
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.15),
-              spreadRadius: 0,
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ],
-          color: AppColors.white,
-          borderRadius: BorderRadius.circular(10),
-        ),
+
+        // decoration: BoxDecoration(
+        //   boxShadow: [
+        //     BoxShadow(
+        //       color: Colors.black.withOpacity(0.15),
+        //       spreadRadius: 0,
+        //       blurRadius: 10,
+        //       offset: const Offset(0, 4),
+        //     ),
+        //   ],
+        //   color: AppColors.white,
+        //   borderRadius: BorderRadius.circular(10),
+        // ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
