@@ -18,79 +18,106 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Color(0xFFFCFCFC),
+    return Scaffold(
+      backgroundColor: const Color(0xFFFCFCFC),
       body: SafeArea(
           child: Padding(
-        padding: EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            MainAppBar(),
-            Padding(
-              padding: EdgeInsets.all(15.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  WelcomeContainer(welcomeMsg: 'Welcome 👋', mainText: 'Okafor\nPrecious Chiemerie', subText: 'You\'re in JSS 2C',),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  CustomText(
-                    text: 'Quick Access',
-                    size: 18,
-                    weight: FontWeight.bold,
-                    color: AppColors.black,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      QuickAccessContainer(
-                        text: 'Learn',
-                        img: AppImages.learn,
-                      ),
-                      QuickAccessContainer(
-                        text: 'Fees',
-                        img: AppImages.fees,
-                      ),
-                      QuickAccessContainer(
-                        text: 'Store',
-                        img: AppImages.store,
-                      ),
-                      QuickAccessContainer(
-                        text: 'Library',
-                        img: AppImages.library,
-                      )
+        padding: const EdgeInsets.all(10.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const MainAppBar(),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const WelcomeContainer(
+                      welcomeMsg: 'Welcome 👋',
+                      mainText: 'Okafor\nPrecious Chiemerie',
+                      subText: 'You\'re in JSS 2C',
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const CustomText(
+                      text: 'Quick Access',
+                      size: 18,
+                      weight: FontWeight.bold,
+                      color: AppColors.black,
+                    ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        QuickAccessContainer(
+                          text: 'Learn',
+                          img: AppImages.learn,
+                        ),
+                        QuickAccessContainer(
+                          text: 'Fees',
+                          img: AppImages.fees,
+                        ),
+                        QuickAccessContainer(
+                          text: 'Store',
+                          img: AppImages.store,
+                        ),
+                        QuickAccessContainer(
+                          text: 'Library',
+                          img: AppImages.library,
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const CustomText(
+                      text: 'Billboard',
+                      size: 18,
+                      weight: FontWeight.bold,
+                      color: AppColors.black,
+                    ),
+                    const Billboard(),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ...[
+                      moreActionsContainer(AppImages.book, "Library", '40'),
+                      moreActionsContainer(AppImages.quiz, "Quiz", '5'),
+                      moreActionsContainer(
+                          AppImages.assignment, "Assignment", '2'),
                     ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  CustomText(
-                    text: 'Billboard',
-                    size: 18,
-                    weight: FontWeight.bold,
-                    color: AppColors.black,
-                  ),
-                  Billboard(),
-                  //moreActionsContainer(AppImages.appleadLogo,"Library")
-                ],
-              ),
-            )
-          ],
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ...[
+                      topPerformerContainer(),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      topPerformerChildContainer("Okafor precious","95",AppImages.goldMedal),
+                      topPerformerChildContainer("Okafor precious","85",AppImages.silverMedal),
+                      topPerformerChildContainer("Okafor precious","75",AppImages.bronzeMedal),
+                    ]
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       )),
     );
   }
 
-  Widget moreActionsContainer(String icon,String text, String num) {
+  Widget moreActionsContainer(String img, String text, String num) {
     return Padding(
       padding: const EdgeInsets.only(top: 10.0),
       child: Container(
-        height: 50,
+        height: 60,
+        padding: const EdgeInsets.all(5),
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.15),
+              color: Colors.black.withOpacity(0.1),
               spreadRadius: 0,
               blurRadius: 10,
               offset: const Offset(0, 4),
@@ -99,10 +126,138 @@ class _HomePageState extends State<HomePage> {
           color: AppColors.white,
           borderRadius: BorderRadius.circular(10),
         ),
-        child: const Row(
-          children: [],
+        child: Row(
+          children: [
+            CircleAvatar(
+              radius: 20,
+              backgroundColor: AppColors.textColor.withOpacity(0.3),
+              //backgroundImage: AssetImage(img,),
+              child: Image.asset(
+                img,
+                height: 25,
+                width: 25,
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomText(
+                  text: text,
+                  size: 16,
+                  weight: FontWeight.bold,
+                  color: AppColors.black,
+                ),
+                CustomText(
+                  text: num,
+                  size: 14,
+                  weight: FontWeight.w500,
+                  color: AppColors.textColor,
+                )
+              ],
+            )
+          ],
         ),
       ),
     );
   }
+
+  Widget topPerformerContainer() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10.0),
+      child: Container(
+        height: 60,
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              spreadRadius: 0,
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+          color: const Color(0xFFB2EBF2),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          children: [
+            Image.asset(
+              AppImages.topPerformer,
+              height: 25,
+              width: 25,
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            const CustomText(
+              text: "Top Performers in JSS 2C",
+              size: 18,
+              weight: FontWeight.bold,
+              color: AppColors.black,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  Widget topPerformerChildContainer( String text, String score,String medal) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10.0),
+      child: Container(
+        height: 60,
+        padding: const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              spreadRadius: 0,
+              blurRadius: 10,
+              offset: const Offset(0, 4),
+            ),
+          ],
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                CircleAvatar(
+                  radius: 20,
+                  backgroundColor: AppColors.textColor.withOpacity(0.3),
+                  backgroundImage: const AssetImage(AppImages.studentImage,),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomText(
+                      text: text,
+                      size: 16,
+                      weight: FontWeight.bold,
+                      color: AppColors.black,
+                    ),
+                    CustomText(
+                      text: score,
+                      size: 14,
+                      weight: FontWeight.w500,
+                      color: AppColors.textColor,
+                    )
+                  ],
+                )
+              ],
+            ),
+            Image.asset(medal)
+          ],
+        ),
+      ),
+    );
+  }
+
 }

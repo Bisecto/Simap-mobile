@@ -22,4 +22,8 @@ class AppImages {
   static const studentSetup = '${_imageBaseUrl}student_setup.png';
   static const guardianSetup = '${_imageBaseUrl}guardian_setup.png';
   static const studentImage = '${_imageBaseUrl}student_image.png';
+  static const topPerformer = '${_imageBaseUrl}top_performer.png';
+  static const goldMedal = '${_imageBaseUrl}gold_medal.png';
+  static const silverMedal = '${_imageBaseUrl}silver_medal.png';
+  static const bronzeMedal = '${_imageBaseUrl}bronze_medal.png';
 }
