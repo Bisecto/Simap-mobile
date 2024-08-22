@@ -66,13 +66,13 @@ class _LandingPageState extends State<LandingPage> {
         }
       },
       child: Scaffold(
-        backgroundColor: Color(0xFFFCFCFC),
+        backgroundColor: Color(0xFFFFFFFF),
         body: IndexedStack(
           index: selectedIndex,
           children: views,
         ),
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: const Color(0xFFFCFCFC),
+          backgroundColor: const Color(0xFFFFFFFF),
           showUnselectedLabels: true,
           currentIndex: selectedIndex,
           selectedItemColor: AppColors.mainAppColor,
@@ -84,38 +84,26 @@ class _LandingPageState extends State<LandingPage> {
           },
           items: [
             BottomNavigationBarItem(
-              icon: AnimateIcon(
-                key: UniqueKey(),
-                onTap: () {},
-                iconType: IconType.onlyIcon,
-                height: 25,
-                width: 25,
+              icon: Icon(
+                Icons.home_outlined,
                 color: selectedIndex == 0
                     ? AppColors.mainAppColor
                     : AppColors.lightDivider,
-                animateIcon: AnimateIcons.home,
               ),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-
-              icon: AnimateIcon(
-
-                key: UniqueKey(),
-                onTap: () {},
-                iconType: IconType.onlyIcon,
-                height: 25,
-                width: 25,
+              icon: Icon(
+                Icons.menu_book_outlined,
                 color: selectedIndex == 1
                     ? AppColors.mainAppColor
                     : AppColors.lightDivider,
-                animateIcon: AnimateIcons.file,
               ),
               label: 'Results',
             ),
             BottomNavigationBarItem(
               icon: Icon(
-                Icons.games_outlined,
+                Icons.videogame_asset,
                 color: selectedIndex == 2
                     ? AppColors.mainAppColor
                     : AppColors.lightDivider,
@@ -123,16 +111,11 @@ class _LandingPageState extends State<LandingPage> {
               label: 'Games',
             ),
             BottomNavigationBarItem(
-              icon: AnimateIcon(
-                key: UniqueKey(),
-                onTap: () {},
-                iconType: IconType.onlyIcon,
-                height: 25,
-                width: 25,
+              icon: Icon(
+                Icons.more_horiz,
                 color: selectedIndex == 3
                     ? AppColors.mainAppColor
                     : AppColors.lightDivider,
-                animateIcon: AnimateIcons.settings,
               ), //Icon(Icons.home),
               label: 'More',
             ),
