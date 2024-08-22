@@ -1,12 +1,14 @@
 import 'package:animated_icon/animated_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:simap/res/app_images.dart';
+import 'package:simap/view/app_screens/auth/sign_page.dart';
 import 'package:simap/view/app_screens/more_section/child_pages/profile_page.dart';
 import 'package:simap/view/app_screens/onbaording_screens/setup.dart';
 
 import '../../../res/app_colors.dart';
 import '../../../utills/app_navigator.dart';
 import '../../widgets/app_custom_text.dart';
+import 'child_pages/performance/performance_page.dart';
 
 class MorePage extends StatefulWidget {
   const MorePage({super.key});
@@ -56,7 +58,15 @@ class _MorePageState extends State<MorePage> {
                 ),
               ),
               // itemContainer(Icons.shopping_cart,'Stores',),
-              // itemContainer(Icons.pie_chart_outline,'My Performance',),
+              InkWell(
+                  onTap: () {
+                    AppNavigator.pushAndStackPage(context,
+                        page: const PerformancePage());
+                  },
+                  child: itemContainer(
+                    Icons.pie_chart_outline,
+                    'My Performance',
+                  )),
               // itemContainer(Icons.archive_outlined,'Archive',),
               // itemContainer(Icons.menu_book_sharp,'Profile',),
               // itemContainer(Icons.videogame_asset_rounded,'Games',),
@@ -65,9 +75,11 @@ class _MorePageState extends State<MorePage> {
                 Icons.help,
                 'Help',
               ),
-              InkWell(onTap: (){
-                AppNavigator.pushAndRemovePreviousPages(context, page: const AppSetUp());
-              },
+              InkWell(
+                onTap: () {
+                  AppNavigator.pushAndRemovePreviousPages(context,
+                      page: const AppSetUp());
+                },
                 child: itemContainer(
                   Icons.refresh,
                   'Reset Setup',
@@ -91,7 +103,12 @@ class _MorePageState extends State<MorePage> {
               const SizedBox(
                 height: 20,
               ),
-              logOutContainer(),
+              InkWell(
+                  onTap: () {
+                    AppNavigator.pushAndRemovePreviousPages(context,
+                        page: const SignPage());
+                  },
+                  child: logOutContainer()),
               const SizedBox(
                 height: 20,
               ),

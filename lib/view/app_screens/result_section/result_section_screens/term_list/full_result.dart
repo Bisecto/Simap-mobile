@@ -39,9 +39,10 @@ class _FullResultPageState extends State<FullResultPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: CustomText(text:'Full Result',color: AppColors.white,),
-        iconTheme: IconThemeData(color: AppColors.white,),
-        backgroundColor: AppColors.mainAppColor,
+
+        title: const CustomText(text:'Full Result',color: AppColors.black,),
+        iconTheme: const IconThemeData(color: AppColors.black,),
+        backgroundColor: AppColors.white,
       ),
       body: SingleChildScrollView(
         //scrollDirection: Axis.horizontal,

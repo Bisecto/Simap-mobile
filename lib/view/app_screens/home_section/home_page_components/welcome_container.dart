@@ -7,7 +7,10 @@ import '../../../../res/app_colors.dart';
 import '../../../../res/app_images.dart';
 
 class WelcomeContainer extends StatelessWidget {
-  const WelcomeContainer({super.key});
+  final String welcomeMsg;
+  final String mainText;
+  final String subText;
+  const WelcomeContainer({super.key,required this.welcomeMsg,required this.subText,required this.mainText});
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +39,8 @@ class WelcomeContainer extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const CustomText(
-                  text: "Welcome 👋",
+                 CustomText(
+                  text: welcomeMsg,
                   color: AppColors.white,
                   weight: FontWeight.w400,
                   size: 14,
@@ -47,16 +50,16 @@ class WelcomeContainer extends StatelessWidget {
                     width: AppUtils
                         .deviceScreenSize(context)
                         .width/2,
-                    child: const CustomText(
-                      text: "Okafor \nPrecious Chiemerie",
+                    child:  CustomText(
+                      text: mainText,
                       color: AppColors.white,
                       weight: FontWeight.w800,
                       maxLines: 2,
                       size: 16,
                     ),
                 ),
-                const CustomText(
-                  text: "You're in JSS 2C",
+                 CustomText(
+                  text: subText,
                   color: AppColors.white,
                   weight: FontWeight.w300,
                   size: 14,
