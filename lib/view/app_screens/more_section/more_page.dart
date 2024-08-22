@@ -2,6 +2,7 @@ import 'package:animated_icon/animated_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:simap/res/app_images.dart';
 import 'package:simap/view/app_screens/more_section/child_pages/profile_page.dart';
+import 'package:simap/view/app_screens/onbaording_screens/setup.dart';
 
 import '../../../res/app_colors.dart';
 import '../../../utills/app_navigator.dart';
@@ -64,9 +65,13 @@ class _MorePageState extends State<MorePage> {
                 Icons.help,
                 'Help',
               ),
-              itemContainer(
-                Icons.refresh,
-                'Reset Setup',
+              InkWell(onTap: (){
+                AppNavigator.pushAndRemovePreviousPages(context, page: const AppSetUp());
+              },
+                child: itemContainer(
+                  Icons.refresh,
+                  'Reset Setup',
+                ),
               ),
               itemContainer(
                 Icons.settings,
