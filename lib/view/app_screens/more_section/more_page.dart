@@ -1,4 +1,3 @@
-import 'package:animated_icon/animated_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:simap/res/app_images.dart';
 import 'package:simap/view/app_screens/auth/sign_page.dart';
