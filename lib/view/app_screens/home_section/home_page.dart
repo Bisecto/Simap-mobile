@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  WelcomeContainer(),
+                  WelcomeContainer(welcomeMsg: 'Welcome 👋', mainText: 'Okafor\nPrecious Chiemerie', subText: 'You\'re in JSS 2C',),
                   SizedBox(
                     height: 20,
                   ),
