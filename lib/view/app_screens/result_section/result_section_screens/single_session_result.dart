@@ -33,27 +33,27 @@ class _SingleSessionResultState extends State<SingleSessionResult> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const MainAppBar(),
+              const MainAppBar(isBackKey: true,),
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: SingleChildScrollView(
                   child: Column(
                     //crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Row(
-                          children: [
-                            Icon(Icons.arrow_back_ios),
-                            CustomText(
-                              text: 'Back',
-                              color: AppColors.black,
-                            ),
-                          ],
-                        ),
-                      ),
+                      // GestureDetector(
+                      //   onTap: () {
+                      //     Navigator.pop(context);
+                      //   },
+                      //   child: const Row(
+                      //     children: [
+                      //       Icon(Icons.arrow_back_ios),
+                      //       CustomText(
+                      //         text: 'Back',
+                      //         color: AppColors.black,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                       const SizedBox(
                         height: 20,
                       ),

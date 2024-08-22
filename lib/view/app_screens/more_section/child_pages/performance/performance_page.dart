@@ -1,6 +1,9 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import '../../../../../res/app_colors.dart';
 import '../../../../widgets/appBar_widget.dart';
 import '../../../home_section/home_page_components/welcome_container.dart';
+import 'line_chart.dart';
 
 class PerformancePage extends StatefulWidget {
   const PerformancePage({super.key});
@@ -35,45 +38,27 @@ class _PerformancePageState extends State<PerformancePage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  // Column(children: [
-                  //   //Initialize the chart widget
-                  //   SfCartesianChart(
-                  //       primaryXAxis: const CategoryAxis(),
-                  //       // Chart title
-                  //       title: const ChartTitle(text: 'Half yearly sales analysis'),
-                  //       // Enable legend
-                  //       legend: const Legend(isVisible: true),
-                  //       // Enable tooltip
-                  //       tooltipBehavior: TooltipBehavior(enable: true),
-                  //       series: <CartesianSeries<_SalesData, String>>[
-                  //         LineSeries<_SalesData, String>(
-                  //             dataSource: data,
-                  //             xValueMapper: (_SalesData sales, _) => sales.year,
-                  //             yValueMapper: (_SalesData sales, _) => sales.sales,
-                  //             name: 'Sales',
-                  //             // Enable data label
-                  //             dataLabelSettings: const DataLabelSettings(isVisible: true))
-                  //       ]),
-                  //   Expanded(
-                  //     child: Padding(
-                  //       padding: const EdgeInsets.all(8.0),
-                  //       //Initialize the spark charts widget
-                  //       child: SfSparkLineChart.custom(
-                  //         //Enable the trackball
-                  //         trackball: const SparkChartTrackball(
-                  //             activationMode: SparkChartActivationMode.tap),
-                  //         //Enable marker
-                  //         marker: const SparkChartMarker(
-                  //             displayMode: SparkChartMarkerDisplayMode.all),
-                  //         //Enable data label
-                  //         labelDisplayMode: SparkChartLabelDisplayMode.all,
-                  //         xValueMapper: (int index) => data[index].year,
-                  //         yValueMapper: (int index) => data[index].sales,
-                  //         dataCount: 5,
-                  //       ),
-                  //     ),
-                  //   )
-                  // ])
+                  Container(
+                    height: 300,
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.15),
+                          spreadRadius: 0,
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(0),
+                      child: CustomChart(
+                        isShowingMainData: false,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             )
