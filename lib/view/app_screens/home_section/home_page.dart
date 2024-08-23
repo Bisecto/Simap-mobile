@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:simap/res/app_images.dart';
+import 'package:simap/utills/app_navigator.dart';
 import 'package:simap/view/app_screens/home_section/home_page_components/quick_access_container.dart';
+import 'package:simap/view/app_screens/quiz_section/available_quiz_subject.dart';
 import 'package:simap/view/widgets/app_custom_text.dart';
 
 import '../../../res/app_colors.dart';
 import '../../widgets/appBar_widget.dart';
+import '../assignment_section/assignment_page.dart';
 import 'home_page_components/billboard.dart';
 import 'home_page_components/welcome_container.dart';
 
@@ -82,9 +85,14 @@ class _HomePageState extends State<HomePage> {
                     ),
                     ...[
                       moreActionsContainer(AppImages.book, "Library", '40'),
-                      moreActionsContainer(AppImages.quiz, "Quiz", '5'),
-                      moreActionsContainer(
-                          AppImages.assignment, "Assignment", '2'),
+                      InkWell(onTap:(){AppNavigator.pushAndStackPage(context, page: const AvailableSubjects());},child: moreActionsContainer(AppImages.quiz, "Quiz", '5')),
+                      InkWell(
+                        onTap: (){
+                          AppNavigator.pushAndStackPage(context, page: const AssignmentPage());
+                        },
+                        child: moreActionsContainer(
+                            AppImages.assignment, "Assignment", '2'),
+                      ),
                     ],
                     const SizedBox(
                       height: 20,
@@ -92,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                     ...[
                       topPerformerContainer(),
                       const SizedBox(
-                        height: 10,
+                        height: 5,
                       ),
                       topPerformerChildContainer("Okafor precious","95",AppImages.goldMedal),
                       topPerformerChildContainer("Okafor precious","85",AppImages.silverMedal),

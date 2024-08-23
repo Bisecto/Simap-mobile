@@ -26,4 +26,5 @@ class AppImages {
   static const goldMedal = '${_imageBaseUrl}gold_medal.png';
   static const silverMedal = '${_imageBaseUrl}silver_medal.png';
   static const bronzeMedal = '${_imageBaseUrl}bronze_medal.png';
+  static const trophy = '${_imageBaseUrl}trophy.png';
 }

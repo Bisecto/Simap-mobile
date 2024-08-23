@@ -17,8 +17,8 @@ class AppNavigator {
 
   static Future<dynamic> pushAndStackPage(BuildContext context,
       {required Widget page,
-        bool rootNavigator = false,
-        RouteStyle routeStyle = RouteStyle.material}) async {
+        bool rootNavigator = true,
+        RouteStyle routeStyle = RouteStyle.cupertino}) async {
     final result = await Navigator.of(context, rootNavigator: rootNavigator)
         .push(route(page, routeStyle: routeStyle));
     return result;
