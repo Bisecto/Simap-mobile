@@ -111,7 +111,7 @@ class _DropDownState extends State<DropDown> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       widget.hint,
-                      style: const TextStyle(color: Colors.grey, fontSize: 14),
+                      style: const TextStyle(color: Colors.black, fontSize: 14),
                     ),
                   ),
                 ),

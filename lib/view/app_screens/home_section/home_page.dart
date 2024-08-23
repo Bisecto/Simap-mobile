@@ -8,6 +8,7 @@ import 'package:simap/view/widgets/app_custom_text.dart';
 import '../../../res/app_colors.dart';
 import '../../widgets/appBar_widget.dart';
 import '../assignment_section/assignment_page.dart';
+import '../store_section/store_page.dart';
 import 'home_page_components/billboard.dart';
 import 'home_page_components/welcome_container.dart';
 
@@ -49,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                       weight: FontWeight.bold,
                       color: AppColors.black,
                     ),
-                    const Row(
+                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         QuickAccessContainer(
@@ -60,9 +61,14 @@ class _HomePageState extends State<HomePage> {
                           text: 'Fees',
                           img: AppImages.fees,
                         ),
-                        QuickAccessContainer(
-                          text: 'Store',
-                          img: AppImages.store,
+                        GestureDetector(
+                          onTap: (){
+                            AppNavigator.pushAndStackPage(context, page: StorePage());
+                          },
+                          child: QuickAccessContainer(
+                            text: 'Store',
+                            img: AppImages.store,
+                          ),
                         ),
                         QuickAccessContainer(
                           text: 'Library',
