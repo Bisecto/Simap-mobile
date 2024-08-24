@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:simap/view/app_screens/learn_section/tutorial_list.dart';
+import 'package:simap/view/app_screens/learn_section/learn_components/tutorial_list.dart';
 
 import '../../../res/app_colors.dart';
 import '../../../res/app_images.dart';

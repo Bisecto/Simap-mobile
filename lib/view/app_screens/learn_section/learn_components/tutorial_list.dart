@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:simap/view/app_screens/learn_section/tutorial_card.dart';
+import 'package:simap/view/app_screens/learn_section/learn_components/tutorial_card.dart';
 
 class TutorialListPage extends StatelessWidget {
   final List<Map<String, dynamic>> tutorials = [
