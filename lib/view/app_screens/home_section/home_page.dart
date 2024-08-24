@@ -8,6 +8,7 @@ import 'package:simap/view/widgets/app_custom_text.dart';
 import '../../../res/app_colors.dart';
 import '../../widgets/appBar_widget.dart';
 import '../assignment_section/assignment_page.dart';
+import '../learn_section/learn_page.dart';
 import '../store_section/store_page.dart';
 import 'home_page_components/billboard.dart';
 import 'home_page_components/welcome_container.dart';
@@ -53,11 +54,16 @@ class _HomePageState extends State<HomePage> {
                      Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        QuickAccessContainer(
-                          text: 'Learn',
-                          img: AppImages.learn,
+                        GestureDetector(
+                          onTap:(){
+                            AppNavigator.pushAndStackPage(context, page: const LearnPage());
+                          },
+                          child: const QuickAccessContainer(
+                            text: 'Learn',
+                            img: AppImages.learn,
+                          ),
                         ),
-                        QuickAccessContainer(
+                        const QuickAccessContainer(
                           text: 'Fees',
                           img: AppImages.fees,
                         ),
@@ -65,12 +71,12 @@ class _HomePageState extends State<HomePage> {
                           onTap: (){
                             AppNavigator.pushAndStackPage(context, page: StorePage());
                           },
-                          child: QuickAccessContainer(
+                          child: const QuickAccessContainer(
                             text: 'Store',
                             img: AppImages.store,
                           ),
                         ),
-                        QuickAccessContainer(
+                        const QuickAccessContainer(
                           text: 'Library',
                           img: AppImages.library,
                         )
