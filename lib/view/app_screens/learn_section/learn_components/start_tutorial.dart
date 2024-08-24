@@ -56,9 +56,9 @@ class _StartTutorialState extends State<StartTutorial> {
           ? null
           : AppBar(
               title: const CustomText(
-                  text: 'Playing Tutorial', color: AppColors.white),
-              backgroundColor: Colors.green,
-              iconTheme: const IconThemeData(color: AppColors.white),
+                  text: 'Playing Tutorial', color: AppColors.black),
+              backgroundColor: Colors.white,
+              iconTheme: const IconThemeData(color: AppColors.black),
             ),
       body: _errorMessage != null
           ? Center(
