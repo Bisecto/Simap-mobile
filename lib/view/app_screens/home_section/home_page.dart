@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:simap/res/app_images.dart';
 import 'package:simap/utills/app_navigator.dart';
 import 'package:simap/view/app_screens/home_section/home_page_components/quick_access_container.dart';
+import 'package:simap/view/app_screens/library_section/library_page.dart';
 import 'package:simap/view/app_screens/quiz_section/available_quiz_subject.dart';
 import 'package:simap/view/widgets/app_custom_text.dart';
 
@@ -76,9 +77,15 @@ class _HomePageState extends State<HomePage> {
                             img: AppImages.store,
                           ),
                         ),
-                        const QuickAccessContainer(
-                          text: 'Library',
-                          img: AppImages.library,
+                        GestureDetector(
+                          onTap: (){
+                            AppNavigator.pushAndStackPage(context, page: const LibraryPage());
+
+                          },
+                          child: const QuickAccessContainer(
+                            text: 'Library',
+                            img: AppImages.library,
+                          ),
                         )
                       ],
                     ),
