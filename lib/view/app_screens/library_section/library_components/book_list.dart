@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:simap/view/app_screens/library_section/library_components/pdf_view.dart';
 import 'package:simap/view/widgets/app_custom_text.dart';
 
 import '../../../../res/app_colors.dart';
+import '../../../../utills/app_navigator.dart';
 
 class BookListScreen extends StatelessWidget {
   const BookListScreen({super.key});
@@ -36,7 +38,7 @@ class BookListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: (books.length * 300) + 100,
-      child:  ListView.builder(
+      child: ListView.builder(
         itemCount: books.length,
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
@@ -98,7 +100,10 @@ class BookListScreen extends StatelessWidget {
                           onPressed: () {
                             _showBookDetails(context, book['title']!);
                           },
-                          child: const CustomText(text:'Details',color: AppColors.white,),
+                          child: const CustomText(
+                            text: 'Details',
+                            color: AppColors.white,
+                          ),
                         ),
                         const SizedBox(width: 10),
                         OutlinedButton(
@@ -109,9 +114,14 @@ class BookListScreen extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-                            _readBook(context, book['title']!);
+                            AppNavigator.pushAndStackPage(context,
+                                page: PDFScreen(bookTitle: book['title']!,));
+                            //_readBook(context, book['title']!);
                           },
-                          child: const CustomText(text:'Read',color: AppColors.green,),
+                          child: const CustomText(
+                            text: 'Read',
+                            color: AppColors.green,
+                          ),
                         ),
                       ],
                     ),
