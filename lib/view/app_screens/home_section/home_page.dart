@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                       height: 20,
                     ),
                     ...[
-                      moreActionsContainer(AppImages.book, "Library", '40'),
+                      //moreActionsContainer(AppImages.book, "Library", '40'),
                       InkWell(onTap:(){AppNavigator.pushAndStackPage(context, page: const AvailableSubjects());},child: moreActionsContainer(AppImages.quiz, "Quiz", '5')),
                       InkWell(
                         onTap: (){
