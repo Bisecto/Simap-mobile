@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simap/model/school_model.dart';
 import 'package:simap/utills/app_utils.dart';
 import 'package:simap/view/widgets/drop_down.dart';
 import 'package:simap/view/widgets/form_input.dart';
@@ -26,7 +27,7 @@ class AppSetUp extends StatefulWidget {
 class _AppSetUpState extends State<AppSetUp> {
   String selectedPreference = '';
   TextEditingController schNameController = TextEditingController();
-
+String logoUrl='';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -204,9 +205,9 @@ class _AppSetUpState extends State<AppSetUp> {
                     ),
                     GestureDetector(
                       onTap: () async {
-                        var selectedSchool = '';
-                        selectedSchool =
-                            await modalSheet.showMaterialModalBottomSheet(
+                        SchoolModel schoolModel;
+                        schoolModel =
+                            (await modalSheet.showMaterialModalBottomSheet(
                                     backgroundColor: Colors.transparent,
                                     isDismissible: true,
                                     shape: const RoundedRectangleBorder(
@@ -217,15 +218,12 @@ class _AppSetUpState extends State<AppSetUp> {
                                     builder: (context) => const Padding(
                                           padding: EdgeInsets.only(top: 100.0),
                                           child: ListOfSchools(),
-                                        )) ??
-                                '';
-                        if (selectedSchool == '') {
-                        } else {
-                          setState(() {
-                            schNameController.text = selectedSchool;
-                          });
-                        }
-                      },
+                                        )))!;
+                        setState(() {
+                          schNameController.text = schoolModel.name;
+                          logoUrl = schoolModel.logoUrl;
+                        });
+                                            },
                       child: CustomTextFormField(
                         controller: schNameController,
                         hint: 'Choose School',
@@ -234,6 +232,7 @@ class _AppSetUpState extends State<AppSetUp> {
                             ? AppColors.green
                             : AppColors.grey,
                         enabled: false,
+                        widget: logoUrl==''?null:Image.network(logoUrl,height: 30,width: 30,),
                         backgroundColor: AppColors.white,
                         validator: AppValidator.validateTextfield,
                         suffixIcon: const Icon(Icons.arrow_drop_down),

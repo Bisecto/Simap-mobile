@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simap/model/school_model.dart';
 
+import '../../../bloc/app_bloc/app_bloc.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_icons.dart';
 import '../../../utills/app_utils.dart';
 import '../../../utills/app_validator.dart';
 import '../../widgets/app_custom_text.dart';
+import '../../widgets/app_loading_bar.dart';
+import '../../widgets/dialog_box.dart';
 import '../../widgets/form_input.dart';
 
 class ListOfSchools extends StatefulWidget {
@@ -16,48 +21,17 @@ class ListOfSchools extends StatefulWidget {
 }
 
 class _ListOfSchoolsState extends State<ListOfSchools> {
-  final List<String> schools = [
-    'Queen’s College, Lagos',
-    'King’s College, Lagos',
-    'Federal Government College, Lagos',
-    'Federal Government College, Enugu',
-    'Christ the King College, Onitsha',
-    'Baptist High School, Jos',
-    'Government College, Umuahia',
-    'Ahmadiyya College, Agege',
-    'Igbobi College, Lagos',
-    'Mayflower School, Ikenne',
-    'St. Gregory’s College, Lagos',
-    'Barewa College, Zaria',
-    'Fountain School, Lagos',
-    'Atlantic Hall, Lagos',
-    'Vivian Fowler Memorial College, Lagos',
-  ];
   TextEditingController schNameController = TextEditingController();
-  List<String> filteredSchools = [];
+
+  // List<SchoolModel> filteredSchools = [];
+  AppBloc appBloc = AppBloc();
 
   @override
   void initState() {
+    // TODO: implement initState
+    appBloc.add(GetSchoolsEvent());
+
     super.initState();
-    filteredSchools = schools; // Initially show all schools
-    schNameController.addListener(_filterSchools);
-  }
-
-  @override
-  void dispose() {
-    schNameController.removeListener(_filterSchools);
-    schNameController.dispose();
-    super.dispose();
-  }
-
-  void _filterSchools() {
-    setState(() {
-      filteredSchools = schools
-          .where((school) => school
-          .toLowerCase()
-          .contains(schNameController.text.toLowerCase()))
-          .toList();
-    });
   }
 
   @override
@@ -95,8 +69,8 @@ class _ListOfSchoolsState extends State<ListOfSchools> {
                           height: 50,
                           width: double.infinity,
                           color: Colors.grey[300],
-                          child: const Center(
-                              child: CircularProgressIndicator()),
+                          child:
+                              const Center(child: CircularProgressIndicator()),
                         );
                       },
                     ),
@@ -130,43 +104,72 @@ class _ListOfSchoolsState extends State<ListOfSchools> {
               ),
             ),
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: filteredSchools.length + 1, // Adjust for search bar
-              padding: EdgeInsets.zero,
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  return Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: CustomTextFormField(
-                      controller: schNameController,
-                      hint: 'Search',
-                      label: '',
-                      borderColor: schNameController.text.isNotEmpty
-                          ? AppColors.green
-                          : AppColors.grey,
-                      backgroundColor: AppColors.white,
-                      widget: const Icon(Icons.search),
-                    ),
-                  );
-                } else {
-                  return Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    margin: const EdgeInsets.symmetric(
-                        vertical: 4.0, horizontal: 8.0),
-                    child: ListTile(
-                      title: Text(filteredSchools[index - 1]),
-                      onTap: (){
-                        Navigator.pop(context,filteredSchools[index - 1]);
-                      },// Adjust index
-                    ),
-                  );
-                }
-              },
-            ),
+          BlocConsumer<AppBloc, AppState>(
+            bloc: appBloc,
+            listener: (context, state) async {
+              if (state is GetSchoolsSuccessState) {
+                // Handle success, navigate or show a message
+              } else if (state is ErrorState) {
+                MSG.warningSnackBar(context, state.error);
+                Navigator.pop(context);
+              }
+            },
+            builder: (context, state) {
+              if (state is LoadingState) {
+                return const Center(
+                  child: AppLoadingPage("Loading......"),
+                );
+              } else if (state is GetSchoolsSuccessState) {
+                final successResponse = state as GetSchoolsSuccessState;
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: successResponse.listOfSchools.length + 1, // Adjust for search bar
+                    padding: EdgeInsets.zero,
+                    itemBuilder: (context, index) {
+                      if (index == 0) {
+                        return Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: CustomTextFormField(
+                            controller: schNameController,
+                            hint: 'Search',
+                            label: '',
+                            borderColor: schNameController.text.isNotEmpty
+                                ? AppColors.green
+                                : AppColors.grey,
+                            backgroundColor: AppColors.white,
+                            widget: const Icon(Icons.search),
+                          ),
+                        );
+                      } else {
+                        return Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 4.0, horizontal: 8.0),
+                          child: ListTile(
+                            leading: Image.network(successResponse.listOfSchools[index - 1].logoUrl,height: 40,width: 40,),
+                            title: Text(successResponse.listOfSchools[index - 1].name),
+                            onTap: () {
+                              Navigator.pop(
+                                context,
+                                successResponse.listOfSchools[index - 1],
+                              );
+                            },
+
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                );
+              } else {
+                return const Center(
+                  child: AppLoadingPage("Loading......"),
+                );
+              }
+            },
           ),
         ],
       ),

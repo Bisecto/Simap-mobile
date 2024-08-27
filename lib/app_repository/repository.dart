@@ -10,15 +10,19 @@ class AppRepository {
   Future<http.Response> postRequest(
       Map<String, String> data, String apiUrl) async {
     var response = await http.post(
-      Uri.parse(apiUrl),
-      body: data,
+      Uri.parse('https://jsonplaceholder.typicode.com/albums'),
+      body: jsonEncode(<String, String>{
+        'title': "This is a title",
+      }),
     );
-    AppUtils().debuglog(apiUrl+response.statusCode.toString());
+
+    AppUtils().debuglog(apiUrl + response.statusCode.toString());
 
     return response;
   }
-  Future<http.Response> postRequestWithToken(String token,
-      Map<String, dynamic> data, String apiUrl) async {
+
+  Future<http.Response> postRequestWithToken(
+      String token, Map<String, dynamic> data, String apiUrl) async {
     var headers = {
       'Authorization': 'JWT $token',
       //'Content-Type': 'application/json'
@@ -28,24 +32,23 @@ class AppRepository {
       headers: headers,
       body: data,
     );
-    AppUtils().debuglog(apiUrl+response.statusCode.toString());
+    AppUtils().debuglog(apiUrl + response.statusCode.toString());
     AppUtils().debuglog(1);
     AppUtils().debuglog(response.body);
     return response;
   }
 
-
-
-  Future<http.Response> getRequest( String apiUrl) async {
+  Future<http.Response> getRequest(String apiUrl) async {
     AppUtils().debuglog(apiUrl);
 
     final response = await http.get(
-      Uri.parse(apiUrl),
+      Uri.parse('https://jsonplaceholder.typicode.com/albums/1'),
     );
-    AppUtils().debuglog(apiUrl+response.statusCode.toString());
+    AppUtils().debuglog(apiUrl + response.statusCode.toString());
 
     return response;
   }
+
   Future<http.Response> getRequestWithToken(String token, String apiUrl) async {
     AppUtils().debuglog(apiUrl);
     var headers = {
@@ -54,11 +57,11 @@ class AppRepository {
     };
     AppUtils().debuglog(headers);
     final response = await http.get(
-      Uri.parse(apiUrl),
+      Uri.parse('https://jsonplaceholder.typicode.com/albums/1'),
       headers: headers,
       // body: jsonEncode(user),
     );
-    AppUtils().debuglog(apiUrl+response.statusCode.toString());
+    AppUtils().debuglog(apiUrl + response.statusCode.toString());
     AppUtils().debuglog(response.statusCode);
     AppUtils().debuglog(response.statusCode);
     AppUtils().debuglog(response.body);

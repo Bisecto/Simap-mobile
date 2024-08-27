@@ -21,7 +21,7 @@ class AppUtils {
   }
   void debuglog(object) {
     if (kDebugMode) {
-      //print(object.toString());
+      print(object.toString());
       // debugPrint(object.toString());
     }
   }
