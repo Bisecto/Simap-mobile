@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:simap/model/school_model.dart';
 import 'package:simap/res/shared_preferenceKey.dart';
@@ -10,6 +12,7 @@ import 'package:simap/utills/shared_preferences.dart';
 import '../../app_repository/repository.dart';
 import '../../res/tem_data/tem_data.dart';
 import '../../utills/app_utils.dart';
+import '../../utills/constants/loading_dialog.dart';
 
 part 'app_event.dart';
 
@@ -71,6 +74,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   Future<void> setUpSchoolEvent(
       SetUpSchoolEvent event, Emitter<AppState> emit) async {
     //SharedPref sharedPref = SharedPref();
+    showDialog(
+        barrierDismissible: false,
+        context: event.context,
+        builder: (_) {
+          return const LoadingDialog('Setting up...');
+        });
     await SharedPref.putString(
       SharedPreferenceKey().appSchoolLogoKey,
       event.schoolModel.logoUrl,
@@ -91,6 +100,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       SharedPreferenceKey().userPreferenceKey,
       event.userPreference,
     );
+    Navigator.pop(event.context);
     emit(SetUpSuccessState());
   }
 }

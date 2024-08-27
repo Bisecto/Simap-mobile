@@ -9,6 +9,7 @@ class GetSchoolsEvent extends AppEvent {}
 class SetUpSchoolEvent extends AppEvent {
   SchoolModel schoolModel;
   String userPreference;
+  BuildContext context;
 
-  SetUpSchoolEvent(this.schoolModel,this.userPreference);
+  SetUpSchoolEvent(this.schoolModel,this.userPreference,this.context);
 }
