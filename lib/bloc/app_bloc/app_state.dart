@@ -20,4 +20,5 @@ class GetSchoolsSuccessState extends AppState {
       this.listOfSchools,
       );
 }
+class SetUpSuccessState extends AppState {}
 class AccessTokenExpireState extends AppState {}

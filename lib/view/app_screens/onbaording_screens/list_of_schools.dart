@@ -23,7 +23,6 @@ class ListOfSchools extends StatefulWidget {
 class _ListOfSchoolsState extends State<ListOfSchools> {
   TextEditingController schNameController = TextEditingController();
 
-  // List<SchoolModel> filteredSchools = [];
   AppBloc appBloc = AppBloc();
 
   @override
