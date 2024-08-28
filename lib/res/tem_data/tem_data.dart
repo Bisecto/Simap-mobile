@@ -1,4 +1,15 @@
 class AppTemData {
+  String studentProfile = '''
+  {
+    "surname": "Doe",
+    "otherNames": "John Michael",
+    "studentClass": "SS 3",
+    "registrationNumber": "SS-123456",
+    "profileImage": "https://example.com/images/student-profile.jpg",
+    "gender": "Male",
+    "dob": "2005-08-15"
+  }
+  ''';
   String schools = '''
   {
     "schools": [

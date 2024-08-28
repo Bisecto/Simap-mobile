@@ -6,8 +6,10 @@ import 'package:simap/view/app_screens/onbaording_screens/setup.dart';
 
 import '../../../res/app_colors.dart';
 import '../../../res/app_images.dart';
+import '../../../res/shared_preferenceKey.dart';
 import '../../../utills/app_navigator.dart';
 import '../../../utills/app_validator.dart';
+import '../../../utills/shared_preferences.dart';
 import '../../widgets/app_custom_text.dart';
 import '../../widgets/form_button.dart';
 import '../../widgets/form_input.dart';
@@ -25,6 +27,24 @@ class _SignPageState extends State<SignPage> {
   final _emailController = TextEditingController();
 
   final _passwordController = TextEditingController();
+  String appSchoolName='';
+  String appLogo='';
+  @override
+  void initState() {
+    // TODO: implement initState
+    getSavedData();
+    super.initState();
+  }
+  Future<void> getSavedData() async {
+    String schoolLogo = await SharedPref.getString(SharedPreferenceKey().appSchoolLogoKey);
+    String schoolName = await SharedPref.getString(SharedPreferenceKey().appSchoolNameKey);
+    AppUtils().debuglog(schoolName);
+    setState(() {
+
+      appSchoolName=schoolName;
+      appLogo=schoolLogo;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,11 +81,7 @@ class _SignPageState extends State<SignPage> {
                               height: 70,
                               width: 70,
                             ),
-                            Image.asset(
-                              AppImages.logo,
-                              height: 70,
-                              width: 70,
-                            ),
+
                           ],
                         ),
 
@@ -75,6 +91,23 @@ class _SignPageState extends State<SignPage> {
                         key: _formKey,
                         child: Column(
                           children: [
+                            if(appLogo!='')
+                              CircleAvatar(
+                                radius: 50,
+                                backgroundColor: AppColors.mainAppColor.withOpacity(0.1),
+                                child: Image.network(
+                                  appLogo,
+
+                                  height: 70,
+                                  width: 70,
+                                ),
+                              ),
+                              // Image.network(
+                              //   appLogo,
+                              //   height: 70,
+                              //   width: 70,
+                              // ),
+                            SizedBox(height: 10,),
                             const CustomText(
                               text:
                               "Please login to continue",

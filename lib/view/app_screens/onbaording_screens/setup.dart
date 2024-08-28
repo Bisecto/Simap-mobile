@@ -57,7 +57,7 @@ class _AppSetUpState extends State<AppSetUp> {
               bloc: appBloc,
               listener: (context, state) async {
                 if (state is SetUpSuccessState) {
-                  AppNavigator.pushAndStackPage(context,
+                  AppNavigator.pushAndRemovePreviousPages(context,
                       page: const SignPage());
                 } else if (state is ErrorState) {
                   MSG.warningSnackBar(context, state.error);
