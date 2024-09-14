@@ -15,6 +15,8 @@ import 'package:simap/view/app_screens/result_section/result_page.dart';
 import '../../../res/app_colors.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart' as modalSheet;
 
+import '../result_section/result_section_screens/single_session_result.dart';
+
 class LandingPage extends StatefulWidget {
   int selectedIndex;
 
@@ -40,7 +42,7 @@ class _LandingPageState extends State<LandingPage> {
 
     views = [
       const HomePage(),
-      const ResultPage(),
+      const SingleSessionResult(session: '2024/2024', isBackKey: false,),
       const GamesPage(),
       const MorePage(),
     ];
@@ -65,7 +67,7 @@ class _LandingPageState extends State<LandingPage> {
         }
       },
       child: Scaffold(
-        backgroundColor: Color(0xFFFFFFFF),
+        backgroundColor: const Color(0xFFFFFFFF),
         body: IndexedStack(
           index: selectedIndex,
           children: views,

@@ -13,8 +13,9 @@ import '../../../widgets/app_custom_text.dart';
 
 class SingleSessionResult extends StatefulWidget {
   final String session;
+  final bool isBackKey;
 
-  const SingleSessionResult({super.key, required this.session});
+  const SingleSessionResult({super.key, required this.session, required this.isBackKey});
 
   @override
   State<SingleSessionResult> createState() => _SingleSessionResultState();
@@ -33,7 +34,7 @@ class _SingleSessionResultState extends State<SingleSessionResult> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const MainAppBar(isBackKey: true,),
+               MainAppBar(isBackKey: widget.isBackKey,),
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: SingleChildScrollView(

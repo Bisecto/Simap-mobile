@@ -23,7 +23,7 @@ class ListResultSession extends StatelessWidget {
       padding: EdgeInsets.zero,
       itemBuilder: (context, index) {
         return GestureDetector(onTap: () {
-          AppNavigator.pushAndStackPage(context, page: SingleSessionResult(session: sessions[index],
+          AppNavigator.pushAndStackPage(context, page: SingleSessionResult(session: sessions[index], isBackKey: true,
 
           ));
         }, child: SessionContainer(session: sessions[index], context: context));

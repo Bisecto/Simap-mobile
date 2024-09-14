@@ -21,7 +21,7 @@ class _ResultPageState extends State<ResultPage> {
           padding: const EdgeInsets.all(10.0),
           child: Column(
             children: [
-              const MainAppBar(),
+              const MainAppBar(isBackKey: true,),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
