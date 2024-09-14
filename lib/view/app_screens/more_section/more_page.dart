@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:simap/res/app_images.dart';
 import 'package:simap/view/app_screens/auth/sign_page.dart';
+import 'package:simap/view/app_screens/library_section/library_page.dart';
 import 'package:simap/view/app_screens/more_section/child_pages/profile_page.dart';
 import 'package:simap/view/app_screens/onbaording_screens/setup.dart';
+import 'package:simap/view/app_screens/store_section/store_page.dart';
 
 import '../../../res/app_colors.dart';
 import '../../../utills/app_navigator.dart';
 import '../../widgets/app_custom_text.dart';
+import '../result_section/result_page.dart';
 import 'child_pages/performance/performance_page.dart';
 
 class MorePage extends StatefulWidget {
@@ -56,7 +59,15 @@ class _MorePageState extends State<MorePage> {
                   'Profile',
                 ),
               ),
-               itemContainer(Icons.shopping_cart,'Stores',),
+              InkWell(
+                onTap: () {
+                  AppNavigator.pushAndStackPage(context, page:  StorePage());
+                },
+                child: itemContainer(
+                  Icons.shopping_cart,
+                  'Stores',
+                ),
+              ),
               InkWell(
                   onTap: () {
                     AppNavigator.pushAndStackPage(context,
@@ -66,10 +77,30 @@ class _MorePageState extends State<MorePage> {
                     Icons.pie_chart_outline,
                     'My Performance',
                   )),
-              itemContainer(Icons.archive_outlined,'Archive',),
-              itemContainer(Icons.menu_book_sharp,'Library',),
-              itemContainer(Icons.videogame_asset_rounded,'Games',),
-              const SizedBox(height: 20,),
+              InkWell(
+                  onTap: () {
+                    AppNavigator.pushAndStackPage(context, page: const ResultPage());
+                  },
+                  child: itemContainer(
+                    Icons.archive_outlined,
+                    'Archive',
+                  )),
+              InkWell(
+                onTap: () {
+                  AppNavigator.pushAndStackPage(context, page: const LibraryPage());
+                },
+                child: itemContainer(
+                  Icons.menu_book_sharp,
+                  'Library',
+                ),
+              ),
+              // itemContainer(
+              //   Icons.videogame_asset_rounded,
+              //   'Games',
+              // ),
+              const SizedBox(
+                height: 20,
+              ),
               itemContainer(
                 Icons.help,
                 'Help',
