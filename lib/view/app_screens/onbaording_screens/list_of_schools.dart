@@ -122,7 +122,8 @@ class _ListOfSchoolsState extends State<ListOfSchools> {
                 final successResponse = state as GetSchoolsSuccessState;
                 return Expanded(
                   child: ListView.builder(
-                    itemCount: successResponse.listOfSchools.length + 1, // Adjust for search bar
+                    itemCount: successResponse.listOfSchools.length + 1,
+                    // Adjust for search bar
                     padding: EdgeInsets.zero,
                     itemBuilder: (context, index) {
                       if (index == 0) {
@@ -148,15 +149,19 @@ class _ListOfSchoolsState extends State<ListOfSchools> {
                           margin: const EdgeInsets.symmetric(
                               vertical: 4.0, horizontal: 8.0),
                           child: ListTile(
-                            leading: Image.network(successResponse.listOfSchools[index - 1].logoUrl,height: 40,width: 40,),
-                            title: Text(successResponse.listOfSchools[index - 1].name),
+                            leading: Image.network(
+                              successResponse.listOfSchools[index - 1].logoUrl,
+                              height: 40,
+                              width: 40,
+                            ),
+                            title: Text(
+                                successResponse.listOfSchools[index - 1].name),
                             onTap: () {
                               Navigator.pop(
                                 context,
                                 successResponse.listOfSchools[index - 1],
                               );
                             },
-
                           ),
                         );
                       }
