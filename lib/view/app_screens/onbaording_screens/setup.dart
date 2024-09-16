@@ -30,7 +30,7 @@ class AppSetUp extends StatefulWidget {
 
 class _AppSetUpState extends State<AppSetUp> {
   String selectedPreference = '';
-  TextEditingController schNameController = TextEditingController();
+  TextEditingController schCodeController = TextEditingController();
   String logoUrl = '';
   AppBloc appBloc = AppBloc();
    SchoolModel? selectedSchoolModel;
@@ -237,36 +237,36 @@ class _AppSetUpState extends State<AppSetUp> {
                           ],
                         ),
                         GestureDetector(
-                          onTap: () async {
-                            SchoolModel schoolModel;
-                            schoolModel = (await modalSheet
-                                .showMaterialModalBottomSheet(
-                                backgroundColor: Colors.transparent,
-                                isDismissible: true,
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.vertical(
-                                      top: Radius.circular(20.0)),
-                                ),
-                                context: context,
-                                builder: (context) => const Padding(
-                                  padding:
-                                  EdgeInsets.only(top: 100.0),
-                                  child: ListOfSchools(),
-                                )))!;
-                            setState(() {
-                              selectedSchoolModel=schoolModel;
-                              schNameController.text = schoolModel.name;
-                              logoUrl = schoolModel.logoUrl;
-                            });
-                          },
+                          // onTap: () async {
+                          //   SchoolModel schoolModel;
+                          //   schoolModel = (await modalSheet
+                          //       .showMaterialModalBottomSheet(
+                          //       backgroundColor: Colors.transparent,
+                          //       isDismissible: true,
+                          //       shape: const RoundedRectangleBorder(
+                          //         borderRadius: BorderRadius.vertical(
+                          //             top: Radius.circular(20.0)),
+                          //       ),
+                          //       context: context,
+                          //       builder: (context) => const Padding(
+                          //         padding:
+                          //         EdgeInsets.only(top: 100.0),
+                          //         child: ListOfSchools(),
+                          //       )))!;
+                          //   setState(() {
+                          //     selectedSchoolModel=schoolModel;
+                          //     schNameController.text = schoolModel.name;
+                          //     logoUrl = schoolModel.logoUrl;
+                          //   });
+                         // },
                           child: CustomTextFormField(
-                            controller: schNameController,
-                            hint: 'Choose School',
-                            label: 'Select the name of the school',
-                            borderColor: schNameController.text.isNotEmpty
+                            controller: schCodeController,
+                            hint: 'Enter school code',
+                            label: 'School code',
+                            borderColor: schCodeController.text.isNotEmpty
                                 ? AppColors.green
                                 : AppColors.grey,
-                            enabled: false,
+                            enabled: true,
                             widget: logoUrl == ''
                                 ? null
                                 : Image.network(
@@ -276,7 +276,7 @@ class _AppSetUpState extends State<AppSetUp> {
                             ),
                             backgroundColor: AppColors.white,
                             validator: AppValidator.validateTextfield,
-                            suffixIcon: const Icon(Icons.arrow_drop_down),
+                            //suffixIcon: const Icon(Icons.arrow_drop_down),
                           ),
                         )
                       ],
@@ -286,7 +286,7 @@ class _AppSetUpState extends State<AppSetUp> {
                         FormButton(
                           onPressed: () {
                             if (selectedPreference != '') {
-                              if (schNameController.text.isNotEmpty) {
+                              if (schCodeController.text.isNotEmpty) {
                                 //print(selectedSchoolModel);
                                appBloc.add(SetUpSchoolEvent(selectedSchoolModel!,selectedPreference,context));
                               } else {
@@ -294,7 +294,7 @@ class _AppSetUpState extends State<AppSetUp> {
                                     context: context,
                                     title: "Info",
                                     subtitle:
-                                    'Select school to complete setup',
+                                    'Enter your school code to complete setup',
                                     type: ToastMessageType.info);
                               }
                             } else {
