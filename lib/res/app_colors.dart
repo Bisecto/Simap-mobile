@@ -25,5 +25,6 @@ class AppColors{
 
 ///Containers Colors
   static const Color quickAccessContainerColor=Color(0xFFEEECEC);
+  static const Color lightGreen=Color(0xFF7BF304);
 
   }
