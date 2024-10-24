@@ -40,17 +40,17 @@ class AppUtils {
     // print(8);
 
     if (!isFirstOpen) {
-      if(schoolLogo.isNotEmpty&&baseUrl.isNotEmpty){
+      //if(schoolLogo.isNotEmpty&&baseUrl.isNotEmpty){
         Future.delayed(const Duration(seconds: 3), () {
           AppNavigator.pushAndRemovePreviousPages(context,
               page: const SignPage());
         });
-      }else{
-        Future.delayed(const Duration(seconds: 3), () {
-          AppNavigator.pushAndRemovePreviousPages(context,
-              page: const AppSetUp());
-        });
-      }
+      // }else{
+      //   Future.delayed(const Duration(seconds: 3), () {
+      //     AppNavigator.pushAndRemovePreviousPages(context,
+      //         page: const AppSetUp());
+      //   });
+      // }
       //   print(1);
       //   if (userData.isNotEmpty && password.isNotEmpty) {
       //     print(3);

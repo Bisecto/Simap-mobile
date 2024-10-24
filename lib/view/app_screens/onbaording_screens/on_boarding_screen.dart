@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_carousel_slider/carousel_slider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:simap/view/app_screens/auth/sign_page.dart';
 import 'package:simap/view/app_screens/onbaording_screens/setup.dart';
 
 import '../../../res/app_colors.dart';
@@ -131,9 +132,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   children: [
                     FormButton(
                       onPressed: () {
-                        AppNavigator.pushAndStackPage(context, page: const AppSetUp());
+                        AppNavigator.pushAndStackPage(context, page: const SignPage());
                       },
-                      text: 'Get Started',
+                      text: 'Continue',
                       height: 60,
                       textSize: 14,
                       borderRadius: 10,

@@ -105,16 +105,16 @@ class _MorePageState extends State<MorePage> {
                 Icons.help,
                 'Help',
               ),
-              InkWell(
-                onTap: () {
-                  AppNavigator.pushAndRemovePreviousPages(context,
-                      page: const AppSetUp());
-                },
-                child: itemContainer(
-                  Icons.refresh,
-                  'Reset Setup',
-                ),
-              ),
+              // InkWell(
+              //   onTap: () {
+              //     AppNavigator.pushAndRemovePreviousPages(context,
+              //         page: const AppSetUp());
+              //   },
+              //   child: itemContainer(
+              //     Icons.refresh,
+              //     'Reset Setup',
+              //   ),
+              // ),
               itemContainer(
                 Icons.settings,
                 'Settings',

@@ -25,26 +25,31 @@ class SignPage extends StatefulWidget {
 class _SignPageState extends State<SignPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
+  final _schoolIdController = TextEditingController();
 
   final _passwordController = TextEditingController();
-  String appSchoolName='';
-  String appLogo='';
+  String appSchoolName = '';
+  String appLogo = '';
+
   @override
   void initState() {
     // TODO: implement initState
     getSavedData();
     super.initState();
   }
+
   Future<void> getSavedData() async {
-    String schoolLogo = await SharedPref.getString(SharedPreferenceKey().appSchoolLogoKey);
-    String schoolName = await SharedPref.getString(SharedPreferenceKey().appSchoolNameKey);
+    String schoolLogo =
+        await SharedPref.getString(SharedPreferenceKey().appSchoolLogoKey);
+    String schoolName =
+        await SharedPref.getString(SharedPreferenceKey().appSchoolNameKey);
     AppUtils().debuglog(schoolName);
     setState(() {
-
-      appSchoolName=schoolName;
-      appLogo=schoolLogo;
+      appSchoolName = schoolName;
+      appLogo = schoolLogo;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +63,7 @@ class _SignPageState extends State<SignPage> {
                 top: 50.0, bottom: 20, left: 20, right: 20),
             child: SingleChildScrollView(
               child: Container(
-                height: AppUtils.deviceScreenSize(context).height-100,
+                height: AppUtils.deviceScreenSize(context).height - 100,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -67,13 +72,13 @@ class _SignPageState extends State<SignPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        if(Navigator.canPop(context))
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Icon(Icons.arrow_back_ios),
-                        ),
+                        if (Navigator.canPop(context))
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Icon(Icons.arrow_back_ios),
+                          ),
                         Row(
                           children: [
                             Image.asset(
@@ -81,56 +86,60 @@ class _SignPageState extends State<SignPage> {
                               height: 70,
                               width: 70,
                             ),
-
                           ],
                         ),
-
                       ],
                     ),
                     Form(
                         key: _formKey,
                         child: Column(
                           children: [
-                            if(appLogo!='')
+                            if (appLogo != '')
                               CircleAvatar(
                                 radius: 50,
-                                backgroundColor: AppColors.mainAppColor.withOpacity(0.1),
+                                backgroundColor:
+                                    AppColors.mainAppColor.withOpacity(0.1),
                                 child: Image.network(
                                   appLogo,
-
                                   height: 70,
                                   width: 70,
                                 ),
                               ),
-                              // Image.network(
-                              //   appLogo,
-                              //   height: 70,
-                              //   width: 70,
-                              // ),
-                            SizedBox(height: 10,),
-                            const CustomText(
-                              text:
-                              "Please login to continue",
-                              color: AppColors
-                                  .mainAppColor
-                              ,
-                              size: 20,
-                              weight:
-                              FontWeight.w600,
+                            // Image.network(
+                            //   appLogo,
+                            //   height: 70,
+                            //   width: 70,
+                            // ),
+                            SizedBox(
+                              height: 10,
                             ),
-                            const SizedBox(height: 20,),
+                            const CustomText(
+                              text: "Please login to continue",
+                              color: AppColors.mainAppColor,
+                              size: 20,
+                              weight: FontWeight.w600,
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
                             CustomTextFormField(
-                              hint:
-                              'Enter your username',
-                              label:
-                              'Username',
-                              borderColor:
-                              AppColors.mainAppColor,
+                              hint: 'Enter your school ID',
+                              label: 'School ID',
+                              borderColor: AppColors.mainAppColor,
+                              controller: _schoolIdController,
+                              backgroundColor: AppColors.white,
+                              validator: AppValidator.validateTextfield,
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            CustomTextFormField(
+                              hint: 'Enter your username',
+                              label: 'Username',
+                              borderColor: AppColors.mainAppColor,
                               controller: _emailController,
-                              backgroundColor:  AppColors.white,
-                              validator: AppValidator
-                                  .validateTextfield,
-
+                              backgroundColor: AppColors.white,
+                              validator: AppValidator.validateTextfield,
                             ),
                             const SizedBox(
                               height: 10,
@@ -138,67 +147,53 @@ class _SignPageState extends State<SignPage> {
                             CustomTextFormField(
                               label: 'Password',
                               isPasswordField: true,
-                              borderColor:
-                              AppColors.mainAppColor,
+                              borderColor: AppColors.mainAppColor,
                               backgroundColor: AppColors.white,
-                              validator: AppValidator
-                                  .validateTextfield,
-                              controller:
-                              _passwordController,
+                              validator: AppValidator.validateTextfield,
+                              controller: _passwordController,
                               hint: 'Enter your password',
                             ),
                             const SizedBox(
                               height: 10,
                             ),
                             Row(
-                              mainAxisAlignment:
-                              MainAxisAlignment
-                                  .spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                SizedBox(),
+                                // GestureDetector(
+                                //   onTap: () {
+                                //    AppNavigator.pushAndRemovePreviousPages(context, page: const AppSetUp());
+                                //
+                                //   },
+                                //   child: const Align(
+                                //     alignment:
+                                //     Alignment.topRight,
+                                //     child: CustomText(
+                                //       text: "Reset setup",
+                                //       color: AppColors.mainAppColor,
+                                //       size: 16,
+                                //       weight:
+                                //       FontWeight.w400,
+                                //     ),
+                                //   ),
+                                // ),
                                 GestureDetector(
                                   onTap: () {
-                                   AppNavigator.pushAndRemovePreviousPages(context, page: const AppSetUp());
-
+                                    AppNavigator.pushAndStackPage(context,
+                                        page: const PasswordResetRequest());
                                   },
                                   child: const Align(
-                                    alignment:
-                                    Alignment.topRight,
+                                    alignment: Alignment.topRight,
                                     child: CustomText(
-                                      text: "Reset setup",
+                                      text: "Forgot password ?",
                                       color: AppColors.mainAppColor,
                                       size: 16,
-                                      weight:
-                                      FontWeight.w400,
-                                    ),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-
-                                    AppNavigator
-                                        .pushAndStackPage(
-                                        context,
-                                        page:
-                                        const PasswordResetRequest());
-                                  },
-                                  child: const Align(
-                                    alignment:
-                                    Alignment.topRight,
-                                    child: CustomText(
-                                      text:
-                                      "Forgot password ?",
-                                      color: AppColors
-                                          .mainAppColor
-                                          ,
-                                      size: 16,
-                                      weight:
-                                      FontWeight.w400,
+                                      weight: FontWeight.w400,
                                     ),
                                   ),
                                 ),
                               ],
                             ),
-
                           ],
                         )),
 
@@ -207,7 +202,7 @@ class _SignPageState extends State<SignPage> {
                         FormButton(
                           onPressed: () {
                             AppNavigator.pushAndStackPage(context,
-                                page:  LandingPage(selectedIndex: 0));
+                                page: LandingPage(selectedIndex: 0));
                           },
                           text: 'Login',
                           height: 60,
