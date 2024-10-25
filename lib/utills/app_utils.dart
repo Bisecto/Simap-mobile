@@ -16,12 +16,11 @@ import '../res/app_router.dart';
 import '../res/shared_preferenceKey.dart';
 import 'app_navigator.dart';
 
-
-
 class AppUtils {
   static Color hexToColor(String code) {
     return Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
   }
+
   void debuglog(object) {
     if (kDebugMode) {
       print(object.toString());
@@ -31,9 +30,9 @@ class AppUtils {
 
   openApp(context) async {
     bool isFirstOpen = (await SharedPref.getBool('isFirstOpen')) ?? true;
-     String schoolLogo = await SharedPref.getString(SharedPreferenceKey().appSchoolLogoKey);
-     String schoolName = await SharedPref.getString(SharedPreferenceKey().appSchoolNameKey);
-     String baseUrl = await SharedPref.getString(SharedPreferenceKey().baseUrlKey);
+    // String schoolLogo = await SharedPref.getString(SharedPreferenceKey().appSchoolLogoKey);
+    // String schoolName = await SharedPref.getString(SharedPreferenceKey().appSchoolNameKey);
+    // String baseUrl = await SharedPref.getString(SharedPreferenceKey().baseUrlKey);
     // String firstame = await SharedPref.getString('firstName');
     // print(userData);
     // print(password);
@@ -41,10 +40,10 @@ class AppUtils {
 
     if (!isFirstOpen) {
       //if(schoolLogo.isNotEmpty&&baseUrl.isNotEmpty){
-        Future.delayed(const Duration(seconds: 3), () {
-          AppNavigator.pushAndRemovePreviousPages(context,
-              page: const SignPage());
-        });
+      Future.delayed(const Duration(seconds: 3), () {
+        AppNavigator.pushAndRemovePreviousPages(context,
+            page: const SignPage());
+      });
       // }else{
       //   Future.delayed(const Duration(seconds: 3), () {
       //     AppNavigator.pushAndRemovePreviousPages(context,
@@ -87,13 +86,14 @@ class AppUtils {
       //     });
       //   }
       // }
-    }else{
+    } else {
       await SharedPref.putBool('isFirstOpen', false);
 
       Future.delayed(const Duration(seconds: 3), () {
-      AppNavigator.pushAndRemovePreviousPages(context,
-          page: const OnBoardingScreen());
-    });}
+        AppNavigator.pushAndRemovePreviousPages(context,
+            page: const OnBoardingScreen());
+      });
+    }
   }
 
   static Future<bool> biometrics(String localizedReason) async {

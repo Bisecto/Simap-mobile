@@ -1,14 +1,16 @@
 class SharedPreferenceKey {
-   String appNameKey = 'appNameKey';
+  String appNameKey = 'appNameKey';
 
-   ///School Keys
-   String baseUrlKey = 'userPassword';
-   String appSchoolNameKey = 'appSchoolName';
-   String appSchoolLogoKey = 'appSchoolLogo';
-   String appSchoolAddressKey = 'appSchoolAddress';
+  String schoolIdKey = 'schoolId';
+  String studentUserNameKey = 'userName';
 
-   ///User KEYS
-   String userDataKey = 'userData';
-   String userPasswordKey = 'userPassword';
-   String userPreferenceKey = 'userPreference';
+// ///School Keys
+// String baseUrlKey = 'userPassword';
+// String appSchoolNameKey = 'appSchoolName';
+// String appSchoolLogoKey = 'appSchoolLogo';
+//
+// ///User KEYS
+// String userDataKey = 'userData';
+// String userPasswordKey = 'userPassword';
+// String userPreferenceKey = 'userPreference';
 }

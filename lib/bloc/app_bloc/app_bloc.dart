@@ -22,7 +22,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc() : super(AppInitial()) {
     on<InitialEvent>(initialEvent);
     on<GetSchoolsEvent>(getSchoolsEvent);
-    on<SetUpSchoolEvent>(setUpSchoolEvent);
+    //on<SetUpSchoolEvent>(setUpSchoolEvent);
     // on<AppEvent>((event, emit) {
     //   // TODO: implement event handler
     // });
@@ -71,36 +71,36 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     // }
   }
 
-  Future<void> setUpSchoolEvent(
-      SetUpSchoolEvent event, Emitter<AppState> emit) async {
-    //SharedPref sharedPref = SharedPref();
-    showDialog(
-        barrierDismissible: false,
-        context: event.context,
-        builder: (_) {
-          return const LoadingDialog('Setting up...');
-        });
-    await SharedPref.putString(
-      SharedPreferenceKey().appSchoolLogoKey,
-      event.schoolModel.logoUrl,
-    );
-    await SharedPref.putString(
-      SharedPreferenceKey().appSchoolNameKey,
-      event.schoolModel.name,
-    );
-    await SharedPref.putString(
-      SharedPreferenceKey().baseUrlKey,
-      event.schoolModel.schoolBaseUrl,
-    );
-    await SharedPref.putString(
-      SharedPreferenceKey().appSchoolAddressKey,
-      event.schoolModel.address,
-    );
-    await SharedPref.putString(
-      SharedPreferenceKey().userPreferenceKey,
-      event.userPreference,
-    );
-    Navigator.pop(event.context);
-    emit(SetUpSuccessState());
-  }
+  // Future<void> setUpSchoolEvent(
+  //     SetUpSchoolEvent event, Emitter<AppState> emit) async {
+  //   //SharedPref sharedPref = SharedPref();
+  //   showDialog(
+  //       barrierDismissible: false,
+  //       context: event.context,
+  //       builder: (_) {
+  //         return const LoadingDialog('Setting up...');
+  //       });
+  //   await SharedPref.putString(
+  //     SharedPreferenceKey().appSchoolLogoKey,
+  //     event.schoolModel.logoUrl,
+  //   );
+  //   await SharedPref.putString(
+  //     SharedPreferenceKey().appSchoolNameKey,
+  //     event.schoolModel.name,
+  //   );
+  //   await SharedPref.putString(
+  //     SharedPreferenceKey().baseUrlKey,
+  //     event.schoolModel.schoolBaseUrl,
+  //   );
+  //   await SharedPref.putString(
+  //     SharedPreferenceKey().appSchoolAddressKey,
+  //     event.schoolModel.address,
+  //   );
+  //   await SharedPref.putString(
+  //     SharedPreferenceKey().userPreferenceKey,
+  //     event.userPreference,
+  //   );
+  //   Navigator.pop(event.context);
+  //   emit(SetUpSuccessState());
+  // }
 }

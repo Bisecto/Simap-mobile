@@ -6,10 +6,11 @@ abstract class AuthEvent {}
 class InitialEvent extends AuthEvent {}
 
 class SignInEventClick extends AuthEvent {
+  final String schoolId;
   final String userData;
   final String password;
 
-  SignInEventClick(this.userData, this.password);
+  SignInEventClick(this.schoolId, this.userData, this.password);
 }
 
 class RequestResetPasswordEventClick extends AuthEvent {

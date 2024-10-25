@@ -34,27 +34,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<FutureOr<void>> signInEventClick(
       SignInEventClick event, Emitter<AuthState> emit) async {
     emit(LoadingState());
-    AppRepository appRepository = AppRepository();
     String deviceId = await AppUtils.getId();
     Map<String, String> formData = {
-      'registration_number_or_email': event.userData,
+      'username': event.userData,
       'password': event.password,
-      'device_id': event.userData.toLowerCase() == 'cprecious038@gmail.com' ||
-              event.userData == '2019514900'
-          ? '79477BA3-2FAC-4D76-B508-8D871AF7E62F'
-          : deviceId
     };
     AppUtils().debuglog(formData);
-
+    AppRepository appRepository=AppRepository();
     // Map<String, String> data = {
     //   'email': 'bursar11@gmail.com',
     //   'password': 'bursar11',
     // };
+    print(AppApis.http+event.schoolId+AppApis.loginStudent);
     try {
       // var response =
-      //     await AppRepository.authPostRequest(data, AppApis.loginCreateToken);
+      //     await appRepository.postRequest(formData, AppApis.http+event.schoolId+AppApis.appBaseUrl+AppApis.loginStudent);
       final loginResponse =
-          await appRepository.postRequest(formData, AppApis.loginStudent);
+          await appRepository.postRequest(formData, AppApis.http+event.schoolId+AppApis.loginStudent);
 
       AppUtils().debuglog('Response status: ${loginResponse.statusCode}');
       AppUtils().debuglog('Response body: ${loginResponse.body}');
@@ -64,7 +60,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (loginResponse.statusCode == 200 || loginResponse.statusCode == 201) {
         final profileResponse = await appRepository.getRequestWithToken(
           json.decode(loginResponse.body)['access'],
-          AppApis.studentProfile,
+          'AppApis.studentProfile',
         );
 
         AppUtils()
