@@ -9,14 +9,20 @@ import '../utills/app_utils.dart';
 class AppRepository {
   Future<http.Response> postRequest(
       Map<String, String> data, String apiUrl) async {
+    final headers = {
+      'Content-Type': 'application/json',
+      'Cookie':
+          'csrftoken=NxxWk8uudx18TvEsVgQzS8ArEeXGBfZO; sessionid=sd1e20jiuf512uqc9lwj9s8iueyo6muu',
+    };
+
+    // Encode data as JSON
     var response = await http.post(
-      Uri.parse('https://jsonplaceholder.typicode.com/albums'),
-      body: jsonEncode(<String, String>{
-        'title': "This is a title",
-      }),
+      Uri.parse(apiUrl),
+      headers: headers,
+      body: jsonEncode(data),
     );
 
-    AppUtils().debuglog(apiUrl + response.statusCode.toString());
+    AppUtils().debuglog('$apiUrl - Status Code: ${response.statusCode}');
 
     return response;
   }
@@ -42,7 +48,7 @@ class AppRepository {
     AppUtils().debuglog(apiUrl);
 
     final response = await http.get(
-      Uri.parse('https://jsonplaceholder.typicode.com/albums/1'),
+      Uri.parse(apiUrl),
     );
     AppUtils().debuglog(apiUrl + response.statusCode.toString());
 
@@ -57,7 +63,7 @@ class AppRepository {
     };
     AppUtils().debuglog(headers);
     final response = await http.get(
-      Uri.parse('https://jsonplaceholder.typicode.com/albums/1'),
+      Uri.parse(apiUrl),
       headers: headers,
       // body: jsonEncode(user),
     );

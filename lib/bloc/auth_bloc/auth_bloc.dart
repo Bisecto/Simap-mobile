@@ -34,7 +34,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<FutureOr<void>> signInEventClick(
       SignInEventClick event, Emitter<AuthState> emit) async {
     emit(LoadingState());
-    String deviceId = await AppUtils.getId();
+    //String deviceId = await AppUtils.getId();
     Map<String, String> formData = {
       'username': event.userData,
       'password': event.password,
