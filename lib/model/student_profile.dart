@@ -1,111 +1,169 @@
+// To parse this JSON data, do
+//
+//     final studentProfile = studentProfileFromJson(jsonString);
+
+import 'dart:convert';
+
+StudentProfile studentProfileFromJson(String str) => StudentProfile.fromJson(json.decode(str));
+
+String studentProfileToJson(StudentProfile data) => json.encode(data.toJson());
+
 class StudentProfile {
-  String fullName;
-  String studentClass;
-  String registrationNumber;
-  String profileImage;
-  String gender;
-  DateTime dob;
-  String parentName;
-  String parentPhoneNumber;
-  String address;
-  String bloodGroup;
-  String genotype;
-  String fatherName;
-  String fatherOccupation;
+  int id;
+  String studentImage;
+  String studentFullname;
+  String parentGuardianName;
+  String occupation;
+  String guardianPhoneNumber;
+  String fatherContact;
+  String fathersName;
+  String fathersOccupation;
   String fatherReligion;
   String fatherAddress;
-  String motherName;
-  String motherOccupation;
-  String motherReligion;
-  String motherAddress;
-  String primarySchool;
+  String motherContact;
+  String mothersName;
+  String mothersOccupation;
+  String mothersReligion;
+  String mothersAddress;
+  dynamic mothersDayOfBirth;
+  dynamic mothersMonthOfBirth;
+  DateTime dateOfBirth;
+  String gender;
+  String religion;
+  String bloodGroup;
+  String genotype;
+  dynamic weight;
+  dynamic height;
+  String primaryClassAndSchoolAttended;
+  String address;
   String state;
+  dynamic localGovernment;
   String lga;
   String town;
-  DateTime lastUpdated;
+  bool viewAds;
+  DateTime updated;
+  int user;
+  int currentClass;
+  int currentSession;
+  int branch;
 
   StudentProfile({
-    required this.fullName,
-    required this.studentClass,
-    required this.registrationNumber,
-    required this.profileImage,
-    required this.gender,
-    required this.dob,
-    required this.parentName,
-    required this.parentPhoneNumber,
-    required this.address,
-    required this.bloodGroup,
-    required this.genotype,
-    required this.fatherName,
-    required this.fatherOccupation,
+    required this.id,
+    required this.studentImage,
+    required this.studentFullname,
+    required this.parentGuardianName,
+    required this.occupation,
+    required this.guardianPhoneNumber,
+    required this.fatherContact,
+    required this.fathersName,
+    required this.fathersOccupation,
     required this.fatherReligion,
     required this.fatherAddress,
-    required this.motherName,
-    required this.motherOccupation,
-    required this.motherReligion,
-    required this.motherAddress,
-    required this.primarySchool,
+    required this.motherContact,
+    required this.mothersName,
+    required this.mothersOccupation,
+    required this.mothersReligion,
+    required this.mothersAddress,
+    required this.mothersDayOfBirth,
+    required this.mothersMonthOfBirth,
+    required this.dateOfBirth,
+    required this.gender,
+    required this.religion,
+    required this.bloodGroup,
+    required this.genotype,
+    required this.weight,
+    required this.height,
+    required this.primaryClassAndSchoolAttended,
+    required this.address,
     required this.state,
+    required this.localGovernment,
     required this.lga,
     required this.town,
-    required this.lastUpdated,
+    required this.viewAds,
+    required this.updated,
+    required this.user,
+    required this.currentClass,
+    required this.currentSession,
+    required this.branch,
   });
 
-  factory StudentProfile.fromJson(Map<String, dynamic> json) {
-    return StudentProfile(
-      fullName: json['user']['student_fullname'],
-      studentClass: json['user']['current_class'].toString(),
-      registrationNumber: json['user']['id'].toString(),
-      profileImage: json['user']['student_image'],
-      gender: json['user']['gender'],
-      dob: DateTime.parse(json['user']['date_of_birth']),
-      parentName: json['user']['parent_guardian_name'],
-      parentPhoneNumber: json['user']['guardian_phone_number'],
-      address: json['user']['address'],
-      bloodGroup: json['user']['blood_group'],
-      genotype: json['user']['genotype'],
-      fatherName: json['user']['fathers_name'],
-      fatherOccupation: json['user']['fathers_occupation'],
-      fatherReligion: json['user']['father_religion'],
-      fatherAddress: json['user']['father_address'],
-      motherName: json['user']['mothers_name'],
-      motherOccupation: json['user']['mothers_occupation'],
-      motherReligion: json['user']['mothers_religion'],
-      motherAddress: json['user']['mothers_address'],
-      primarySchool: json['user']['primary_class_and_school_attended'],
-      state: json['user']['state'],
-      lga: json['user']['lga'],
-      town: json['user']['town'],
-      lastUpdated: DateTime.parse(json['user']['updated']),
-    );
-  }
+  factory StudentProfile.fromJson(Map<String, dynamic> json) => StudentProfile(
+    id: json["id"],
+    studentImage: json["student_image"],
+    studentFullname: json["student_fullname"],
+    parentGuardianName: json["parent_guardian_name"],
+    occupation: json["occupation"],
+    guardianPhoneNumber: json["guardian_phone_number"],
+    fatherContact: json["father_contact"],
+    fathersName: json["fathers_name"],
+    fathersOccupation: json["fathers_occupation"],
+    fatherReligion: json["father_religion"],
+    fatherAddress: json["father_address"],
+    motherContact: json["mother_contact"],
+    mothersName: json["mothers_name"],
+    mothersOccupation: json["mothers_occupation"],
+    mothersReligion: json["mothers_religion"],
+    mothersAddress: json["mothers_address"],
+    mothersDayOfBirth: json["mothers_day_of_birth"],
+    mothersMonthOfBirth: json["mothers_month_of_birth"],
+    dateOfBirth: DateTime.parse(json["date_of_birth"]),
+    gender: json["gender"],
+    religion: json["religion"],
+    bloodGroup: json["blood_group"],
+    genotype: json["genotype"],
+    weight: json["weight"],
+    height: json["height"],
+    primaryClassAndSchoolAttended: json["primary_class_and_school_attended"],
+    address: json["address"],
+    state: json["state"],
+    localGovernment: json["local_government"],
+    lga: json["lga"],
+    town: json["town"],
+    viewAds: json["view_ads"],
+    updated: DateTime.parse(json["updated"]),
+    user: json["user"],
+    currentClass: json["current_class"],
+    currentSession: json["current_session"],
+    branch: json["branch"],
+  );
 
-  Map<String, dynamic> toJson() {
-    return {
-      'fullName': fullName,
-      'studentClass': studentClass,
-      'registrationNumber': registrationNumber,
-      'profileImage': profileImage,
-      'gender': gender,
-      'dob': dob.toIso8601String(),
-      'parentName': parentName,
-      'parentPhoneNumber': parentPhoneNumber,
-      'address': address,
-      'bloodGroup': bloodGroup,
-      'genotype': genotype,
-      'fatherName': fatherName,
-      'fatherOccupation': fatherOccupation,
-      'fatherReligion': fatherReligion,
-      'fatherAddress': fatherAddress,
-      'motherName': motherName,
-      'motherOccupation': motherOccupation,
-      'motherReligion': motherReligion,
-      'motherAddress': motherAddress,
-      'primarySchool': primarySchool,
-      'state': state,
-      'lga': lga,
-      'town': town,
-      'lastUpdated': lastUpdated.toIso8601String(),
-    };
-  }
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "student_image": studentImage,
+    "student_fullname": studentFullname,
+    "parent_guardian_name": parentGuardianName,
+    "occupation": occupation,
+    "guardian_phone_number": guardianPhoneNumber,
+    "father_contact": fatherContact,
+    "fathers_name": fathersName,
+    "fathers_occupation": fathersOccupation,
+    "father_religion": fatherReligion,
+    "father_address": fatherAddress,
+    "mother_contact": motherContact,
+    "mothers_name": mothersName,
+    "mothers_occupation": mothersOccupation,
+    "mothers_religion": mothersReligion,
+    "mothers_address": mothersAddress,
+    "mothers_day_of_birth": mothersDayOfBirth,
+    "mothers_month_of_birth": mothersMonthOfBirth,
+    "date_of_birth": "${dateOfBirth.year.toString().padLeft(4, '0')}-${dateOfBirth.month.toString().padLeft(2, '0')}-${dateOfBirth.day.toString().padLeft(2, '0')}",
+    "gender": gender,
+    "religion": religion,
+    "blood_group": bloodGroup,
+    "genotype": genotype,
+    "weight": weight,
+    "height": height,
+    "primary_class_and_school_attended": primaryClassAndSchoolAttended,
+    "address": address,
+    "state": state,
+    "local_government": localGovernment,
+    "lga": lga,
+    "town": town,
+    "view_ads": viewAds,
+    "updated": updated.toIso8601String(),
+    "user": user,
+    "current_class": currentClass,
+    "current_session": currentSession,
+    "branch": branch,
+  };
 }

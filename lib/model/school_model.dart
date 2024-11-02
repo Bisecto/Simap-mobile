@@ -1,31 +1,33 @@
+// To parse this JSON data, do
+//
+//     final schoolModel = schoolModelFromJson(jsonString);
 
+import 'dart:convert';
+
+SchoolModel schoolModelFromJson(String str) => SchoolModel.fromJson(json.decode(str));
+
+String schoolModelToJson(SchoolModel data) => json.encode(data.toJson());
 
 class SchoolModel {
+  int id;
   String name;
-  String address;
-  String logoUrl;
-  String schoolBaseUrl;
+  String logo;
 
   SchoolModel({
+    required this.id,
     required this.name,
-    required this.address,
-    required this.logoUrl,
-    required this.schoolBaseUrl,
+    required this.logo,
   });
 
   factory SchoolModel.fromJson(Map<String, dynamic> json) => SchoolModel(
+    id: json["id"],
     name: json["name"],
-    address: json["address"],
-    logoUrl: json["logo_url"],
-    schoolBaseUrl: json["school_base_url"],
+    logo: json["logo"],
   );
 
   Map<String, dynamic> toJson() => {
+    "id": id,
     "name": name,
-    "address": address,
-    "logo_url": logoUrl,
-    "school_base_url": schoolBaseUrl,
+    "logo": logo,
   };
 }
-
-
