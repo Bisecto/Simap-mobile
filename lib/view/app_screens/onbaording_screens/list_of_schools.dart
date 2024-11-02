@@ -150,7 +150,7 @@ class _ListOfSchoolsState extends State<ListOfSchools> {
                               vertical: 4.0, horizontal: 8.0),
                           child: ListTile(
                             leading: Image.network(
-                              successResponse.listOfSchools[index - 1].logoUrl,
+                              successResponse.listOfSchools[index - 1].logo,
                               height: 40,
                               width: 40,
                             ),
