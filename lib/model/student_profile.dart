@@ -1,12 +1,4 @@
-// To parse this JSON data, do
-//
-//     final studentProfile = studentProfileFromJson(jsonString);
 
-import 'dart:convert';
-
-StudentProfile studentProfileFromJson(String str) => StudentProfile.fromJson(json.decode(str));
-
-String studentProfileToJson(StudentProfile data) => json.encode(data.toJson());
 
 class StudentProfile {
   int id;

@@ -1,12 +1,4 @@
-// To parse this JSON data, do
-//
-//     final schoolModel = schoolModelFromJson(jsonString);
 
-import 'dart:convert';
-
-SchoolModel schoolModelFromJson(String str) => SchoolModel.fromJson(json.decode(str));
-
-String schoolModelToJson(SchoolModel data) => json.encode(data.toJson());
 
 class SchoolModel {
   int id;
