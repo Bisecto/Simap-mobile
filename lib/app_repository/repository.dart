@@ -11,8 +11,8 @@ class AppRepository {
       Map<String, String> data, String apiUrl) async {
     final headers = {
       'Content-Type': 'application/json',
-      'Cookie':
-          'csrftoken=NxxWk8uudx18TvEsVgQzS8ArEeXGBfZO; sessionid=sd1e20jiuf512uqc9lwj9s8iueyo6muu',
+      // 'Cookie':
+      //     'csrftoken=NxxWk8uudx18TvEsVgQzS8ArEeXGBfZO; sessionid=sd1e20jiuf512uqc9lwj9s8iueyo6muu',
     };
 
     // Encode data as JSON
@@ -59,7 +59,7 @@ class AppRepository {
     AppUtils().debuglog(apiUrl);
     var headers = {
       'Authorization': 'JWT $token',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     };
     AppUtils().debuglog(headers);
     final response = await http.get(
@@ -68,9 +68,9 @@ class AppRepository {
       // body: jsonEncode(user),
     );
     AppUtils().debuglog(apiUrl + response.statusCode.toString());
+    AppUtils().debuglog(response.headers);
     AppUtils().debuglog(response.statusCode);
-    AppUtils().debuglog(response.statusCode);
-    AppUtils().debuglog(response.body);
+    //AppUtils().debuglog(response.body);
     return response;
   }
 }

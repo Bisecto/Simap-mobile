@@ -253,7 +253,7 @@ class _SignPageState extends State<SignPage> {
                                     FormButton(
                                       onPressed: () async {
                                         authBloc.add(SignInEventClick(
-                                            _schoolIdController.text,
+                                           'uhs',// _schoolIdController.text,
                                            'UHS20230200',
                                             'gabmbapass'));
                                         // AppNavigator.pushAndStackPage(context,

@@ -4,6 +4,12 @@ class SharedPreferenceKey {
   String schoolIdKey = 'schoolId';
   String studentUserNameKey = 'userName';
 
+  ///ACCESS TOKEN
+  String accessTokenKey = 'accessToken';
+  String refreshTokenKey = 'refreshToken';
+  String csrftokenKey = 'csrftoken';
+  String sessionIdKey = 'sessionId';
+
 // ///School Keys
 // String baseUrlKey = 'userPassword';
 // String appSchoolNameKey = 'appSchoolName';

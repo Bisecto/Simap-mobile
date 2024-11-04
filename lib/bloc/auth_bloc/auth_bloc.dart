@@ -6,6 +6,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:simap/model/school_model.dart';
+import 'package:simap/res/shared_preferenceKey.dart';
+import 'package:simap/utills/shared_preferences.dart';
 
 import '../../app_repository/repository.dart';
 import '../../model/student_profile.dart';
@@ -25,65 +28,70 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<RequestResetPasswordEventClick>(requestResetPasswordEventClick);
     on<OnVerifyOtpEvent>(onVerifyOtpEvent);
     on<ResetPasswordEventClick>(resetPasswordEventClick);
-    // on<FindMyEmailEventClick>(findMyEmailEventClick);
-    // on<AuthEvent>((event, emit) {
-    //   // TODO: implement event handler
-    // });
   }
 
   Future<FutureOr<void>> signInEventClick(
       SignInEventClick event, Emitter<AuthState> emit) async {
     emit(LoadingState());
-    //String deviceId = await AppUtils.getId();
     Map<String, String> formData = {
       'username': event.userData,
       'password': event.password,
     };
     AppUtils().debuglog(formData);
-    AppRepository appRepository=AppRepository();
-    // Map<String, String> data = {
-    //   'email': 'bursar11@gmail.com',
-    //   'password': 'bursar11',
-    // };
-    print(AppApis.http+event.schoolId+AppApis.loginStudent);
+    AppRepository appRepository = AppRepository();
+
+    print(AppApis.http + event.schoolId + AppApis.loginStudent);
     try {
-      // var response =
-      //     await appRepository.postRequest(formData, AppApis.http+event.schoolId+AppApis.appBaseUrl+AppApis.loginStudent);
-      final loginResponse =
-          await appRepository.postRequest(formData, AppApis.http+event.schoolId+AppApis.loginStudent);
+      final loginResponse = await appRepository.postRequest(
+          formData, AppApis.http + event.schoolId + AppApis.loginStudent);
 
       AppUtils().debuglog('Response status: ${loginResponse.statusCode}');
       AppUtils().debuglog('Response body: ${loginResponse.body}');
       AppUtils().debuglog(loginResponse.statusCode);
 
       AppUtils().debuglog(loginResponse.body);
+      AppUtils().debuglog("loginResponse.body");
+      AppUtils().debuglog(loginResponse.headers);
+
       if (loginResponse.statusCode == 200 || loginResponse.statusCode == 201) {
-        final profileResponse = await appRepository.getRequestWithToken(
+        SchoolModel schoolModel = SchoolModel.fromJson(
+            json.decode(loginResponse.body)['school'][0]);
+
+        await SharedPref.putString(
+            SharedPreferenceKey().schoolIdKey, event.schoolId);
+        await SharedPref.putString(SharedPreferenceKey().accessTokenKey,
+            json.decode(loginResponse.body)['access']);
+        await SharedPref.putString(SharedPreferenceKey().refreshTokenKey,
+            json.decode(loginResponse.body)['refresh']);
+
+        final studentDashboardResponse =
+            await appRepository.getRequestWithToken(
           json.decode(loginResponse.body)['access'],
-          'AppApis.studentProfile',
+          AppApis.http + event.schoolId + AppApis.dashboard,
         );
 
-        AppUtils()
-            .debuglog('Profile Response status: ${profileResponse.statusCode}');
-        AppUtils().debuglog('Profile Response body: ${profileResponse.body}');
+        AppUtils().debuglog(
+            'se status: ${json.decode(loginResponse.body)['access']}');
+        AppUtils().debuglog(
+            'Dashboard Response status: ${studentDashboardResponse.statusCode}');
+        //AppUtils().debuglog('Dashboard Response body: ${studentDashboardResponse.body}');
 
-        if (profileResponse.statusCode == 200 ||
-            profileResponse.statusCode == 201) {
-          AppUtils().debuglog(profileResponse.body);
-          StudentProfile studentProfile =
-              StudentProfile.fromJson(jsonDecode(AppTemData().studentProfile));
+        if (studentDashboardResponse.statusCode == 200 ||
+            studentDashboardResponse.statusCode == 201) {
+          //AppUtils().debuglog(studentDashboardResponse.body);
+          StudentProfile studentProfile = StudentProfile.fromJson(
+              json.decode(studentDashboardResponse.body)['current_data']['student']);
 
-          //if(studentProfile)
 
           AppUtils().debuglog(studentProfile);
           AppUtils().debuglog(studentProfile);
 
           emit(SuccessState("Login Successful", studentProfile));
-        } else if (profileResponse.statusCode == 401) {
+        } else if (studentDashboardResponse.statusCode == 401) {
           emit(AccessTokenExpireState());
         } else {
           emit(ErrorState(json.decode(loginResponse.body)['detail']));
-          AppUtils().debuglog(json.decode(loginResponse.body));
+          //AppUtils().debuglog(json.decode(loginResponse.body));
           emit(AuthInitial());
         }
       } else if (loginResponse.statusCode == 500 ||
