@@ -4,6 +4,7 @@ import 'package:simap/utills/app_utils.dart';
 import 'package:simap/view/app_screens/learn_section/learn_components/start_tutorial.dart';
 import 'package:simap/view/widgets/form_button.dart';
 
+import '../../../../model/class_model.dart';
 import '../../../../model/student_profile.dart';
 import '../../../../res/app_colors.dart';
 import '../../../widgets/appBar_widget.dart';
@@ -11,7 +12,9 @@ import '../../../widgets/app_custom_text.dart';
 
 class TutorialDetailPage extends StatefulWidget {
   StudentProfile studentProfile;
-   TutorialDetailPage({super.key,required this.studentProfile});
+  ClassModel classModel;
+
+  TutorialDetailPage({super.key,required this.studentProfile,required this.classModel});
 
   @override
   State<TutorialDetailPage> createState() => _TutorialDetailPageState();
@@ -29,7 +32,7 @@ class _TutorialDetailPageState extends State<TutorialDetailPage> {
           child: Column(
             children: [
                MainAppBar(
-                isBackKey: true,studentProfile: widget.studentProfile
+                isBackKey: true,studentProfile: widget.studentProfile, classModel: widget.classModel,
               ),
               Padding(
                 padding: const EdgeInsets.all(15.0),

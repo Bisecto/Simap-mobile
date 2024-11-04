@@ -6,6 +6,7 @@ import 'package:simap/view/app_screens/result_section/result_section_screens/ter
 import 'package:simap/view/app_screens/result_section/result_section_screens/term_list/term_list.dart';
 import 'package:simap/view/widgets/form_button.dart';
 
+import '../../../../model/class_model.dart';
 import '../../../../model/student_profile.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../utills/app_utils.dart';
@@ -17,8 +18,9 @@ class SingleSessionResult extends StatefulWidget {
   final bool isBackKey;
   StudentProfile studentProfile;
 
+  ClassModel classModel;
 
-   SingleSessionResult({super.key, required this.session, required this.isBackKey,required this.studentProfile});
+   SingleSessionResult({super.key, required this.session, required this.isBackKey,required this.studentProfile,required this.classModel});
 
   @override
   State<SingleSessionResult> createState() => _SingleSessionResultState();
@@ -37,7 +39,7 @@ class _SingleSessionResultState extends State<SingleSessionResult> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-               MainAppBar(isBackKey: widget.isBackKey,studentProfile: widget.studentProfile),
+               MainAppBar(isBackKey: widget.isBackKey,studentProfile: widget.studentProfile, classModel: widget.classModel,),
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: SingleChildScrollView(

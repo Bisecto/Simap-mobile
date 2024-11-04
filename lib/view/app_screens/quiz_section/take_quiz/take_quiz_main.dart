@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:simap/utills/app_utils.dart';
 import 'package:simap/view/app_screens/quiz_section/take_quiz/quiz_modal.dart';
 
+import '../../../../model/class_model.dart';
 import '../../../../model/student_profile.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../res/app_images.dart';
@@ -11,9 +12,10 @@ import '../../../widgets/app_custom_text.dart';
 class TakeQuizMain extends StatefulWidget {
   final String subject;
   StudentProfile studentProfile;
+  ClassModel classModel;
 
 
-   TakeQuizMain({super.key, required this.subject,required this.studentProfile});
+   TakeQuizMain({super.key, required this.subject,required this.studentProfile,required this.classModel});
 
   @override
   State<TakeQuizMain> createState() => _TakeQuizMainState();
@@ -31,7 +33,7 @@ class _TakeQuizMainState extends State<TakeQuizMain> {
           child: Column(
             children: [
                MainAppBar(
-                isBackKey: true,studentProfile: widget.studentProfile
+                isBackKey: true,studentProfile: widget.studentProfile, classModel: widget.classModel,
               ),
               Padding(
                 padding: const EdgeInsets.all(15.0),

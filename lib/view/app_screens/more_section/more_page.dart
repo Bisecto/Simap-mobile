@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:simap/model/class_model.dart';
 import 'package:simap/model/school_model.dart';
 import 'package:simap/model/student_profile.dart';
 import 'package:simap/res/app_images.dart';
@@ -22,7 +23,8 @@ import 'child_pages/performance/performance_page.dart';
 class MorePage extends StatefulWidget {
   StudentProfile studentProfile;
   SchoolModel schoolModel;
-   MorePage({super.key, required this.studentProfile,required this.schoolModel});
+  ClassModel classModel;
+   MorePage({super.key, required this.studentProfile,required this.schoolModel,required this.classModel});
 
   @override
   State<MorePage> createState() => _MorePageState();
@@ -82,7 +84,7 @@ class _MorePageState extends State<MorePage> {
               InkWell(
                 onTap: () {
                   AppNavigator.pushAndStackPage(context,
-                      page: const ProfilePage());
+                      page:  ProfilePage(studentProfile: widget.studentProfile, currentClass: widget.classModel,));
                 },
                 child: itemContainer(
                   Icons.perm_identity,
@@ -91,7 +93,7 @@ class _MorePageState extends State<MorePage> {
               ),
               InkWell(
                 onTap: () {
-                  AppNavigator.pushAndStackPage(context, page:  StorePage(studentProfile: widget.studentProfile,));
+                  AppNavigator.pushAndStackPage(context, page:  StorePage(studentProfile: widget.studentProfile, classModel: widget.classModel,));
                 },
                 child: itemContainer(
                   Icons.shopping_cart,
@@ -101,7 +103,7 @@ class _MorePageState extends State<MorePage> {
               InkWell(
                   onTap: () {
                     AppNavigator.pushAndStackPage(context,
-                        page:  PerformancePage(studentProfile: widget.studentProfile,));
+                        page:  PerformancePage(studentProfile: widget.studentProfile, classModel: widget.classModel,));
                   },
                   child: itemContainer(
                     Icons.pie_chart_outline,
@@ -109,7 +111,7 @@ class _MorePageState extends State<MorePage> {
                   )),
               InkWell(
                   onTap: () {
-                    AppNavigator.pushAndStackPage(context, page:  ResultPage(studentProfile: widget.studentProfile,));
+                    AppNavigator.pushAndStackPage(context, page:  ResultPage(studentProfile: widget.studentProfile, classModel: widget.classModel,));
                   },
                   child: itemContainer(
                     Icons.archive_outlined,
@@ -117,7 +119,7 @@ class _MorePageState extends State<MorePage> {
                   )),
               InkWell(
                 onTap: () {
-                  AppNavigator.pushAndStackPage(context, page:  LibraryPage(studentProfile: widget.studentProfile,));
+                  AppNavigator.pushAndStackPage(context, page:  LibraryPage(studentProfile: widget.studentProfile, classModel: widget.classModel,));
                 },
                 child: itemContainer(
                   Icons.menu_book_sharp,

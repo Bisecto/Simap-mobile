@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simap/model/class_model.dart';
 import 'package:simap/utills/app_navigator.dart';
 import 'package:simap/view/app_screens/learn_section/learn_components/tutorial_detail_page.dart';
 
@@ -12,15 +13,15 @@ class TutorialCard extends StatelessWidget {
 
 
   StudentProfile studentProfile;
-
+ClassModel classModel;
   TutorialCard(
-      {required this.title, required this.duration, required this.image,required this.studentProfile});
+      {required this.title, required this.duration, required this.image,required this.studentProfile,required this.classModel});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        AppNavigator.pushAndStackPage(context, page: TutorialDetailPage(studentProfile: studentProfile,));
+        AppNavigator.pushAndStackPage(context, page: TutorialDetailPage(studentProfile: studentProfile, classModel: classModel,));
       },
       child: Container(
         padding: const EdgeInsets.all(5),

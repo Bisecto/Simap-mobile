@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simap/model/class_model.dart';
 import 'package:simap/res/app_images.dart';
 import 'package:simap/utills/app_navigator.dart';
 import 'package:simap/utills/app_utils.dart';
@@ -9,8 +10,8 @@ import '../../../../res/app_colors.dart';
 
 class ListResultSession extends StatelessWidget {
   StudentProfile studentProfile;
-
-  ListResultSession({super.key, required this.studentProfile});
+ClassModel classModel;
+  ListResultSession({super.key, required this.studentProfile,required this.classModel});
 
   final List<String> sessions = [
     '2024/2025',
@@ -31,7 +32,7 @@ class ListResultSession extends StatelessWidget {
                   page: SingleSessionResult(
                     session: sessions[index],
                     isBackKey: true,
-                    studentProfile: studentProfile,
+                    studentProfile: studentProfile, classModel:classModel,
                   ));
             },
             child:

@@ -5,6 +5,7 @@ import 'package:simap/view/app_screens/store_section/store_containers/store_filt
 import 'package:simap/view/widgets/app_custom_text.dart';
 import 'package:simap/view/widgets/drop_down.dart';
 
+import '../../../model/class_model.dart';
 import '../../../model/student_profile.dart';
 import '../../../res/app_colors.dart';
 import '../../widgets/appBar_widget.dart';
@@ -12,8 +13,9 @@ import 'cart_page.dart';
 
 class StorePage extends StatefulWidget {
   StudentProfile studentProfile;
+  ClassModel classModel;
 
-  StorePage({required this.studentProfile});
+  StorePage({required this.studentProfile,required this.classModel});
 
   @override
   _StorePageState createState() => _StorePageState();
@@ -63,7 +65,7 @@ class _StorePageState extends State<StorePage> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => CartPage(
-        cartItems: cartItems, studentProfile: widget.studentProfile,)),
+        cartItems: cartItems, studentProfile: widget.studentProfile, classModel: widget.classModel,)),
     );
   }
 
@@ -80,7 +82,7 @@ class _StorePageState extends State<StorePage> {
               child: Column(
                 children: [
                   MainAppBar(
-                      isBackKey: true, studentProfile: widget.studentProfile
+                      isBackKey: true, studentProfile: widget.studentProfile, classModel: widget.classModel,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(15.0),

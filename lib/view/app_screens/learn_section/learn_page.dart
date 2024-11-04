@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:simap/model/student_profile.dart';
 import 'package:simap/view/app_screens/learn_section/learn_components/tutorial_list.dart';
 
+import '../../../model/class_model.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_images.dart';
 import '../../../utills/app_navigator.dart';
@@ -13,7 +14,9 @@ import '../quiz_section/available_quiz_subject.dart';
 
 class LearnPage extends StatefulWidget {
   StudentProfile studentProfile;
-   LearnPage({super.key,required this.studentProfile});
+  ClassModel classModel;
+
+  LearnPage({super.key,required this.studentProfile,required this.classModel});
 
   @override
   State<LearnPage> createState() => _LearnPageState();
@@ -30,7 +33,7 @@ class _LearnPageState extends State<LearnPage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                   MainAppBar(isBackKey: true,studentProfile: widget.studentProfile),
+                   MainAppBar(isBackKey: true,studentProfile: widget.studentProfile, classModel:  widget.classModel,),
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Column(
@@ -47,10 +50,10 @@ class _LearnPageState extends State<LearnPage> {
 
                         ...[
                           moreActionsContainer(AppImages.book, "Library", '40'),
-                          InkWell(onTap:(){AppNavigator.pushAndStackPage(context, page:  AvailableSubjects(studentProfile: widget.studentProfile,));},child: moreActionsContainer(AppImages.quiz, "Quiz", '5')),
+                          InkWell(onTap:(){AppNavigator.pushAndStackPage(context, page:  AvailableSubjects(studentProfile: widget.studentProfile, classModel: widget.classModel,));},child: moreActionsContainer(AppImages.quiz, "Quiz", '5')),
                           InkWell(
                             onTap: (){
-                              AppNavigator.pushAndStackPage(context, page:  AssignmentPage(studentProfile:widget.studentProfile,));
+                              AppNavigator.pushAndStackPage(context, page:  AssignmentPage(studentProfile:widget.studentProfile, classModel: widget.classModel,));
                             },
                             child: moreActionsContainer(
                                 AppImages.assignment, "Assignment", '2'),
@@ -59,7 +62,7 @@ class _LearnPageState extends State<LearnPage> {
                         const SizedBox(
                           height: 20,
                         ),
-                        TutorialListPage(studentProfile: widget.studentProfile,)
+                        TutorialListPage(studentProfile: widget.studentProfile, classModel: widget.classModel,)
 
                       ],
                     ),

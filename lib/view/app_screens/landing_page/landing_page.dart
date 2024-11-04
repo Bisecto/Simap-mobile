@@ -65,11 +65,11 @@ class _LandingPageState extends State<LandingPage> {
       SingleSessionResult(
         session: '2024/2024',
         isBackKey: false,
-        studentProfile: widget.studentProfile,
+        studentProfile: widget.studentProfile, classModel: widget.classModel,
       ),
       const GamesPage(),
       MorePage(
-        studentProfile: widget.studentProfile, schoolModel: widget.schoolModel,
+        studentProfile: widget.studentProfile, schoolModel: widget.schoolModel, classModel: widget.classModel,
       ),
     ];
     super.initState();

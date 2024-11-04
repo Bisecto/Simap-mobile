@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:simap/model/class_model.dart';
 import 'package:simap/model/student_profile.dart';
 import 'package:simap/res/app_colors.dart';
 import 'package:simap/res/shared_preferenceKey.dart';
@@ -14,9 +15,10 @@ import '../../res/app_images.dart';
 
 class MainAppBar extends StatefulWidget {
   StudentProfile studentProfile;
+  ClassModel classModel;
   final bool isBackKey;
 
-  MainAppBar({super.key, this.isBackKey = false, required this.studentProfile});
+  MainAppBar({super.key, this.isBackKey = false, required this.studentProfile,required this.classModel});
 
   @override
   State<MainAppBar> createState() => _MainAppBarState();
@@ -82,7 +84,7 @@ class _MainAppBarState extends State<MainAppBar> {
                 GestureDetector(
                   onTap: () {
                     AppNavigator.pushAndStackPage(context,
-                        page: const ProfilePage());
+                        page:  ProfilePage(studentProfile: widget.studentProfile, currentClass: widget.classModel,));
                   },
                   child: CircleAvatar(
                       backgroundColor: AppColors.mainAppColor,

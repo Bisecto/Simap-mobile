@@ -1,17 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:simap/model/class_model.dart';
+import 'package:simap/model/student_profile.dart';
 import 'package:simap/res/app_images.dart';
 
+import '../../../../res/apis.dart';
 import '../../../../res/app_colors.dart';
+import '../../../../res/shared_preferenceKey.dart';
+import '../../../../utills/shared_preferences.dart';
 import '../../../widgets/app_custom_text.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  StudentProfile studentProfile;
+  ClassModel currentClass;
+
+  ProfilePage(
+      {super.key, required this.studentProfile, required this.currentClass});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  String studentImage = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getSavedData();
+    super.initState();
+  }
+
+  getSavedData() async {
+    String schoolIdKey =
+        await SharedPref.getString(SharedPreferenceKey().schoolIdKey);
+    setState(() {
+      studentImage = AppApis.http +
+          schoolIdKey +
+          AppApis.appBaseUrl +
+          widget.studentProfile.studentImage;
+      print(studentImage);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,21 +69,22 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(
               height: 20,
             ),
-            const CircleAvatar(
+            CircleAvatar(
               radius: 70,
-              backgroundImage: AssetImage(AppImages.studentImage),
+              backgroundImage: NetworkImage(studentImage),
             ),
             const SizedBox(
               height: 10,
             ),
-            const CustomText(
-              text: 'Okafor',
+            CustomText(
+              text: widget.studentProfile.studentFullname.split(' ')[0],
               color: AppColors.black,
               weight: FontWeight.bold,
               size: 20,
             ),
-            const CustomText(
-              text: 'Precious Chiemerie',
+            CustomText(
+              text: widget.studentProfile.studentFullname.replaceAll(
+                  widget.studentProfile.studentFullname.split(' ')[0], ''),
               color: AppColors.textColor,
               weight: FontWeight.w400,
               size: 16,
@@ -61,14 +92,30 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(
               height: 20,
             ),
-            profileDetailContainer('Female',"Gender"),
-            profileDetailContainer('10th June, 2018',"Date Of Birth"),
-            profileDetailContainer('Class',"Primary 6A"),
+            profileDetailContainer(widget.studentProfile.gender, "Gender"),
+            profileDetailContainer(
+                widget.studentProfile.dateOfBirth, "Date Of Birth"),
+            profileDetailContainer(
+                widget.currentClass.className.className, "Class"),
+            profileDetailContainer(widget.studentProfile.lga, "LGA"),
+            profileDetailContainer(widget.studentProfile.town, "Town"),
+            profileDetailContainer(widget.studentProfile.state, "State"),
+            profileDetailContainer(widget.studentProfile.gender, "Gender"),
+            profileDetailContainer(
+                widget.studentProfile.parentGuardianName, "Guardian Name"),
+            profileDetailContainer(
+                widget.studentProfile.guardianPhoneNumber, "Guardian Phone"),
+            profileDetailContainer(
+                widget.studentProfile.bloodGroup, "Blood group"),
+            profileDetailContainer(widget.studentProfile.genotype, "Genotype"),
+            profileDetailContainer(
+                widget.currentClass.className.className, "Class"),
           ],
         ),
       )),
     );
   }
+
   Widget profileDetailContainer(title, sub) {
     return Padding(
       padding: const EdgeInsets.only(top: 10.0),
@@ -94,11 +141,9 @@ class _ProfilePageState extends State<ProfilePage> {
               color: AppColors.black,
               weight: FontWeight.bold,
             ),
-
           ],
         ),
       ),
     );
   }
-
 }

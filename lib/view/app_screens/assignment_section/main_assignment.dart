@@ -4,13 +4,16 @@ import 'package:simap/utills/app_utils.dart';
 import 'package:simap/view/app_screens/assignment_section/question_card.dart';
 import 'package:simap/view/widgets/form_button.dart';
 
+import '../../../model/class_model.dart';
 import '../../../model/student_profile.dart';
 import '../../widgets/appBar_widget.dart';
 import '../home_section/home_page_components/welcome_container.dart';
 
 class MainAssignmentPage extends StatefulWidget {
   StudentProfile studentProfile;
-  MainAssignmentPage({required this.studentProfile});
+  ClassModel classModel;
+
+  MainAssignmentPage({required this.studentProfile,required this.classModel});
 
   @override
   State<MainAssignmentPage> createState() => _MainAssignmentPageState();
@@ -57,7 +60,7 @@ class _MainAssignmentPageState extends State<MainAssignmentPage> {
           child: Column(
             children: [
               MainAppBar(
-                isBackKey: true, studentProfile: widget.studentProfile,
+                isBackKey: true, studentProfile: widget.studentProfile, classModel: widget.classModel,
               ),
               Padding(
                 padding: EdgeInsets.all(15.0),

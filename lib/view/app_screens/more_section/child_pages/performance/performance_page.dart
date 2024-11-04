@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:simap/model/student_profile.dart';
+import '../../../../../model/class_model.dart';
 import '../../../../../res/app_colors.dart';
 import '../../../../widgets/appBar_widget.dart';
 import '../../../home_section/home_page_components/welcome_container.dart';
@@ -8,7 +9,10 @@ import 'line_chart.dart';
 
 class PerformancePage extends StatefulWidget {
   StudentProfile studentProfile;
-   PerformancePage({super.key, required this.studentProfile});
+  ClassModel classModel;
+
+  PerformancePage(
+      {super.key, required this.studentProfile, required this.classModel});
 
   @override
   State<PerformancePage> createState() => _PerformancePageState();
@@ -24,8 +28,10 @@ class _PerformancePageState extends State<PerformancePage> {
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
-             MainAppBar(
-              isBackKey: true,studentProfile: widget.studentProfile
+            MainAppBar(
+              isBackKey: true,
+              studentProfile: widget.studentProfile,
+              classModel: widget.classModel,
             ),
             Padding(
               padding: const EdgeInsets.all(15.0),

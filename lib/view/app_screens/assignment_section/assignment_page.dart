@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:simap/res/app_icons.dart';
 import 'package:simap/utills/app_navigator.dart';
 
+import '../../../model/class_model.dart';
 import '../../../model/student_profile.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_images.dart';
@@ -13,8 +14,9 @@ import 'main_assignment.dart';
 
 class AssignmentPage extends StatefulWidget {
   StudentProfile studentProfile;
+  ClassModel classModel;
 
-  AssignmentPage({super.key, required this.studentProfile});
+  AssignmentPage({super.key, required this.studentProfile,required this.classModel});
 
   @override
   State<AssignmentPage> createState() => _AssignmentPageState();
@@ -33,7 +35,7 @@ class _AssignmentPageState extends State<AssignmentPage> {
             children: [
               MainAppBar(
                 isBackKey: true,
-                studentProfile: widget.studentProfile,
+                studentProfile: widget.studentProfile, classModel: widget.classModel,
               ),
               Padding(
                 padding: EdgeInsets.all(15.0),
@@ -71,7 +73,7 @@ class _AssignmentPageState extends State<AssignmentPage> {
         onTap: () {
           AppNavigator.pushAndStackPage(context,
               page: MainAssignmentPage(
-                studentProfile: widget.studentProfile,
+                studentProfile: widget.studentProfile, classModel: widget.classModel,
               ));
         },
         child: Container(

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:simap/model/class_model.dart';
 import 'package:simap/view/app_screens/learn_section/learn_components/tutorial_card.dart';
 
 import '../../../../model/student_profile.dart';
 
 class TutorialListPage extends StatelessWidget {
   StudentProfile studentProfile;
-  TutorialListPage({required this.studentProfile});
+  ClassModel classModel;
+  TutorialListPage({required this.studentProfile,required this.classModel});
 
   final List<Map<String, dynamic>> tutorials = [
     {
@@ -46,7 +48,7 @@ class TutorialListPage extends StatelessWidget {
             child: TutorialCard(
               title: tutorial["title"],
               duration: tutorial["duration"],
-              image: tutorial["image"], studentProfile: studentProfile,
+              image: tutorial["image"], studentProfile: studentProfile, classModel:classModel,
             ),
           );
         },

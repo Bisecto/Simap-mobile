@@ -19,7 +19,8 @@ import 'home_page_components/welcome_container.dart';
 class HomePage extends StatefulWidget {
   StudentProfile studentProfile;
   ClassModel classModel;
-  HomePage({super.key,required this.studentProfile,required this.classModel});
+
+  HomePage({super.key, required this.studentProfile, required this.classModel});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -36,16 +37,22 @@ class _HomePageState extends State<HomePage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-               MainAppBar( studentProfile: widget.studentProfile,),
+              MainAppBar(
+                studentProfile: widget.studentProfile,
+                classModel: widget.classModel,
+              ),
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                     WelcomeContainer(
+                    WelcomeContainer(
                       welcomeMsg: 'Welcome 👋',
-                      mainText: '${widget.studentProfile.studentFullname.split(' ')[0]}\n${widget.studentProfile.studentFullname.replaceAll(widget.studentProfile.studentFullname.split(' ')[0], '')}'.trim(),
-                      subText: 'You\'re in ${widget.classModel.className.className}',
+                      mainText:
+                          '${widget.studentProfile.studentFullname.split(' ')[0]}\n${widget.studentProfile.studentFullname.replaceAll(widget.studentProfile.studentFullname.split(' ')[0], '')}'
+                              .trim(),
+                      subText:
+                          'You\'re in ${widget.classModel.className.className}',
                     ),
                     const SizedBox(
                       height: 20,
@@ -56,12 +63,16 @@ class _HomePageState extends State<HomePage> {
                       weight: FontWeight.bold,
                       color: AppColors.black,
                     ),
-                     Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         GestureDetector(
-                          onTap:(){
-                            AppNavigator.pushAndStackPage(context, page:  LearnPage(studentProfile: widget.studentProfile,));
+                          onTap: () {
+                            AppNavigator.pushAndStackPage(context,
+                                page: LearnPage(
+                                  studentProfile: widget.studentProfile,
+                                  classModel: widget.classModel,
+                                ));
                           },
                           child: const QuickAccessContainer(
                             text: 'Learn',
@@ -73,8 +84,12 @@ class _HomePageState extends State<HomePage> {
                           img: AppImages.fees,
                         ),
                         GestureDetector(
-                          onTap: (){
-                            AppNavigator.pushAndStackPage(context, page: StorePage(studentProfile: widget.studentProfile,));
+                          onTap: () {
+                            AppNavigator.pushAndStackPage(context,
+                                page: StorePage(
+                                  studentProfile: widget.studentProfile,
+                                  classModel: widget.classModel,
+                                ));
                           },
                           child: const QuickAccessContainer(
                             text: 'Store',
@@ -82,9 +97,12 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         GestureDetector(
-                          onTap: (){
-                            AppNavigator.pushAndStackPage(context, page:  LibraryPage(studentProfile: widget.studentProfile,));
-
+                          onTap: () {
+                            AppNavigator.pushAndStackPage(context,
+                                page: LibraryPage(
+                                  studentProfile: widget.studentProfile,
+                                  classModel: widget.classModel,
+                                ));
                           },
                           child: const QuickAccessContainer(
                             text: 'Library',
@@ -108,10 +126,23 @@ class _HomePageState extends State<HomePage> {
                     ),
                     ...[
                       //moreActionsContainer(AppImages.book, "Library", '40'),
-                      InkWell(onTap:(){AppNavigator.pushAndStackPage(context, page:  AvailableSubjects(studentProfile: widget.studentProfile,));},child: moreActionsContainer(AppImages.quiz, "Quiz", '5')),
                       InkWell(
-                        onTap: (){
-                          AppNavigator.pushAndStackPage(context, page:  AssignmentPage(studentProfile: widget.studentProfile,));
+                          onTap: () {
+                            AppNavigator.pushAndStackPage(context,
+                                page: AvailableSubjects(
+                                  studentProfile: widget.studentProfile,
+                                  classModel: widget.classModel,
+                                ));
+                          },
+                          child: moreActionsContainer(
+                              AppImages.quiz, "Quiz", '5')),
+                      InkWell(
+                        onTap: () {
+                          AppNavigator.pushAndStackPage(context,
+                              page: AssignmentPage(
+                                studentProfile: widget.studentProfile,
+                                classModel: widget.classModel,
+                              ));
                         },
                         child: moreActionsContainer(
                             AppImages.assignment, "Assignment", '2'),
@@ -125,9 +156,12 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(
                         height: 5,
                       ),
-                      topPerformerChildContainer("Okafor precious","95",AppImages.goldMedal),
-                      topPerformerChildContainer("Okafor precious","85",AppImages.silverMedal),
-                      topPerformerChildContainer("Okafor precious","75",AppImages.bronzeMedal),
+                      topPerformerChildContainer(
+                          "Okafor precious", "95", AppImages.goldMedal),
+                      topPerformerChildContainer(
+                          "Okafor precious", "85", AppImages.silverMedal),
+                      topPerformerChildContainer(
+                          "Okafor precious", "75", AppImages.bronzeMedal),
                     ]
                   ],
                 ),
@@ -234,7 +268,8 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-  Widget topPerformerChildContainer( String text, String score,String medal) {
+
+  Widget topPerformerChildContainer(String text, String score, String medal) {
     return Padding(
       padding: const EdgeInsets.only(top: 10.0),
       child: Container(
@@ -260,7 +295,9 @@ class _HomePageState extends State<HomePage> {
                 CircleAvatar(
                   radius: 20,
                   backgroundColor: AppColors.textColor.withOpacity(0.3),
-                  backgroundImage: const AssetImage(AppImages.studentImage,),
+                  backgroundImage: const AssetImage(
+                    AppImages.studentImage,
+                  ),
                 ),
                 const SizedBox(
                   width: 10,
@@ -290,5 +327,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
 }
