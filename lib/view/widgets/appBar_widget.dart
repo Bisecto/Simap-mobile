@@ -16,28 +16,32 @@ class MainAppBar extends StatefulWidget {
   StudentProfile studentProfile;
   final bool isBackKey;
 
-   MainAppBar({super.key, this.isBackKey = false,required this.studentProfile});
+  MainAppBar({super.key, this.isBackKey = false, required this.studentProfile});
 
   @override
   State<MainAppBar> createState() => _MainAppBarState();
 }
 
 class _MainAppBarState extends State<MainAppBar> {
-  String studentImage='';
+  String studentImage = '';
+
   @override
   void initState() {
     // TODO: implement initState
     getSavedData();
     super.initState();
   }
+
   getSavedData() async {
-   String schoolIdKey=await SharedPref.getString(SharedPreferenceKey().schoolIdKey);
-   setState(() {
-     studentImage="${AppApis.http + schoolIdKey +widget.studentProfile.studentImage}";
-     print(studentImage);
-   });
-   
+    String schoolIdKey =
+        await SharedPref.getString(SharedPreferenceKey().schoolIdKey);
+    setState(() {
+      studentImage =
+          "${AppApis.http + schoolIdKey + AppApis.appBaseUrl + widget.studentProfile.studentImage}";
+      print(studentImage);
+    });
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -80,10 +84,11 @@ class _MainAppBarState extends State<MainAppBar> {
                     AppNavigator.pushAndStackPage(context,
                         page: const ProfilePage());
                   },
-                  child:  CircleAvatar(
-                    backgroundColor: AppColors.mainAppColor,
-                    backgroundImage: NetworkImage(widget.studentProfile.studentImage)//AssetImage(AppImages.person),
-                  ),
+                  child: CircleAvatar(
+                      backgroundColor: AppColors.mainAppColor,
+                      backgroundImage: NetworkImage(
+                          studentImage) //AssetImage(AppImages.person),
+                      ),
                 )
               ],
             )
