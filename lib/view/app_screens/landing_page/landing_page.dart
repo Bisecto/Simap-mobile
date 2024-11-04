@@ -69,7 +69,7 @@ class _LandingPageState extends State<LandingPage> {
       ),
       const GamesPage(),
       MorePage(
-        studentProfile: widget.studentProfile,
+        studentProfile: widget.studentProfile, schoolModel: widget.schoolModel,
       ),
     ];
     super.initState();

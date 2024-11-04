@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:simap/model/school_model.dart';
 import 'package:simap/model/student_profile.dart';
 import 'package:simap/res/app_images.dart';
 import 'package:simap/view/app_screens/auth/sign_page.dart';
@@ -7,21 +10,44 @@ import 'package:simap/view/app_screens/more_section/child_pages/profile_page.dar
 import 'package:simap/view/app_screens/onbaording_screens/setup.dart';
 import 'package:simap/view/app_screens/store_section/store_page.dart';
 
+import '../../../res/apis.dart';
 import '../../../res/app_colors.dart';
+import '../../../res/shared_preferenceKey.dart';
 import '../../../utills/app_navigator.dart';
+import '../../../utills/shared_preferences.dart';
 import '../../widgets/app_custom_text.dart';
 import '../result_section/result_page.dart';
 import 'child_pages/performance/performance_page.dart';
 
 class MorePage extends StatefulWidget {
   StudentProfile studentProfile;
-   MorePage({super.key, required this.studentProfile});
+  SchoolModel schoolModel;
+   MorePage({super.key, required this.studentProfile,required this.schoolModel});
 
   @override
   State<MorePage> createState() => _MorePageState();
 }
 
 class _MorePageState extends State<MorePage> {
+  String logo = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getSavedData();
+    super.initState();
+  }
+
+  getSavedData() async {
+    String schoolIdKey =
+    await SharedPref.getString(SharedPreferenceKey().schoolIdKey);
+    setState(() {
+      logo =
+      AppApis.http + schoolIdKey + AppApis.appBaseUrl + widget.schoolModel.logo;
+      print(logo);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,16 +63,18 @@ class _MorePageState extends State<MorePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      AppImages.logo,
+                    Image.network(
+                      logo,
                       height: 100,
                       width: 100,
                     ),
-                    const CustomText(
-                      text: 'Nnamdi Azikiwe High School',
+                     CustomText(
+                      text:widget.schoolModel.name,
                       size: 18,
+                      maxLines: 3,
                       weight: FontWeight.bold,
                       color: AppColors.black,
+                       textAlign: TextAlign.center,
                     ),
                   ],
                 ),
