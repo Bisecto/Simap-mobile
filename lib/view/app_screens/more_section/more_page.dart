@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simap/model/student_profile.dart';
 import 'package:simap/res/app_images.dart';
 import 'package:simap/view/app_screens/auth/sign_page.dart';
 import 'package:simap/view/app_screens/library_section/library_page.dart';
@@ -13,7 +14,8 @@ import '../result_section/result_page.dart';
 import 'child_pages/performance/performance_page.dart';
 
 class MorePage extends StatefulWidget {
-  const MorePage({super.key});
+  StudentProfile studentProfile;
+   MorePage({super.key, required this.studentProfile});
 
   @override
   State<MorePage> createState() => _MorePageState();
@@ -61,7 +63,7 @@ class _MorePageState extends State<MorePage> {
               ),
               InkWell(
                 onTap: () {
-                  AppNavigator.pushAndStackPage(context, page:  StorePage());
+                  AppNavigator.pushAndStackPage(context, page:  StorePage(studentProfile: widget.studentProfile,));
                 },
                 child: itemContainer(
                   Icons.shopping_cart,
@@ -71,7 +73,7 @@ class _MorePageState extends State<MorePage> {
               InkWell(
                   onTap: () {
                     AppNavigator.pushAndStackPage(context,
-                        page: const PerformancePage());
+                        page:  PerformancePage(studentProfile: widget.studentProfile,));
                   },
                   child: itemContainer(
                     Icons.pie_chart_outline,
@@ -79,7 +81,7 @@ class _MorePageState extends State<MorePage> {
                   )),
               InkWell(
                   onTap: () {
-                    AppNavigator.pushAndStackPage(context, page: const ResultPage());
+                    AppNavigator.pushAndStackPage(context, page:  ResultPage(studentProfile: widget.studentProfile,));
                   },
                   child: itemContainer(
                     Icons.archive_outlined,
@@ -87,7 +89,7 @@ class _MorePageState extends State<MorePage> {
                   )),
               InkWell(
                 onTap: () {
-                  AppNavigator.pushAndStackPage(context, page: const LibraryPage());
+                  AppNavigator.pushAndStackPage(context, page:  LibraryPage(studentProfile: widget.studentProfile,));
                 },
                 child: itemContainer(
                   Icons.menu_book_sharp,

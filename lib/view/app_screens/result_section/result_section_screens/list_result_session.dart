@@ -4,10 +4,13 @@ import 'package:simap/utills/app_navigator.dart';
 import 'package:simap/utills/app_utils.dart';
 import 'package:simap/view/app_screens/result_section/result_section_screens/single_session_result.dart';
 
+import '../../../../model/student_profile.dart';
 import '../../../../res/app_colors.dart';
 
 class ListResultSession extends StatelessWidget {
-  ListResultSession({super.key});
+  StudentProfile studentProfile;
+
+  ListResultSession({super.key, required this.studentProfile});
 
   final List<String> sessions = [
     '2024/2025',
@@ -22,11 +25,17 @@ class ListResultSession extends StatelessWidget {
       itemCount: sessions.length,
       padding: EdgeInsets.zero,
       itemBuilder: (context, index) {
-        return GestureDetector(onTap: () {
-          AppNavigator.pushAndStackPage(context, page: SingleSessionResult(session: sessions[index], isBackKey: true,
-
-          ));
-        }, child: SessionContainer(session: sessions[index], context: context));
+        return GestureDetector(
+            onTap: () {
+              AppNavigator.pushAndStackPage(context,
+                  page: SingleSessionResult(
+                    session: sessions[index],
+                    isBackKey: true,
+                    studentProfile: studentProfile,
+                  ));
+            },
+            child:
+                SessionContainer(session: sessions[index], context: context));
       },
     );
   }
@@ -55,9 +64,7 @@ class ListResultSession extends StatelessWidget {
             children: [
               Container(
                 height: 190,
-                width: AppUtils
-                    .deviceScreenSize(context)
-                    .width,
+                width: AppUtils.deviceScreenSize(context).width,
                 decoration: BoxDecoration(
                   color: AppColors.quickAccessContainerColor,
                   boxShadow: [
@@ -71,7 +78,10 @@ class ListResultSession extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Image.asset(
-                  AppImages.testPassed, height: 150, width: 150,),
+                  AppImages.testPassed,
+                  height: 150,
+                  width: 150,
+                ),
               ),
               Text(
                 session,

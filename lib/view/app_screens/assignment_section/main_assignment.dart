@@ -4,10 +4,19 @@ import 'package:simap/utills/app_utils.dart';
 import 'package:simap/view/app_screens/assignment_section/question_card.dart';
 import 'package:simap/view/widgets/form_button.dart';
 
+import '../../../model/student_profile.dart';
 import '../../widgets/appBar_widget.dart';
 import '../home_section/home_page_components/welcome_container.dart';
 
-class MainAssignmentPage extends StatelessWidget {
+class MainAssignmentPage extends StatefulWidget {
+  StudentProfile studentProfile;
+  MainAssignmentPage({required this.studentProfile});
+
+  @override
+  State<MainAssignmentPage> createState() => _MainAssignmentPageState();
+}
+
+class _MainAssignmentPageState extends State<MainAssignmentPage> {
   final List<Map<String, dynamic>> quizData = [
     {
       "question": "What is the value of 2^3 + 5?",
@@ -48,7 +57,7 @@ class MainAssignmentPage extends StatelessWidget {
           child: Column(
             children: [
               MainAppBar(
-                isBackKey: true,
+                isBackKey: true, studentProfile: widget.studentProfile,
               ),
               Padding(
                 padding: EdgeInsets.all(15.0),

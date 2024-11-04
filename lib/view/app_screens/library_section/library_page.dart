@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simap/model/student_profile.dart';
 import 'package:simap/view/app_screens/library_section/library_components/book_list.dart';
 
 import '../../../utills/app_utils.dart';
@@ -6,7 +7,8 @@ import '../../widgets/appBar_widget.dart';
 import '../../widgets/drop_down.dart';
 
 class LibraryPage extends StatefulWidget {
-  const LibraryPage({super.key});
+  StudentProfile studentProfile;
+   LibraryPage({super.key, required this.studentProfile});
 
   @override
   State<LibraryPage> createState() => _LibraryPageState();
@@ -26,8 +28,8 @@ class _LibraryPageState extends State<LibraryPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const MainAppBar(
-                isBackKey: true,
+               MainAppBar(
+                isBackKey: true,studentProfile: widget.studentProfile
               ),
               Padding(
                 padding: const EdgeInsets.all(15.0),

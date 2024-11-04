@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:simap/utills/app_navigator.dart';
 import 'package:simap/view/app_screens/learn_section/learn_components/tutorial_detail_page.dart';
 
+import '../../../../model/student_profile.dart';
 import '../../../../res/app_colors.dart';
 
 class TutorialCard extends StatelessWidget {
@@ -9,14 +10,17 @@ class TutorialCard extends StatelessWidget {
   final String duration;
   final String image;
 
+
+  StudentProfile studentProfile;
+
   TutorialCard(
-      {required this.title, required this.duration, required this.image});
+      {required this.title, required this.duration, required this.image,required this.studentProfile});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        AppNavigator.pushAndStackPage(context, page: TutorialDetailPage());
+        AppNavigator.pushAndStackPage(context, page: TutorialDetailPage(studentProfile: studentProfile,));
       },
       child: Container(
         padding: const EdgeInsets.all(5),

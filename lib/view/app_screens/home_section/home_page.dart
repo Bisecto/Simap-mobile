@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const MainAppBar(),
+               MainAppBar( studentProfile: widget.studentProfile,),
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Column(
@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         GestureDetector(
                           onTap:(){
-                            AppNavigator.pushAndStackPage(context, page: const LearnPage());
+                            AppNavigator.pushAndStackPage(context, page:  LearnPage(studentProfile: widget.studentProfile,));
                           },
                           child: const QuickAccessContainer(
                             text: 'Learn',
@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         GestureDetector(
                           onTap: (){
-                            AppNavigator.pushAndStackPage(context, page: StorePage());
+                            AppNavigator.pushAndStackPage(context, page: StorePage(studentProfile: widget.studentProfile,));
                           },
                           child: const QuickAccessContainer(
                             text: 'Store',
@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         GestureDetector(
                           onTap: (){
-                            AppNavigator.pushAndStackPage(context, page: const LibraryPage());
+                            AppNavigator.pushAndStackPage(context, page:  LibraryPage(studentProfile: widget.studentProfile,));
 
                           },
                           child: const QuickAccessContainer(
@@ -108,10 +108,10 @@ class _HomePageState extends State<HomePage> {
                     ),
                     ...[
                       //moreActionsContainer(AppImages.book, "Library", '40'),
-                      InkWell(onTap:(){AppNavigator.pushAndStackPage(context, page: const AvailableSubjects());},child: moreActionsContainer(AppImages.quiz, "Quiz", '5')),
+                      InkWell(onTap:(){AppNavigator.pushAndStackPage(context, page:  AvailableSubjects(studentProfile: widget.studentProfile,));},child: moreActionsContainer(AppImages.quiz, "Quiz", '5')),
                       InkWell(
                         onTap: (){
-                          AppNavigator.pushAndStackPage(context, page: const AssignmentPage());
+                          AppNavigator.pushAndStackPage(context, page:  AssignmentPage(studentProfile: widget.studentProfile,));
                         },
                         child: moreActionsContainer(
                             AppImages.assignment, "Assignment", '2'),

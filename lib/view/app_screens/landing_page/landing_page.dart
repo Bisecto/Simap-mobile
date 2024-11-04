@@ -29,13 +29,15 @@ class LandingPage extends StatefulWidget {
   List<Subject> subjectList;
   SchoolModel schoolModel;
   ClassModel classModel;
+
   LandingPage(
       {super.key,
       required this.selectedIndex,
       required this.subjectList,
       required this.schoolModel,
       required this.sessionModel,
-      required this.studentProfile,required this.classModel});
+      required this.studentProfile,
+      required this.classModel});
 
   @override
   State<LandingPage> createState() => _LandingPageState();
@@ -56,13 +58,19 @@ class _LandingPageState extends State<LandingPage> {
     //topicInitialization();
 
     views = [
-       HomePage(studentProfile: widget.studentProfile, classModel: widget.classModel,),
-      const SingleSessionResult(
+      HomePage(
+        studentProfile: widget.studentProfile,
+        classModel: widget.classModel,
+      ),
+      SingleSessionResult(
         session: '2024/2024',
         isBackKey: false,
+        studentProfile: widget.studentProfile,
       ),
       const GamesPage(),
-      const MorePage(),
+      MorePage(
+        studentProfile: widget.studentProfile,
+      ),
     ];
     super.initState();
   }

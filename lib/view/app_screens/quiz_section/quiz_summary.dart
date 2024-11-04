@@ -6,12 +6,15 @@ import 'package:simap/view/app_screens/quiz_section/take_quiz/take_quiz_main.dar
 import 'package:simap/view/widgets/app_custom_text.dart';
 import 'package:simap/view/widgets/form_button.dart';
 
+import '../../../model/student_profile.dart';
 import '../../widgets/appBar_widget.dart';
 
 class QuizSummary extends StatefulWidget {
   final String subject;
+  StudentProfile studentProfile;
 
-  const QuizSummary({super.key, required this.subject});
+
+   QuizSummary({super.key, required this.subject,required this.studentProfile});
 
   @override
   State<QuizSummary> createState() => _QuizSummaryState();
@@ -28,8 +31,8 @@ class _QuizSummaryState extends State<QuizSummary> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const MainAppBar(
-                isBackKey: true,
+               MainAppBar(
+                isBackKey: true,studentProfile: widget.studentProfile
               ),
               Padding(
                 padding: const EdgeInsets.all(15.0),
@@ -106,7 +109,7 @@ class _QuizSummaryState extends State<QuizSummary> {
                       ),
                       FormButton(
                         onPressed: () {
-                          AppNavigator.pushAndStackPage(context, page: TakeQuizMain(subject: widget.subject,));
+                          AppNavigator.pushAndStackPage(context, page: TakeQuizMain(subject: widget.subject, studentProfile: widget.studentProfile,));
                         },
                         text: "Take Quiz",
                         bgColor: AppColors.mainAppColor,

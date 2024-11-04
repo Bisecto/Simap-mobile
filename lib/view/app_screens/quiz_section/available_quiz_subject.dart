@@ -4,6 +4,7 @@ import 'package:simap/res/app_icons.dart';
 import 'package:simap/utills/app_navigator.dart';
 import 'package:simap/view/app_screens/quiz_section/quiz_summary.dart';
 
+import '../../../model/student_profile.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_images.dart';
 import '../../widgets/appBar_widget.dart';
@@ -11,7 +12,9 @@ import '../../widgets/app_custom_text.dart';
 import '../home_section/home_page_components/welcome_container.dart';
 
 class AvailableSubjects extends StatefulWidget {
-  const AvailableSubjects({super.key});
+  StudentProfile studentProfile;
+
+   AvailableSubjects({super.key,required this.studentProfile});
 
   @override
   State<AvailableSubjects> createState() => _AvailableSubjectsState();
@@ -29,7 +32,7 @@ class _AvailableSubjectsState extends State<AvailableSubjects> {
           child: Column(
             children: [
               MainAppBar(
-                isBackKey: true,
+                isBackKey: true,studentProfile: widget.studentProfile
               ),
               Padding(
                 padding: EdgeInsets.all(15.0),
@@ -65,7 +68,7 @@ class _AvailableSubjectsState extends State<AvailableSubjects> {
       padding: const EdgeInsets.only(top: 10.0),
       child: GestureDetector(
         onTap: () {
-          AppNavigator.pushAndStackPage(context, page: QuizSummary(subject: subject,));
+          AppNavigator.pushAndStackPage(context, page: QuizSummary(subject: subject, studentProfile: widget.studentProfile,));
         },
         child: Container(
           height: 100,

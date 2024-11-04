@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:simap/view/app_screens/learn_section/learn_components/tutorial_card.dart';
 
+import '../../../../model/student_profile.dart';
+
 class TutorialListPage extends StatelessWidget {
+  StudentProfile studentProfile;
+  TutorialListPage({required this.studentProfile});
+
   final List<Map<String, dynamic>> tutorials = [
     {
       "title": "Arithmetic and Quantitative Reasoning",
@@ -41,7 +46,7 @@ class TutorialListPage extends StatelessWidget {
             child: TutorialCard(
               title: tutorial["title"],
               duration: tutorial["duration"],
-              image: tutorial["image"],
+              image: tutorial["image"], studentProfile: studentProfile,
             ),
           );
         },

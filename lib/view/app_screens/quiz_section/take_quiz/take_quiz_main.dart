@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:simap/utills/app_utils.dart';
 import 'package:simap/view/app_screens/quiz_section/take_quiz/quiz_modal.dart';
 
+import '../../../../model/student_profile.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../res/app_images.dart';
 import '../../../widgets/appBar_widget.dart';
@@ -9,8 +10,10 @@ import '../../../widgets/app_custom_text.dart';
 
 class TakeQuizMain extends StatefulWidget {
   final String subject;
+  StudentProfile studentProfile;
 
-  const TakeQuizMain({super.key, required this.subject});
+
+   TakeQuizMain({super.key, required this.subject,required this.studentProfile});
 
   @override
   State<TakeQuizMain> createState() => _TakeQuizMainState();
@@ -27,8 +30,8 @@ class _TakeQuizMainState extends State<TakeQuizMain> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const MainAppBar(
-                isBackKey: true,
+               MainAppBar(
+                isBackKey: true,studentProfile: widget.studentProfile
               ),
               Padding(
                 padding: const EdgeInsets.all(15.0),

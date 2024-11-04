@@ -1,12 +1,14 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:simap/model/student_profile.dart';
 import '../../../../../res/app_colors.dart';
 import '../../../../widgets/appBar_widget.dart';
 import '../../../home_section/home_page_components/welcome_container.dart';
 import 'line_chart.dart';
 
 class PerformancePage extends StatefulWidget {
-  const PerformancePage({super.key});
+  StudentProfile studentProfile;
+   PerformancePage({super.key, required this.studentProfile});
 
   @override
   State<PerformancePage> createState() => _PerformancePageState();
@@ -22,8 +24,8 @@ class _PerformancePageState extends State<PerformancePage> {
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: [
-            const MainAppBar(
-              isBackKey: true,
+             MainAppBar(
+              isBackKey: true,studentProfile: widget.studentProfile
             ),
             Padding(
               padding: const EdgeInsets.all(15.0),

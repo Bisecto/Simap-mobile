@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:simap/res/app_icons.dart';
 import 'package:simap/utills/app_navigator.dart';
 
+import '../../../model/student_profile.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_images.dart';
 import '../../widgets/appBar_widget.dart';
@@ -11,7 +12,9 @@ import '../home_section/home_page_components/welcome_container.dart';
 import 'main_assignment.dart';
 
 class AssignmentPage extends StatefulWidget {
-  const AssignmentPage({super.key});
+  StudentProfile studentProfile;
+
+  AssignmentPage({super.key, required this.studentProfile});
 
   @override
   State<AssignmentPage> createState() => _AssignmentPageState();
@@ -20,7 +23,7 @@ class AssignmentPage extends StatefulWidget {
 class _AssignmentPageState extends State<AssignmentPage> {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: Color(0xFFFCFCFC),
       body: SafeArea(
           child: Padding(
@@ -30,6 +33,7 @@ class _AssignmentPageState extends State<AssignmentPage> {
             children: [
               MainAppBar(
                 isBackKey: true,
+                studentProfile: widget.studentProfile,
               ),
               Padding(
                 padding: EdgeInsets.all(15.0),
@@ -64,8 +68,12 @@ class _AssignmentPageState extends State<AssignmentPage> {
     return Padding(
       padding: const EdgeInsets.only(top: 10.0),
       child: GestureDetector(
-        onTap: (){AppNavigator.pushAndStackPage(context, page: MainAssignmentPage(
-        ));},
+        onTap: () {
+          AppNavigator.pushAndStackPage(context,
+              page: MainAssignmentPage(
+                studentProfile: widget.studentProfile,
+              ));
+        },
         child: Container(
           height: 100,
           padding: const EdgeInsets.all(10),
@@ -78,7 +86,7 @@ class _AssignmentPageState extends State<AssignmentPage> {
                 offset: const Offset(0, 4),
               ),
             ],
-            color:  AppColors.white,
+            color: AppColors.white,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(

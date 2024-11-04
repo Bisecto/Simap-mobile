@@ -4,13 +4,20 @@ import 'package:simap/utills/app_utils.dart';
 import 'package:simap/view/app_screens/learn_section/learn_components/start_tutorial.dart';
 import 'package:simap/view/widgets/form_button.dart';
 
+import '../../../../model/student_profile.dart';
 import '../../../../res/app_colors.dart';
 import '../../../widgets/appBar_widget.dart';
 import '../../../widgets/app_custom_text.dart';
 
-class TutorialDetailPage extends StatelessWidget {
-  const TutorialDetailPage({super.key});
+class TutorialDetailPage extends StatefulWidget {
+  StudentProfile studentProfile;
+   TutorialDetailPage({super.key,required this.studentProfile});
 
+  @override
+  State<TutorialDetailPage> createState() => _TutorialDetailPageState();
+}
+
+class _TutorialDetailPageState extends State<TutorialDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,8 +28,8 @@ class TutorialDetailPage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const MainAppBar(
-                isBackKey: true,
+               MainAppBar(
+                isBackKey: true,studentProfile: widget.studentProfile
               ),
               Padding(
                 padding: const EdgeInsets.all(15.0),

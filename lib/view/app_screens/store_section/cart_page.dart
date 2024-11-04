@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../model/student_profile.dart';
 import '../../../res/app_colors.dart';
 import '../../../utills/app_utils.dart';
 import '../../widgets/appBar_widget.dart';
@@ -7,8 +8,10 @@ import '../../widgets/app_custom_text.dart';
 
 class CartPage extends StatefulWidget {
   final List<Map<String, dynamic>> cartItems;
+  StudentProfile studentProfile;
 
-  const CartPage({super.key, required this.cartItems});
+
+   CartPage({super.key, required this.cartItems,required this.studentProfile});
 
   @override
   State<CartPage> createState() => _CartPageState();
@@ -25,8 +28,8 @@ class _CartPageState extends State<CartPage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  const MainAppBar(
-                    isBackKey: true,
+                   MainAppBar(
+                    isBackKey: true,studentProfile: widget.studentProfile
                   ),
                   Padding(
                     padding: const EdgeInsets.all(15.0),

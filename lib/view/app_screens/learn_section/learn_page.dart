@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simap/model/student_profile.dart';
 import 'package:simap/view/app_screens/learn_section/learn_components/tutorial_list.dart';
 
 import '../../../res/app_colors.dart';
@@ -11,7 +12,8 @@ import '../home_section/home_page_components/welcome_container.dart';
 import '../quiz_section/available_quiz_subject.dart';
 
 class LearnPage extends StatefulWidget {
-  const LearnPage({super.key});
+  StudentProfile studentProfile;
+   LearnPage({super.key,required this.studentProfile});
 
   @override
   State<LearnPage> createState() => _LearnPageState();
@@ -28,7 +30,7 @@ class _LearnPageState extends State<LearnPage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  const MainAppBar(isBackKey: true,),
+                   MainAppBar(isBackKey: true,studentProfile: widget.studentProfile),
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Column(
@@ -45,10 +47,10 @@ class _LearnPageState extends State<LearnPage> {
 
                         ...[
                           moreActionsContainer(AppImages.book, "Library", '40'),
-                          InkWell(onTap:(){AppNavigator.pushAndStackPage(context, page: const AvailableSubjects());},child: moreActionsContainer(AppImages.quiz, "Quiz", '5')),
+                          InkWell(onTap:(){AppNavigator.pushAndStackPage(context, page:  AvailableSubjects(studentProfile: widget.studentProfile,));},child: moreActionsContainer(AppImages.quiz, "Quiz", '5')),
                           InkWell(
                             onTap: (){
-                              AppNavigator.pushAndStackPage(context, page: const AssignmentPage());
+                              AppNavigator.pushAndStackPage(context, page:  AssignmentPage(studentProfile:widget.studentProfile,));
                             },
                             child: moreActionsContainer(
                                 AppImages.assignment, "Assignment", '2'),
@@ -57,7 +59,7 @@ class _LearnPageState extends State<LearnPage> {
                         const SizedBox(
                           height: 20,
                         ),
-                        TutorialListPage()
+                        TutorialListPage(studentProfile: widget.studentProfile,)
 
                       ],
                     ),
