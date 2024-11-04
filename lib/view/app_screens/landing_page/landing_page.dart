@@ -25,7 +25,7 @@ import '../result_section/result_section_screens/single_session_result.dart';
 class LandingPage extends StatefulWidget {
   int selectedIndex;
   StudentProfile studentProfile;
-  SessionModel sessionModel;
+  CurrentSessionModel sessionModel;
   List<Subject> subjectList;
   SchoolModel schoolModel;
   ClassModel classModel;

@@ -1,13 +1,13 @@
 
 
-class SessionModel {
+class CurrentSessionModel {
   int id;
   String session;
   String sessionSlug;
   bool activeSession;
   int branch;
 
-  SessionModel({
+  CurrentSessionModel({
     required this.id,
     required this.session,
     required this.sessionSlug,
@@ -15,7 +15,7 @@ class SessionModel {
     required this.branch,
   });
 
-  factory SessionModel.fromJson(Map<String, dynamic> json) => SessionModel(
+  factory CurrentSessionModel.fromJson(Map<String, dynamic> json) => CurrentSessionModel(
     id: json["id"],
     session: json["session"],
     sessionSlug: json["session_slug"],

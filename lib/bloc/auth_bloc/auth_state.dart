@@ -30,7 +30,7 @@ class SuccessState extends AuthState {
   final StudentProfile studentProfile;
   final SchoolModel schoolModel;
   final List<Subject> subjectList;
-  final SessionModel sessionModel;
+  final CurrentSessionModel sessionModel;
   final ClassModel classModel;
 
   SuccessState(this.msg, this.studentProfile, this.schoolModel,

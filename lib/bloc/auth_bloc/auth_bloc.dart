@@ -86,7 +86,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         ClassModel classModel = ClassModel.fromJson(
             json.decode(studentDashboardResponse.body)['current_data']
                 ['current_class']);
-        SessionModel sessionModel = SessionModel.fromJson(json
+        CurrentSessionModel sessionModel = CurrentSessionModel.fromJson(json
             .decode(studentDashboardResponse.body)['current_data']['session']);
 
         AppUtils().debuglog(studentProfile);
