@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:simap/model/class_model.dart';
+import 'package:simap/model/student_profile.dart';
 import 'package:simap/res/app_images.dart';
 import 'package:simap/utills/app_navigator.dart';
 import 'package:simap/view/app_screens/home_section/home_page_components/quick_access_container.dart';
@@ -15,7 +17,9 @@ import 'home_page_components/billboard.dart';
 import 'home_page_components/welcome_container.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  StudentProfile studentProfile;
+  ClassModel classModel;
+  HomePage({super.key,required this.studentProfile,required this.classModel});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -38,10 +42,10 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const WelcomeContainer(
+                     WelcomeContainer(
                       welcomeMsg: 'Welcome 👋',
-                      mainText: 'Okafor\nPrecious Chiemerie',
-                      subText: 'You\'re in JSS 2C',
+                      mainText: '${widget.studentProfile.studentFullname.split(' ')[0]}\n${widget.studentProfile.studentFullname.replaceAll(widget.studentProfile.studentFullname.split(' ')[0], '')}'.trim(),
+                      subText: 'You\'re in ${widget.classModel.className.className}',
                     ),
                     const SizedBox(
                       height: 20,

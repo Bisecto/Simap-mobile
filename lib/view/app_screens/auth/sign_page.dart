@@ -73,7 +73,7 @@ class _SignPageState extends State<SignPage> {
                       subjectList: state.subjectList,
                       schoolModel: state.schoolModel,
                       sessionModel: state.sessionModel,
-                      studentProfile: state.studentProfile,
+                      studentProfile: state.studentProfile, classModel: state.classModel,
                     ));
               } else if (state is DeviceChange) {
                 MSG.snackBar(context, state.msg);

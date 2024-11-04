@@ -16,6 +16,7 @@ import 'package:simap/view/app_screens/home_section/home_page.dart';
 import 'package:simap/view/app_screens/more_section/more_page.dart';
 import 'package:simap/view/app_screens/result_section/result_page.dart';
 
+import '../../../model/class_model.dart';
 import '../../../res/app_colors.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart' as modalSheet;
 
@@ -27,14 +28,14 @@ class LandingPage extends StatefulWidget {
   SessionModel sessionModel;
   List<Subject> subjectList;
   SchoolModel schoolModel;
-
+  ClassModel classModel;
   LandingPage(
       {super.key,
       required this.selectedIndex,
       required this.subjectList,
       required this.schoolModel,
       required this.sessionModel,
-      required this.studentProfile});
+      required this.studentProfile,required this.classModel});
 
   @override
   State<LandingPage> createState() => _LandingPageState();
@@ -55,7 +56,7 @@ class _LandingPageState extends State<LandingPage> {
     //topicInitialization();
 
     views = [
-      const HomePage(),
+       HomePage(studentProfile: widget.studentProfile, classModel: widget.classModel,),
       const SingleSessionResult(
         session: '2024/2024',
         isBackKey: false,

@@ -1,5 +1,7 @@
 
 
+import 'package:simap/model/class_model.dart';
+
 class StudentProfile {
   int id;
   String studentImage;
@@ -35,7 +37,7 @@ class StudentProfile {
   bool viewAds;
   DateTime updated;
   int user;
-  int currentClass;
+  //ClassModel currentClass;
   int currentSession;
   int branch;
 
@@ -74,7 +76,7 @@ class StudentProfile {
     required this.viewAds,
     required this.updated,
     required this.user,
-    required this.currentClass,
+   // required this.currentClass,
     required this.currentSession,
     required this.branch,
   });
@@ -114,7 +116,7 @@ class StudentProfile {
     viewAds: json["view_ads"],
     updated: DateTime.parse(json["updated"]),
     user: json["user"],
-    currentClass: json["current_class"],
+   // currentClass: json["current_class"],
     currentSession: json["current_session"],
     branch: json["branch"],
   );
@@ -154,7 +156,7 @@ class StudentProfile {
     "view_ads": viewAds,
     "updated": updated.toIso8601String(),
     "user": user,
-    "current_class": currentClass,
+   // "current_class": currentClass,
     "current_session": currentSession,
     "branch": branch,
   };

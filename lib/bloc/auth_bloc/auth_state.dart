@@ -31,9 +31,10 @@ class SuccessState extends AuthState {
   final SchoolModel schoolModel;
   final List<Subject> subjectList;
   final SessionModel sessionModel;
+  final ClassModel classModel;
 
-  SuccessState(
-      this.msg, this.studentProfile,this.schoolModel,this.subjectList,this.sessionModel);
+  SuccessState(this.msg, this.studentProfile, this.schoolModel,
+      this.subjectList, this.sessionModel, this.classModel);
 }
 
 class ResetPasswordSuccessState extends AuthState {
@@ -52,7 +53,5 @@ class OtpRequestSuccessState extends AuthState {
 class OtpVerificationSuccessState extends AuthState {
   final String msg;
 
-
   OtpVerificationSuccessState(this.msg);
 }
-
