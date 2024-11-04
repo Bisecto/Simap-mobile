@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:simap/model/class_model.dart';
 import 'package:simap/model/student_profile.dart';
 import 'package:simap/res/app_images.dart';
+import 'package:simap/utills/app_utils.dart';
 
 import '../../../../res/apis.dart';
 import '../../../../res/app_colors.dart';
@@ -48,69 +49,69 @@ class _ProfilePageState extends State<ProfilePage> {
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: const Row(
-                children: [
-                  Icon(Icons.arrow_back_ios),
-                  CustomText(
-                    text: 'Profile',
-                    color: AppColors.black,
-                    weight: FontWeight.bold,
-                    size: 16,
-                  ),
-                ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: const Row(
+                  children: [
+                    Icon(Icons.arrow_back_ios),
+                    CustomText(
+                      text: 'Profile',
+                      color: AppColors.black,
+                      weight: FontWeight.bold,
+                      size: 16,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            CircleAvatar(
-              radius: 70,
-              backgroundImage: NetworkImage(studentImage),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            CustomText(
-              text: widget.studentProfile.studentFullname.split(' ')[0],
-              color: AppColors.black,
-              weight: FontWeight.bold,
-              size: 20,
-            ),
-            CustomText(
-              text: widget.studentProfile.studentFullname.replaceAll(
-                  widget.studentProfile.studentFullname.split(' ')[0], ''),
-              color: AppColors.textColor,
-              weight: FontWeight.w400,
-              size: 16,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            profileDetailContainer(widget.studentProfile.gender, "Gender"),
-            profileDetailContainer(
-                widget.studentProfile.dateOfBirth, "Date Of Birth"),
-            profileDetailContainer(
-                widget.currentClass.className.className, "Class"),
-            profileDetailContainer(widget.studentProfile.lga, "LGA"),
-            profileDetailContainer(widget.studentProfile.town, "Town"),
-            profileDetailContainer(widget.studentProfile.state, "State"),
-            profileDetailContainer(widget.studentProfile.gender, "Gender"),
-            profileDetailContainer(
-                widget.studentProfile.parentGuardianName, "Guardian Name"),
-            profileDetailContainer(
-                widget.studentProfile.guardianPhoneNumber, "Guardian Phone"),
-            profileDetailContainer(
-                widget.studentProfile.bloodGroup, "Blood group"),
-            profileDetailContainer(widget.studentProfile.genotype, "Genotype"),
-            profileDetailContainer(
-                widget.currentClass.className.className, "Class"),
-          ],
+              const SizedBox(
+                height: 20,
+              ),
+              CircleAvatar(
+                radius: 70,
+                backgroundImage: NetworkImage(studentImage),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              CustomText(
+                text: widget.studentProfile.studentFullname.split(' ')[0],
+                color: AppColors.black,
+                weight: FontWeight.bold,
+                size: 20,
+              ),
+              CustomText(
+                text: widget.studentProfile.studentFullname.replaceAll(
+                    widget.studentProfile.studentFullname.split(' ')[0], ''),
+                color: AppColors.textColor,
+                weight: FontWeight.w400,
+                size: 16,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              profileDetailContainer(widget.studentProfile.gender, "Gender"),
+              profileDetailContainer(
+                  AppUtils.formateSimpleDate(dateTime: widget.studentProfile.dateOfBirth.toString()), "Date Of Birth"),
+              profileDetailContainer(
+                  widget.currentClass.className.className, "Class"),
+              profileDetailContainer(widget.studentProfile.lga, "LGA"),
+              profileDetailContainer(widget.studentProfile.town, "Town"),
+              profileDetailContainer(widget.studentProfile.state, "State"),
+              profileDetailContainer(widget.studentProfile.gender, "Gender"),
+              profileDetailContainer(
+                  widget.studentProfile.parentGuardianName, "Guardian Name"),
+              profileDetailContainer(
+                  widget.studentProfile.guardianPhoneNumber, "Guardian Phone"),
+              profileDetailContainer(
+                  widget.studentProfile.bloodGroup, "Blood group"),
+              profileDetailContainer(widget.studentProfile.genotype, "Genotype"),
+            ],
+          ),
         ),
       )),
     );
