@@ -24,7 +24,7 @@ class AppRouter {
   static const String noInternetScreen = "/no-internet";
 
   ///LANDING PAGE LandingPage
-  static const String landingPage = "/landing-page";
+  //static const String landingPage = "/landing-page";
   static const String notificationPage = "/notification-page";
 
   static const String chooseLocation = "/choose-location-page";
@@ -36,12 +36,12 @@ class AppRouter {
       // case onBoardingScreen:
       //   return MaterialPageRoute(builder: (_) => const OnBoardingScreen());
 
-      case landingPage:
-
-
-        return MaterialPageRoute(
-            builder: (_) => LandingPage(selectedIndex: 0,
-                ));
+      // case landingPage:
+      //
+      //
+      //   return MaterialPageRoute(
+      //       builder: (_) => LandingPage(selectedIndex: 0,
+      //           ));
 
 
 

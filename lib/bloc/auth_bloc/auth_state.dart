@@ -28,9 +28,12 @@ class DeviceChange extends AuthState {
 class SuccessState extends AuthState {
   final String msg;
   final StudentProfile studentProfile;
+  final SchoolModel schoolModel;
+  final List<Subject> subjectList;
+  final SessionModel sessionModel;
 
   SuccessState(
-      this.msg, this.studentProfile);
+      this.msg, this.studentProfile,this.schoolModel,this.subjectList,this.sessionModel);
 }
 
 class ResetPasswordSuccessState extends AuthState {

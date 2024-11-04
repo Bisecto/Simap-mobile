@@ -6,6 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:simap/model/school_model.dart';
+import 'package:simap/model/session_model.dart';
+import 'package:simap/model/student_profile.dart';
+import 'package:simap/model/subject.dart';
 
 import 'package:simap/view/app_screens/games_section/games_page.dart';
 import 'package:simap/view/app_screens/home_section/home_page.dart';
@@ -19,8 +23,18 @@ import '../result_section/result_section_screens/single_session_result.dart';
 
 class LandingPage extends StatefulWidget {
   int selectedIndex;
+  StudentProfile studentProfile;
+  SessionModel sessionModel;
+  List<Subject> subjectList;
+  SchoolModel schoolModel;
 
-  LandingPage({super.key, required this.selectedIndex});
+  LandingPage(
+      {super.key,
+      required this.selectedIndex,
+      required this.subjectList,
+      required this.schoolModel,
+      required this.sessionModel,
+      required this.studentProfile});
 
   @override
   State<LandingPage> createState() => _LandingPageState();
@@ -42,7 +56,10 @@ class _LandingPageState extends State<LandingPage> {
 
     views = [
       const HomePage(),
-      const SingleSessionResult(session: '2024/2024', isBackKey: false,),
+      const SingleSessionResult(
+        session: '2024/2024',
+        isBackKey: false,
+      ),
       const GamesPage(),
       const MorePage(),
     ];

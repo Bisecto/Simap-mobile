@@ -7,11 +7,13 @@ import 'package:meta/meta.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:simap/model/school_model.dart';
+import 'package:simap/model/session_model.dart';
 import 'package:simap/res/shared_preferenceKey.dart';
 import 'package:simap/utills/shared_preferences.dart';
 
 import '../../app_repository/repository.dart';
 import '../../model/student_profile.dart';
+import '../../model/subject.dart';
 import '../../res/apis.dart';
 import '../../res/tem_data/tem_data.dart';
 import '../../utills/app_utils.dart';
@@ -41,7 +43,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AppRepository appRepository = AppRepository();
 
     print(AppApis.http + event.schoolId + AppApis.loginStudent);
-    try {
+    //try {
       final loginResponse = await appRepository.postRequest(
           formData, AppApis.http + event.schoolId + AppApis.loginStudent);
 
@@ -54,8 +56,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       AppUtils().debuglog(loginResponse.headers);
 
       if (loginResponse.statusCode == 200 || loginResponse.statusCode == 201) {
-        SchoolModel schoolModel = SchoolModel.fromJson(
-            json.decode(loginResponse.body)['school'][0]);
+        SchoolModel schoolModel =
+            SchoolModel.fromJson(json.decode(loginResponse.body)['school'][0]);
 
         await SharedPref.putString(
             SharedPreferenceKey().schoolIdKey, event.schoolId);
@@ -80,13 +82,24 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             studentDashboardResponse.statusCode == 201) {
           //AppUtils().debuglog(studentDashboardResponse.body);
           StudentProfile studentProfile = StudentProfile.fromJson(
-              json.decode(studentDashboardResponse.body)['current_data']['student']);
-
+              json.decode(studentDashboardResponse.body)['current_data']
+                  ['student']);
+          SessionModel sessionModel = SessionModel.fromJson(
+              json.decode(studentDashboardResponse.body)['current_data']
+                  ['session']);
 
           AppUtils().debuglog(studentProfile);
           AppUtils().debuglog(studentProfile);
+          List<dynamic> subjectJsonResponse =
+              json.decode(studentDashboardResponse.body)
+                  ['subjects'];
 
-          emit(SuccessState("Login Successful", studentProfile));
+          List<Subject> subjectList = subjectJsonResponse
+              .map((item) => Subject.fromJson(item))
+              .toList();
+
+          emit(SuccessState("Login Successful", studentProfile, schoolModel,
+              subjectList, sessionModel));
         } else if (studentDashboardResponse.statusCode == 401) {
           emit(AccessTokenExpireState());
         } else {
@@ -105,14 +118,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         AppUtils().debuglog(json.decode(loginResponse.body));
         emit(AuthInitial());
       }
-    } catch (e) {
-      AppUtils().debuglog(e);
-      emit(ErrorState("There was a problem login you in please try again."));
-
-      AppUtils().debuglog(e);
-      emit(AuthInitial());
-      AppUtils().debuglog(12345678);
-    }
+    // } catch (e) {
+    //   AppUtils().debuglog(e);
+    //   emit(ErrorState("There was a problem login you in please try again."));
+    //
+    //   AppUtils().debuglog(e);
+    //   emit(AuthInitial());
+    //   AppUtils().debuglog(12345678);
+    // }
   }
 
   FutureOr<void> initialEvent(InitialEvent event, Emitter<AuthState> emit) {

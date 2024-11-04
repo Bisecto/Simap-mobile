@@ -70,8 +70,10 @@ class _SignPageState extends State<SignPage> {
                 AppNavigator.pushAndRemovePreviousPages(context,
                     page: LandingPage(
                       selectedIndex: 0,
-                      // studentProfile: state.studentProfile,
-                      // currentSession: state.currentSession,
+                      subjectList: state.subjectList,
+                      schoolModel: state.schoolModel,
+                      sessionModel: state.sessionModel,
+                      studentProfile: state.studentProfile,
                     ));
               } else if (state is DeviceChange) {
                 MSG.snackBar(context, state.msg);
@@ -180,7 +182,6 @@ class _SignPageState extends State<SignPage> {
                                         CustomTextFormField(
                                           hint: 'Enter your username',
                                           label: 'Username',
-
                                           borderColor: AppColors.mainAppColor,
                                           controller: _emailController,
                                           backgroundColor: AppColors.white,
@@ -193,7 +194,6 @@ class _SignPageState extends State<SignPage> {
                                         CustomTextFormField(
                                           label: 'Password',
                                           isPasswordField: true,
-
                                           borderColor: AppColors.mainAppColor,
                                           backgroundColor: AppColors.white,
                                           validator:
@@ -253,8 +253,9 @@ class _SignPageState extends State<SignPage> {
                                     FormButton(
                                       onPressed: () async {
                                         authBloc.add(SignInEventClick(
-                                           'uhs',// _schoolIdController.text,
-                                           'UHS20230200',
+                                            'uhs',
+                                            // _schoolIdController.text,
+                                            'UHS20230200',
                                             'gabmbapass'));
                                         // AppNavigator.pushAndStackPage(context,
                                         //     page: LandingPage(selectedIndex: 0));
