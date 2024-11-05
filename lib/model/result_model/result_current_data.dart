@@ -1,28 +1,28 @@
 class CurrentData {
   int id;
   Session session;
-  DateTime dateAdded;
-  int currentClass;
+  //DateTime dateAdded;
+  //int currentClass;
 
   CurrentData({
     required this.id,
     required this.session,
-    required this.dateAdded,
-    required this.currentClass,
+    //required this.dateAdded,
+    //required this.currentClass,
   });
 
   factory CurrentData.fromJson(Map<String, dynamic> json) => CurrentData(
     id: json["id"],
     session: Session.fromJson(json["session"]),
-    dateAdded: DateTime.parse(json["date_added"]),
-    currentClass: json["current_class"],
+   // dateAdded: DateTime.parse(json["date_added"]),
+    //currentClass: json["current_class"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "session": session.toJson(),
-    "date_added": dateAdded.toIso8601String(),
-    "current_class": currentClass,
+    //"date_added": dateAdded.toIso8601String(),
+    //"current_class": currentClass,
   };
 }
 

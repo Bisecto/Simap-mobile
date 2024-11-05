@@ -24,14 +24,14 @@ class ResultDataTerm {
   });
 
   factory ResultDataTerm.fromJson(Map<String, dynamic> json) => ResultDataTerm(
-    term: json["term"],
+    term: json["term"].toString(),
     subjectResults: List<TermSubjectResult>.from(json["subject_results"].map((x) => TermSubjectResult.fromJson(x))),
     behaviour: Behaviour.fromJson(json["behaviour"]),
     psychomotor: Psychomotor.fromJson(json["psychomotor"]),
     comments: Comments.fromJson(json["comments"]),
-    totalScore: json["total_score"],
-    averageScore: json["average_score"],
-    position: json["position"],
+    totalScore: json["total_score"].toString(),
+    averageScore: json["average_score"].toString(),
+    position: json["position"].toString(),
   );
 
   Map<String, dynamic> toJson() => {

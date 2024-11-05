@@ -16,9 +16,9 @@ class SubjectResultAnnual {
   factory SubjectResultAnnual.fromJson(Map<String, dynamic> json) => SubjectResultAnnual(
     totalScore: json["total_score"],
     averageScore: json["average_score"],
-    grade: json["grade"],
-    remark: json["remark"],
-    position: json["position"],
+    grade: json["grade"]??'',
+    remark: json["remark"]??'',
+    position: json["position"]??'',
   );
 
   Map<String, dynamic> toJson() => {

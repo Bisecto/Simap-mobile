@@ -14,11 +14,11 @@ class Scores {
   });
 
   factory Scores.fromJson(Map<String, dynamic> json) => Scores(
-    the1StCat: json["1ST CAT"],
-    the2NdCat: json["2ND CAT"],
-    assignment: json["ASSIGNMENT"],
-    project: json["PROJECT"],
-    exam: json["EXAM"],
+    the1StCat: json["1ST CAT"].toString(),
+    the2NdCat: json["2ND CAT"].toString(),
+    assignment: json["ASSIGNMENT"].toString(),
+    project: json["PROJECT"].toString(),
+    exam: json["EXAM"].toString(),
   );
 
   Map<String, dynamic> toJson() => {
