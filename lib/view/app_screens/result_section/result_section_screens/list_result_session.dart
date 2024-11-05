@@ -10,8 +10,11 @@ import '../../../../res/app_colors.dart';
 
 class ListResultSession extends StatelessWidget {
   StudentProfile studentProfile;
-ClassModel classModel;
-  ListResultSession({super.key, required this.studentProfile,required this.classModel});
+  ClassModel classModel;
+
+//Session session;
+  ListResultSession(
+      {super.key, required this.studentProfile, required this.classModel});
 
   final List<String> sessions = [
     '2024/2025',
@@ -28,12 +31,12 @@ ClassModel classModel;
       itemBuilder: (context, index) {
         return GestureDetector(
             onTap: () {
-              AppNavigator.pushAndStackPage(context,
-                  page: SingleSessionResult(
-                    session: sessions[index],
-                    isBackKey: true,
-                    studentProfile: studentProfile, classModel:classModel,
-                  ));
+              // AppNavigator.pushAndStackPage(context,
+              //     page: SingleSessionResult(
+              //       session: sessions[index],
+              //       isBackKey: true,
+              //       studentProfile: studentProfile, classModel:classModel, currentSessionModel: null,
+              //     ));
             },
             child:
                 SessionContainer(session: sessions[index], context: context));

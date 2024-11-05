@@ -17,4 +17,5 @@ class AppApis {
   static String loginStudent = "$appBaseUrl/endpoint/login";
 
   static String dashboard = "$appBaseUrl/endpoint/dashboard";
+  static String resultsArchive = "$appBaseUrl/endpoint/results-archive";
 }

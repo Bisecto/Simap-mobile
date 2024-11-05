@@ -63,7 +63,7 @@ class _LandingPageState extends State<LandingPage> {
         classModel: widget.classModel,
       ),
       SingleSessionResult(
-        session: '2024/2024',
+        currentSessionModel: widget.sessionModel,
         isBackKey: false,
         studentProfile: widget.studentProfile, classModel: widget.classModel,
       ),

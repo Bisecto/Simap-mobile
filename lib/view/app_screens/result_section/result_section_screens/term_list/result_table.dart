@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:simap/view/widgets/app_custom_text.dart';
+import '../../../../../model/result_model/result_data/term_subject_result.dart';
 import '../../../../../res/app_colors.dart';
 
+// grades_table.dart
+
 class GradesTable extends StatelessWidget {
-  final List<List<String>> subjectsGradesAndScores = [
-    ['Mathematics', '95', 'A'],
-    ['English', '85', 'B'],
-    ['Physics', '92', 'A'],
-    ['Chemistry', '75', 'C'],
-    ['Biology', '88', 'B'],
-    ['History', '90', 'A'],
-    ['Geography', '10', 'F'],
-  ];
+  final List<TermSubjectResult> subjectResults;
+
+  GradesTable({required this.subjectResults});
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +23,11 @@ class GradesTable extends StatelessWidget {
         _buildTableRow(
           ['Subject', 'Total Score', 'Grade'],
           isHeader: true,
-          isPurple: false,
         ),
-        for (var subjectGradeScore in subjectsGradesAndScores)
+        for (var result in subjectResults)
           _buildTableRow(
-            subjectGradeScore,
+            [result.subject, result.totalScore, result.grade],
             isHeader: false,
-            isPurple: false,
           ),
       ],
     );
@@ -41,7 +36,6 @@ class GradesTable extends StatelessWidget {
   TableRow _buildTableRow(
       List<String> rowData, {
         required bool isHeader,
-        required bool isPurple,
       }) {
     return TableRow(
       decoration: BoxDecoration(
@@ -60,44 +54,20 @@ class GradesTable extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: isHeader
                       ? AppColors.mainAppColor
-                      : (rowData.indexOf(cellData) == 2
-                      ? Colors.grey[200]
-                      : Colors.white),
-                  borderRadius: isHeader
-                      ? BorderRadius.circular(0)
-                      : BorderRadius.circular(10),
+                      : Colors.white,
+                  borderRadius: BorderRadius.circular(isHeader ? 0 : 10),
                 ),
                 child: CustomText(
                   text: cellData,
                   maxLines: 2,
-                  color: isHeader
-                      ? Colors.white
-                      : rowData.indexOf(cellData) == 2
-                      ? _getGradeColor(cellData)
-                      : AppColors.black,
+                  color: isHeader ? Colors.white : AppColors.black,
                   weight: isHeader ? FontWeight.bold : FontWeight.normal,
                   size: 14,
-                  textAlign: TextAlign.left,
                 ),
               ),
             ),
           ),
       ],
     );
-  }
-
-  Color _getGradeColor(String grade) {
-    switch (grade) {
-      case 'A':
-        return Colors.green;
-      case 'B':
-        return Colors.blue;
-      case 'C':
-        return Colors.orange;
-      case 'D':
-        return Colors.black;
-      default:
-        return Colors.red;
-    }
   }
 }
