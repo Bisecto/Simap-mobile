@@ -20,4 +20,9 @@ class InitialSuccessState extends ResultState {
   final ResultModel resultModel;
 
   InitialSuccessState(this.msg,this.resultModel);
+}class ArchivedSuccessState extends ResultState {
+  final String msg;
+  final List<CurrentSessionModel> sessionsList;
+
+  ArchivedSuccessState(this.msg,this.sessionsList);
 }

@@ -5,6 +5,7 @@ import 'package:simap/model/session_model.dart';
 import 'package:simap/utills/app_navigator.dart';
 import 'package:simap/view/app_screens/auth/sign_page.dart';
 import 'package:simap/view/app_screens/result_section/result_section_screens/term_list/annual_grade_table.dart';
+import 'package:simap/view/app_screens/result_section/result_section_screens/term_list/full_annual_result.dart';
 import 'package:simap/view/app_screens/result_section/result_section_screens/term_list/full_result.dart';
 import 'package:simap/view/app_screens/result_section/result_section_screens/term_list/result_table.dart';
 import 'package:simap/view/app_screens/result_section/result_section_screens/term_list/term_list.dart';
@@ -242,7 +243,7 @@ class _SingleSessionResultState extends State<SingleSessionResult> {
                                 FormButton(
                                   onPressed: () {
                                     AppNavigator.pushAndStackPage(context,
-                                        page: FullResultPage());
+                                        page: AnnualFullResultPage(resultDataAnnual: resultDataAnnual,));
                                   },
                                   bgColor: AppColors.mainAppColor,
                                   text: "View full result",
@@ -341,7 +342,7 @@ class _SingleSessionResultState extends State<SingleSessionResult> {
                                 FormButton(
                                   onPressed: () {
                                     AppNavigator.pushAndStackPage(context,
-                                        page: FullResultPage());
+                                        page: FullResultPage(fullResults: selectedResultTerm.subjectResults,));
                                   },
                                   bgColor: AppColors.mainAppColor,
                                   text: "View full result",

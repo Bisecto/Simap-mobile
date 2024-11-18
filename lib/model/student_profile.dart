@@ -82,7 +82,7 @@ class StudentProfile {
   });
 
   factory StudentProfile.fromJson(Map<String, dynamic> json) => StudentProfile(
-    id: json["id"],
+    id: json["id"]??"",
     studentImage: json["student_image"],
     studentFullname: json["student_fullname"],
     parentGuardianName: json["parent_guardian_name"],
@@ -110,9 +110,9 @@ class StudentProfile {
     primaryClassAndSchoolAttended: json["primary_class_and_school_attended"],
     address: json["address"],
     state: json["state"],
-    localGovernment: json["local_government"],
-    lga: json["lga"],
-    town: json["town"],
+    localGovernment: json["local_government"]??"",
+    lga: json["lga"]??"",
+    town: json["town"]??"",
     viewAds: json["view_ads"],
     updated: DateTime.parse(json["updated"]),
     user: json["user"],
