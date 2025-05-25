@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:lottie/lottie.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import '../../res/app_enums.dart';
@@ -15,7 +14,6 @@ showToast(
   } else if (type == ToastMessageType.info) {
     alert(context: context, title: title, subtitle: subtitle, alertType: AlertType.info);
   } else if (type == ToastMessageType.error) {
-    Vibrate.vibrate(); //vibrate device
     alert(context: context, title: title, subtitle: subtitle, alertType: AlertType.error);
   }
 }
