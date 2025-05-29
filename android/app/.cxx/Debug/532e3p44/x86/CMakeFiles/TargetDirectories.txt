@@ -1,0 +1,2 @@
+/Users/precious/StudioProjects/Simap-mobile/android/app/.cxx/Debug/532e3p44/x86/CMakeFiles/edit_cache.dir
+/Users/precious/StudioProjects/Simap-mobile/android/app/.cxx/Debug/532e3p44/x86/CMakeFiles/rebuild_cache.dir

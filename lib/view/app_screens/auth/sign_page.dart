@@ -255,8 +255,8 @@ class _SignPageState extends State<SignPage> {
                                         authBloc.add(SignInEventClick(
                                             'uhs',
                                             // _schoolIdController.text,
-                                            'UHS20230200',
-                                            'gabmbapass'));
+                                            'UHS20220156',
+                                            'angumepass'));
                                         // AppNavigator.pushAndStackPage(context,
                                         //     page: LandingPage(selectedIndex: 0));
                                       },
