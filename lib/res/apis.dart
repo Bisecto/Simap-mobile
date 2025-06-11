@@ -1,9 +1,8 @@
 class AppApis {
-  static String http = "http://";
+  static String http = "https://";
   static String appBaseUrl = ".myeduportal.net";
 
   //static String imageBaseUrl = "https://nau-slc.s3.eu-west-2.amazonaws.com";
-
   // static String appBaseUrl = "https://portal.cbtq.app";
   // static String imageBaseUrl = "https://portal.cbtq.app";
 
