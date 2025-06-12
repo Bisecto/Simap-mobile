@@ -4,7 +4,7 @@ class ResultTemplate {
   bool isInUse;
   int branch;
   dynamic session;
-  int classType;
+  //int classType;
 
   ResultTemplate({
     required this.id,
@@ -12,7 +12,7 @@ class ResultTemplate {
     required this.isInUse,
     required this.branch,
     required this.session,
-    required this.classType,
+    //required this.classType,
   });
 
   factory ResultTemplate.fromJson(Map<String, dynamic> json) => ResultTemplate(
@@ -21,7 +21,7 @@ class ResultTemplate {
     isInUse: json["is_in_use"],
     branch: json["branch"],
     session: json["session"],
-    classType: json["class_type"],
+    //classType: json["class_type"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -30,6 +30,6 @@ class ResultTemplate {
     "is_in_use": isInUse,
     "branch": branch,
     "session": session,
-    "class_type": classType,
+   // "class_type": classType,
   };
 }

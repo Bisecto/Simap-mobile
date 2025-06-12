@@ -80,7 +80,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       if (studentDashboardResponse.statusCode == 200 ||
           studentDashboardResponse.statusCode == 201) {
-        //AppUtils().debuglog(studentDashboardResponse.body);
+        AppUtils().debuglog(studentDashboardResponse.body);
         StudentProfile studentProfile = StudentProfile.fromJson(json
             .decode(studentDashboardResponse.body)['current_data']['student']);
         ClassModel classModel = ClassModel.fromJson(

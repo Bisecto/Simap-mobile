@@ -1,6 +1,7 @@
 
 
 import 'package:simap/model/class_model.dart';
+import 'package:simap/model/user.dart';
 
 class StudentProfile {
   int id;
@@ -36,7 +37,7 @@ class StudentProfile {
   String town;
   bool viewAds;
   DateTime updated;
-  int user;
+  User? user;
   //ClassModel currentClass;
   int currentSession;
   int branch;
@@ -85,37 +86,37 @@ class StudentProfile {
     id: json["id"]??"",
     studentImage: json["student_image"],
     studentFullname: json["student_fullname"],
-    parentGuardianName: json["parent_guardian_name"],
-    occupation: json["occupation"],
-    guardianPhoneNumber: json["guardian_phone_number"],
-    fatherContact: json["father_contact"],
-    fathersName: json["fathers_name"],
-    fathersOccupation: json["fathers_occupation"],
-    fatherReligion: json["father_religion"],
-    fatherAddress: json["father_address"],
-    motherContact: json["mother_contact"],
-    mothersName: json["mothers_name"],
-    mothersOccupation: json["mothers_occupation"],
-    mothersReligion: json["mothers_religion"],
-    mothersAddress: json["mothers_address"],
-    mothersDayOfBirth: json["mothers_day_of_birth"],
-    mothersMonthOfBirth: json["mothers_month_of_birth"],
+    parentGuardianName: json["parent_guardian_name"]??'N/A',
+    occupation: json["occupation"]??'N/A',
+    guardianPhoneNumber: json["guardian_phone_number"]??'N/A',
+    fatherContact: json["father_contact"]??'N/A',
+    fathersName: json["fathers_name"]??'N/A',
+    fathersOccupation: json["fathers_occupation"]??'N/A',
+    fatherReligion: json["father_religion"]??'N/A',
+    fatherAddress: json["father_address"]??'N/A',
+    motherContact: json["mother_contact"]??'N/A',
+    mothersName: json["mothers_name"]??'N/A',
+    mothersOccupation: json["mothers_occupation"]??'N/A',
+    mothersReligion: json["mothers_religion"]??'N/A',
+    mothersAddress: json["mothers_address"]??'N/A',
+    mothersDayOfBirth: json["mothers_day_of_birth"]??'N/A',
+    mothersMonthOfBirth: json["mothers_month_of_birth"]??'N/A',
     dateOfBirth: DateTime.parse(json["date_of_birth"]),
-    gender: json["gender"],
-    religion: json["religion"],
-    bloodGroup: json["blood_group"],
-    genotype: json["genotype"],
+    gender: json["gender"]??'N/A',
+    religion: json["religion"]??'N/A',
+    bloodGroup: json["blood_group"]??'N/A',
+    genotype: json["genotype"]??'N/A',
     weight: json["weight"],
     height: json["height"],
-    primaryClassAndSchoolAttended: json["primary_class_and_school_attended"],
-    address: json["address"],
-    state: json["state"],
-    localGovernment: json["local_government"]??"",
-    lga: json["lga"]??"",
-    town: json["town"]??"",
+    primaryClassAndSchoolAttended: json["primary_class_and_school_attended"]??'N/A',
+    address: json["address"]??'N/A',
+    state: json["state"]??'N/A',
+    localGovernment: json["local_government"]??'N/A',
+    lga: json["lga"]??'N/A',
+    town: json["town"]??'N/A',
     viewAds: json["view_ads"],
     updated: DateTime.parse(json["updated"]),
-    user: json["user"],
+    user: json["user"] == null ? null : User.fromJson(json["user"]),
    // currentClass: json["current_class"],
     currentSession: json["current_session"],
     branch: json["branch"],
@@ -155,7 +156,7 @@ class StudentProfile {
     "town": town,
     "view_ads": viewAds,
     "updated": updated.toIso8601String(),
-    "user": user,
+    "user": user!.toJson(),
    // "current_class": currentClass,
     "current_session": currentSession,
     "branch": branch,

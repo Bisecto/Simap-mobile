@@ -56,7 +56,7 @@ class _LandingPageState extends State<LandingPage> {
     // TODO: implement initState
     selectedIndex = widget.selectedIndex;
     //topicInitialization();
-
+print(widget.sessionModel);
     views = [
       HomePage(
         studentProfile: widget.studentProfile,

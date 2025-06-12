@@ -19,7 +19,7 @@ class ResultModel {
   ResultData resultData;
   List<String> publishTerms;
   ResultTemplate resultTemplate;
-  Controls controls;
+ // Controls controls;
   CurrentData currentData;
   TermsIdDic termsIdDic;
   dynamic thirdId;
@@ -28,7 +28,7 @@ class ResultModel {
     required this.resultData,
     required this.publishTerms,
     required this.resultTemplate,
-    required this.controls,
+   // required this.controls,
     required this.currentData,
     required this.termsIdDic,
     required this.thirdId,
@@ -38,7 +38,7 @@ class ResultModel {
     resultData: ResultData.fromJson(json["resultData"]),
     publishTerms: List<String>.from(json["publish_terms"].map((x) => x)),
     resultTemplate: ResultTemplate.fromJson(json["result_template"]),
-    controls: Controls.fromJson(json["controls"]),
+    //controls: Controls.fromJson(json["controls"]),
     currentData: CurrentData.fromJson(json["current_data"]),
     termsIdDic: TermsIdDic.fromJson(json["terms_id_dic"]),
     thirdId: json["third_id"],
@@ -48,7 +48,7 @@ class ResultModel {
     "resultData": resultData.toJson(),
     "publish_terms": List<dynamic>.from(publishTerms.map((x) => x)),
     "result_template": resultTemplate.toJson(),
-    "controls": controls.toJson(),
+   // "controls": controls.toJson(),
     "current_data": currentData.toJson(),
     "terms_id_dic": termsIdDic.toJson(),
     "third_id": thirdId,
