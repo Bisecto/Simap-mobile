@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:simap/model/class_model.dart';
 import 'package:simap/model/school_model.dart';
+import 'package:simap/model/session_model.dart';
 import 'package:simap/model/student_profile.dart';
 import 'package:simap/res/app_images.dart';
 import 'package:simap/view/app_screens/auth/sign_page.dart';
@@ -19,12 +20,15 @@ import '../../../utills/shared_preferences.dart';
 import '../../widgets/app_custom_text.dart';
 import '../result_section/result_page.dart';
 import 'child_pages/performance/performance_page.dart';
+import 'child_pages/performance/student_performance.dart';
 
 class MorePage extends StatefulWidget {
   StudentProfile studentProfile;
   SchoolModel schoolModel;
   ClassModel classModel;
-   MorePage({super.key, required this.studentProfile,required this.schoolModel,required this.classModel});
+  final SessionModel currentSessionModel;
+  final List<SessionModel> sessionsList;
+   MorePage({super.key, required this.studentProfile,required this.schoolModel,required this.classModel, required this.currentSessionModel, required this.sessionsList});
 
   @override
   State<MorePage> createState() => _MorePageState();
@@ -103,7 +107,7 @@ class _MorePageState extends State<MorePage> {
               InkWell(
                   onTap: () {
                     AppNavigator.pushAndStackPage(context,
-                        page:  PerformancePage(studentProfile: widget.studentProfile, classModel: widget.classModel,));
+                        page:  StudentPerformanceScreen(studentProfile: widget.studentProfile, classModel: widget.classModel, schoolModel: widget.schoolModel, currentSessionModel: widget.currentSessionModel, sessionsList: widget.sessionsList,));//PerformancePage(studentProfile: widget.studentProfile, classModel: widget.classModel,));
                   },
                   child: itemContainer(
                     Icons.pie_chart_outline,

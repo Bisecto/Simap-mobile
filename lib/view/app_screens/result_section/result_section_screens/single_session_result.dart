@@ -26,7 +26,7 @@ import '../../../widgets/app_loading_bar.dart';
 import '../../../widgets/dialog_box.dart';
 
 class SingleSessionResult extends StatefulWidget {
-  final CurrentSessionModel currentSessionModel;
+  final SessionModel currentSessionModel;
   final SchoolModel schoolModel;
   final bool isBackKey;
   StudentProfile studentProfile;

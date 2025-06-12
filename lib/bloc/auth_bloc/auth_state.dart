@@ -30,11 +30,12 @@ class SuccessState extends AuthState {
   final StudentProfile studentProfile;
   final SchoolModel schoolModel;
   final List<Subject> subjectList;
-  final CurrentSessionModel sessionModel;
+  final List<SessionModel> sessionsList;
+  final SessionModel sessionModel;
   final ClassModel classModel;
 
   SuccessState(this.msg, this.studentProfile, this.schoolModel,
-      this.subjectList, this.sessionModel, this.classModel);
+      this.subjectList, this.sessionModel, this.classModel, this.sessionsList);
 }
 
 class ResetPasswordSuccessState extends AuthState {

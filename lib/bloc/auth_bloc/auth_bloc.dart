@@ -86,7 +86,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         ClassModel classModel = ClassModel.fromJson(
             json.decode(studentDashboardResponse.body)['current_data']
                 ['current_class']);
-        CurrentSessionModel sessionModel = CurrentSessionModel.fromJson(json
+        SessionModel sessionModel = SessionModel.fromJson(json
             .decode(studentDashboardResponse.body)['current_data']['session']);
 
         AppUtils().debuglog(studentProfile);
@@ -96,9 +96,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
         List<Subject> subjectList =
             subjectJsonResponse.map((item) => Subject.fromJson(item)).toList();
+        final sessionRespomse = await appRepository.getRequestWithToken(
+            json.decode(loginResponse.body)['access'],
+            // formData,
+            '${AppApis.http}${event.schoolId}${AppApis.resultsArchive}');
 
+        AppUtils().debuglog(sessionRespomse.statusCode);
+        //AppUtils().debuglog(resultRespomse.body);
+
+          print(json.decode(sessionRespomse.body));
+          List<dynamic> sessionsJsonResponse = json.decode(sessionRespomse.body)['sessions'];
+
+          List<SessionModel> sessionsList = sessionsJsonResponse
+              .map((item) => SessionModel.fromJson(item))
+              .toList();
         emit(SuccessState("Login Successful", studentProfile, schoolModel,
-            subjectList, sessionModel,classModel));
+            subjectList, sessionModel,classModel,sessionsList));
       } else if (studentDashboardResponse.statusCode == 401) {
         emit(AccessTokenExpireState());
       } else {

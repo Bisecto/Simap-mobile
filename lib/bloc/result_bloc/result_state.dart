@@ -22,7 +22,7 @@ class InitialSuccessState extends ResultState {
   InitialSuccessState(this.msg,this.resultModel);
 }class ArchivedSuccessState extends ResultState {
   final String msg;
-  final List<CurrentSessionModel> sessionsList;
+  final List<SessionModel> sessionsList;
 
   ArchivedSuccessState(this.msg,this.sessionsList);
 }

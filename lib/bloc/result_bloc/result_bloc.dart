@@ -106,8 +106,8 @@ class ResultBloc extends Bloc<ResultEvent, ResultState> {
       print(json.decode(sessionRespomse.body));
       List<dynamic> sessionsJsonResponse = json.decode(sessionRespomse.body)['sessions'];
 
-      List<CurrentSessionModel> sessionsList = sessionsJsonResponse
-          .map((item) => CurrentSessionModel.fromJson(item))
+      List<SessionModel> sessionsList = sessionsJsonResponse
+          .map((item) => SessionModel.fromJson(item))
           .toList();
       emit(ArchivedSuccessState("Successful", sessionsList));
     } else if (sessionRespomse.statusCode == 401) {
