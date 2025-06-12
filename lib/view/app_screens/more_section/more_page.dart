@@ -111,7 +111,7 @@ class _MorePageState extends State<MorePage> {
                   )),
               InkWell(
                   onTap: () {
-                    AppNavigator.pushAndStackPage(context, page:  ResultPage(studentProfile: widget.studentProfile, classModel: widget.classModel,));
+                    AppNavigator.pushAndStackPage(context, page:  ResultPage(studentProfile: widget.studentProfile, classModel: widget.classModel, schoolModel: widget.schoolModel,));
                   },
                   child: itemContainer(
                     Icons.archive_outlined,

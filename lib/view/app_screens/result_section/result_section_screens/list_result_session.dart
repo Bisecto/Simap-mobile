@@ -8,6 +8,7 @@ import 'package:simap/utills/app_utils.dart';
 import 'package:simap/view/app_screens/result_section/result_section_screens/single_session_result.dart';
 
 import '../../../../bloc/result_bloc/result_bloc.dart';
+import '../../../../model/school_model.dart';
 import '../../../../model/student_profile.dart';
 import '../../../../res/app_colors.dart';
 import '../../../widgets/app_loading_bar.dart';
@@ -17,10 +18,14 @@ import '../../auth/sign_page.dart';
 class ListResultSession extends StatefulWidget {
   StudentProfile studentProfile;
   ClassModel classModel;
+  final SchoolModel schoolModel;
 
 //Session session;
   ListResultSession(
-      {super.key, required this.studentProfile, required this.classModel});
+      {super.key,
+      required this.studentProfile,
+      required this.classModel,
+      required this.schoolModel});
 
   @override
   State<ListResultSession> createState() => _ListResultSessionState();
@@ -98,7 +103,11 @@ class _ListResultSessionState extends State<ListResultSession> {
       onTap: () {
         AppNavigator.pushAndStackPage(context,
             page: SingleSessionResult(
-              currentSessionModel: session, isBackKey: true, studentProfile: widget.studentProfile, classModel: widget.classModel,
+              currentSessionModel: session,
+              isBackKey: true,
+              studentProfile: widget.studentProfile,
+              classModel: widget.classModel,
+              schoolModel: widget.schoolModel,
             ));
       },
       child: Padding(

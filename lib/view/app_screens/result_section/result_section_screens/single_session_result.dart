@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simap/model/school_model.dart';
 import 'package:simap/model/session_model.dart';
 import 'package:simap/utills/app_navigator.dart';
 import 'package:simap/view/app_screens/auth/sign_page.dart';
+import 'package:simap/view/app_screens/result_section/result_section_screens/result_pdf_generator.dart';
 import 'package:simap/view/app_screens/result_section/result_section_screens/term_list/annual_grade_table.dart';
 import 'package:simap/view/app_screens/result_section/result_section_screens/term_list/full_annual_result.dart';
 import 'package:simap/view/app_screens/result_section/result_section_screens/term_list/full_result.dart';
@@ -25,9 +27,9 @@ import '../../../widgets/dialog_box.dart';
 
 class SingleSessionResult extends StatefulWidget {
   final CurrentSessionModel currentSessionModel;
+  final SchoolModel schoolModel;
   final bool isBackKey;
   StudentProfile studentProfile;
-
   ClassModel classModel;
 
   SingleSessionResult(
@@ -35,6 +37,7 @@ class SingleSessionResult extends StatefulWidget {
       required this.currentSessionModel,
       required this.isBackKey,
       required this.studentProfile,
+      required this.schoolModel,
       required this.classModel});
 
   @override
@@ -88,7 +91,7 @@ class _SingleSessionResultState extends State<SingleSessionResult> {
                     case const (InitialSuccessState):
                       final initialSuccessState = state as InitialSuccessState;
                       terms = initialSuccessState.resultModel.resultData.terms;
-                     ResultDataTerm selectedResultTerm = terms[0];
+                      ResultDataTerm selectedResultTerm = terms[0];
 
                       for (int i = 0; i < terms.length; i++) {
                         print(terms[i]);
@@ -157,7 +160,7 @@ class _SingleSessionResultState extends State<SingleSessionResult> {
                               if (selectedTerm.toLowerCase() == 'annual') ...[
                                 Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     CustomText(
                                       text: "$selectedTerm Term Result",
@@ -165,34 +168,67 @@ class _SingleSessionResultState extends State<SingleSessionResult> {
                                       weight: FontWeight.bold,
                                       color: AppColors.black,
                                     ),
-                                    Container(
-                                      height: 40,
-                                      width: 120,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color:
-                                            Colors.black.withOpacity(0.15),
-                                            spreadRadius: 0,
-                                            blurRadius: 10,
-                                            offset: const Offset(0, 4),
-                                          ),
-                                        ],
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: const Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.center,
-                                        children: [
-                                          CustomText(
-                                            text: 'Download',
-                                            size: 16,
-                                            weight: FontWeight.w600,
-                                            color: AppColors.mainAppColor,
-                                          ),
-                                          Icon(Icons.download)
-                                        ],
+                                    GestureDetector(
+                                      onTap: () async {
+                                        if (selectedTerm.toLowerCase() ==
+                                            'annual') {
+                                          await StudentResultPdfGenerator
+                                              .generatePdf(
+                                            studentProfile:
+                                                widget.studentProfile,
+                                            school: widget.schoolModel,
+                                            academicSession: widget
+                                                .currentSessionModel.session,
+                                            className: widget
+                                                .classModel.className.className,
+                                            termName: selectedTerm,
+                                            annualData: resultDataAnnual,
+                                          );
+                                        } else {
+                                          await StudentResultPdfGenerator
+                                              .generatePdf(
+                                            studentProfile:
+                                                widget.studentProfile,
+                                            school: widget.schoolModel,
+                                            academicSession: widget
+                                                .currentSessionModel.session,
+                                            className: widget
+                                                .classModel.className.className,
+                                            termName: selectedTerm,
+                                            termData: selectedResultTerm,
+                                          );
+                                        }
+                                      },
+                                      child: Container(
+                                        height: 40,
+                                        width: 120,
+                                        decoration: BoxDecoration(
+                                          color: AppColors.white,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black
+                                                  .withOpacity(0.15),
+                                              spreadRadius: 0,
+                                              blurRadius: 10,
+                                              offset: const Offset(0, 4),
+                                            ),
+                                          ],
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: const Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            CustomText(
+                                              text: 'Download',
+                                              size: 16,
+                                              weight: FontWeight.w600,
+                                              color: AppColors.mainAppColor,
+                                            ),
+                                            Icon(Icons.download)
+                                          ],
+                                        ),
                                       ),
                                     )
                                   ],
@@ -202,7 +238,7 @@ class _SingleSessionResultState extends State<SingleSessionResult> {
                                 ),
                                 Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: [
@@ -238,12 +274,14 @@ class _SingleSessionResultState extends State<SingleSessionResult> {
                                   height: 15,
                                 ),
                                 AnnualGradesTable(
-                                  subjectResults:resultDataAnnual.subjectResults
-                                ),
+                                    subjectResults:
+                                        resultDataAnnual.subjectResults),
                                 FormButton(
                                   onPressed: () {
                                     AppNavigator.pushAndStackPage(context,
-                                        page: AnnualFullResultPage(resultDataAnnual: resultDataAnnual,));
+                                        page: AnnualFullResultPage(
+                                          resultDataAnnual: resultDataAnnual,
+                                        ));
                                   },
                                   bgColor: AppColors.mainAppColor,
                                   text: "View full result",
@@ -251,8 +289,7 @@ class _SingleSessionResultState extends State<SingleSessionResult> {
                                 const SizedBox(
                                   height: 30,
                                 ),
-
-                              ]else ...[
+                              ] else ...[
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -263,34 +300,67 @@ class _SingleSessionResultState extends State<SingleSessionResult> {
                                       weight: FontWeight.bold,
                                       color: AppColors.black,
                                     ),
-                                    Container(
-                                      height: 40,
-                                      width: 120,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color:
-                                                Colors.black.withOpacity(0.15),
-                                            spreadRadius: 0,
-                                            blurRadius: 10,
-                                            offset: const Offset(0, 4),
-                                          ),
-                                        ],
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: const Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          CustomText(
-                                            text: 'Download',
-                                            size: 16,
-                                            weight: FontWeight.w600,
-                                            color: AppColors.mainAppColor,
-                                          ),
-                                          Icon(Icons.download)
-                                        ],
+                                    GestureDetector(
+                                      onTap: () async {
+                                        if (selectedTerm.toLowerCase() ==
+                                            'annual') {
+                                          await StudentResultPdfGenerator
+                                              .generatePdf(
+                                            studentProfile:
+                                                widget.studentProfile,
+                                            school: widget.schoolModel,
+                                            academicSession: widget
+                                                .currentSessionModel.session,
+                                            className: widget
+                                                .classModel.className.className,
+                                            termName: selectedTerm,
+                                            annualData: resultDataAnnual,
+                                          );
+                                        } else {
+                                          await StudentResultPdfGenerator
+                                              .generatePdf(
+                                            studentProfile:
+                                                widget.studentProfile,
+                                            school: widget.schoolModel,
+                                            academicSession: widget
+                                                .currentSessionModel.session,
+                                            className: widget
+                                                .classModel.className.className,
+                                            termName: selectedTerm,
+                                            termData: selectedResultTerm,
+                                          );
+                                        }
+                                      },
+                                      child: Container(
+                                        height: 40,
+                                        width: 120,
+                                        decoration: BoxDecoration(
+                                          color: AppColors.white,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black
+                                                  .withOpacity(0.15),
+                                              spreadRadius: 0,
+                                              blurRadius: 10,
+                                              offset: const Offset(0, 4),
+                                            ),
+                                          ],
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        child: const Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            CustomText(
+                                              text: 'Download',
+                                              size: 16,
+                                              weight: FontWeight.w600,
+                                              color: AppColors.mainAppColor,
+                                            ),
+                                            Icon(Icons.download)
+                                          ],
+                                        ),
                                       ),
                                     )
                                   ],
@@ -342,7 +412,10 @@ class _SingleSessionResultState extends State<SingleSessionResult> {
                                 FormButton(
                                   onPressed: () {
                                     AppNavigator.pushAndStackPage(context,
-                                        page: FullResultPage(fullResults: selectedResultTerm.subjectResults,));
+                                        page: FullResultPage(
+                                          fullResults:
+                                              selectedResultTerm.subjectResults,
+                                        ));
                                   },
                                   bgColor: AppColors.mainAppColor,
                                   text: "View full result",

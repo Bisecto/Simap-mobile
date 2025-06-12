@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../model/class_model.dart';
+import '../../../model/school_model.dart';
 import '../../../model/student_profile.dart';
 import '../../../res/app_colors.dart';
 import '../../widgets/appBar_widget.dart';
@@ -9,8 +10,10 @@ import 'result_section_screens/list_result_session.dart';
 class ResultPage extends StatefulWidget {
   StudentProfile studentProfile;
   ClassModel classModel;
+  final SchoolModel schoolModel;
 
-   ResultPage({super.key,required this.studentProfile,required this.classModel});
+
+  ResultPage({super.key,required this.studentProfile,required this.classModel, required this.schoolModel});
 
   @override
   State<ResultPage> createState() => _ResultPageState();
@@ -49,7 +52,7 @@ class _ResultPageState extends State<ResultPage> {
                       ),
                       const SizedBox(height: 10),
                       Expanded(
-                        child: ListResultSession(studentProfile: widget.studentProfile, classModel: widget.classModel,),
+                        child: ListResultSession(studentProfile: widget.studentProfile, classModel: widget.classModel, schoolModel: widget.schoolModel,),
                       ),
                     ],
                   ),
