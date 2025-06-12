@@ -35,7 +35,7 @@ class _ListResultSessionState extends State<ListResultSession> {
   // final List<String> sessions = [
   ResultBloc resultBloc = ResultBloc();
 
-  late List<CurrentSessionModel> sessions = [];
+  late List<SessionModel> sessions = [];
 
   @override
   void initState() {
@@ -98,7 +98,7 @@ class _ListResultSessionState extends State<ListResultSession> {
   }
 
   Widget SessionContainer(
-      {required CurrentSessionModel session, required context}) {
+      {required SessionModel session, required context}) {
     return GestureDetector(
       onTap: () {
         AppNavigator.pushAndStackPage(context,
