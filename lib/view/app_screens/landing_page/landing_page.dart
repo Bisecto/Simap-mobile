@@ -25,7 +25,8 @@ import '../result_section/result_section_screens/single_session_result.dart';
 class LandingPage extends StatefulWidget {
   int selectedIndex;
   StudentProfile studentProfile;
-  CurrentSessionModel sessionModel;
+  SessionModel sessionModel;
+  final List<SessionModel> sessionList;
   List<Subject> subjectList;
   SchoolModel schoolModel;
   ClassModel classModel;
@@ -37,7 +38,7 @@ class LandingPage extends StatefulWidget {
       required this.schoolModel,
       required this.sessionModel,
       required this.studentProfile,
-      required this.classModel});
+      required this.classModel, required this.sessionList});
 
   @override
   State<LandingPage> createState() => _LandingPageState();
@@ -65,11 +66,11 @@ print(widget.sessionModel);
       SingleSessionResult(
         currentSessionModel: widget.sessionModel,
         isBackKey: false,
-        studentProfile: widget.studentProfile, classModel: widget.classModel,
+        studentProfile: widget.studentProfile, classModel: widget.classModel, schoolModel: widget.schoolModel,
       ),
       const GamesPage(),
       MorePage(
-        studentProfile: widget.studentProfile, schoolModel: widget.schoolModel, classModel: widget.classModel,
+        studentProfile: widget.studentProfile, schoolModel: widget.schoolModel, classModel: widget.classModel, currentSessionModel: widget.sessionModel, sessionsList: widget.sessionList,
       ),
     ];
     super.initState();

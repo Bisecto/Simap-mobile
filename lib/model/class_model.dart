@@ -27,23 +27,23 @@ class ClassModel {
 class ClassName {
   int id;
   String className;
-  int school;
+  //int school;
 
   ClassName({
     required this.id,
     required this.className,
-    required this.school,
+   // required this.school,
   });
 
   factory ClassName.fromJson(Map<String, dynamic> json) => ClassName(
     id: json["id"],
     className: json["class_name"],
-    school: json["school"],
+   // school: json["school"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "class_name": className,
-    "school": school,
+    //"school": school,
   };
 }

@@ -26,5 +26,46 @@ class AppColors{
 ///Containers Colors
   static const Color quickAccessContainerColor=Color(0xFFEEECEC);
   static const Color lightGreen=Color(0xFF7BF304);
+  static const Color primaryColor = Color(0xFF3F51B5); // Indigo
+  static const Color primaryColorLight = Color(0xFF757DE8);
+  static const Color primaryColorDark = Color(0xFF002984);
 
+  // Secondary Colors
+  static const Color secondaryColor = Color(0xFF03DAC6);
+  static const Color secondaryColorLight = Color(0xFF66FFF9);
+  static const Color secondaryColorDark = Color(0xFF00A896);
+
+  // Background Colors
+  static const Color backgroundColor = Color(0xFFFCFCFC);
+  static const Color surfaceColor = Color(0xFFFFFFFF);
+  static const Color cardBackground = Color(0xFFFFFFFF);
+
+  // Text Colors
+  static const Color textPrimary = Color(0xFF212121);
+  static const Color textSecondary = Color(0xFF757575);
+  static const Color textHint = Color(0xFFBDBDBD);
+
+  // Common Colors
+
+  static const Color transparent = Color(0x00000000);
+
+  // Status Colors
+  static const Color success = Color(0xFF4CAF50);
+  static const Color warning = Color(0xFFFF9800);
+  static const Color error = Color(0xFFF44336);
+  static const Color info = Color(0xFF2196F3);
+
+  // Class Colors
+  static const Color diamond = Color(0xFF64B5F6);
+  static const Color gold = Color(0xFFFFB74D);
+  static const Color silver = Color(0xFFBDBDBD);
+  static const Color emerald = Color(0xFF81C784);
+  static const Color pearl = Color(0xFFF8BBD9);
+
+  // Chart Colors
+  static const Color chartPrimary = Color(0xFF3F51B5);
+  static const Color chartSecondary = Color(0xFF03DAC6);
+  static const Color chartImprovement = Color(0xFF4CAF50);
+  static const Color chartDecline = Color(0xFFF44336);
+  static const Color chartNeutral = Color(0xFF9E9E9E);
   }

@@ -103,6 +103,10 @@ class ResultBloc extends Bloc<ResultEvent, ResultState> {
     //AppUtils().debuglog(resultRespomse.body);
     if (sessionRespomse.statusCode == 200 ||
         sessionRespomse.statusCode == 201) {
+      print(json.decode(sessionRespomse.body)[0]);
+      print(json.decode(sessionRespomse.body)[0]);
+      print(json.decode(sessionRespomse.body));
+      print(json.decode(sessionRespomse.body));
       print(json.decode(sessionRespomse.body));
       List<dynamic> sessionsJsonResponse = json.decode(sessionRespomse.body)['sessions'];
 

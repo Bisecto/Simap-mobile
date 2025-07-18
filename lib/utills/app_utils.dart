@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,6 +28,28 @@ class AppUtils {
       // debugPrint(object.toString());
     }
   }
+  Dio createDio() {
+    final dio = Dio();
+
+    // Add JWT token interceptor
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          // Add your JWT token here
+          const token = 'your-jwt-token'; // Get this from secure storage
+          options.headers['Authorization'] = 'JWT $token';
+          handler.next(options);
+        },
+        onError: (error, handler) {
+          // Handle errors (e.g., token refresh)
+          handler.next(error);
+        },
+      ),
+    );
+
+    return dio;
+  }
+
 
   openApp(context) async {
     bool isFirstOpen = (await SharedPref.getBool('isFirstOpen')) ?? true;

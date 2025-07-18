@@ -20,7 +20,6 @@ import '../../../utills/shared_preferences.dart';
 import '../../widgets/app_custom_text.dart';
 import '../result_section/result_page.dart';
 import 'child_pages/performance/performance_page.dart';
-import 'child_pages/performance/student_performance.dart';
 
 class MorePage extends StatefulWidget {
   StudentProfile studentProfile;
@@ -28,7 +27,14 @@ class MorePage extends StatefulWidget {
   ClassModel classModel;
   final SessionModel currentSessionModel;
   final List<SessionModel> sessionsList;
-   MorePage({super.key, required this.studentProfile,required this.schoolModel,required this.classModel, required this.currentSessionModel, required this.sessionsList});
+
+  MorePage(
+      {super.key,
+      required this.studentProfile,
+      required this.schoolModel,
+      required this.classModel,
+      required this.currentSessionModel,
+      required this.sessionsList});
 
   @override
   State<MorePage> createState() => _MorePageState();
@@ -46,10 +52,12 @@ class _MorePageState extends State<MorePage> {
 
   getSavedData() async {
     String schoolIdKey =
-    await SharedPref.getString(SharedPreferenceKey().schoolIdKey);
+        await SharedPref.getString(SharedPreferenceKey().schoolIdKey);
     setState(() {
-      logo =
-      AppApis.http + schoolIdKey + AppApis.appBaseUrl + widget.schoolModel.logo;
+      logo = AppApis.http +
+          schoolIdKey +
+          AppApis.appBaseUrl +
+          widget.schoolModel.logo;
       print(logo);
     });
   }
@@ -74,13 +82,13 @@ class _MorePageState extends State<MorePage> {
                       height: 100,
                       width: 100,
                     ),
-                     CustomText(
-                      text:widget.schoolModel.name,
+                    CustomText(
+                      text: widget.schoolModel.name,
                       size: 18,
                       maxLines: 3,
                       weight: FontWeight.bold,
                       color: AppColors.black,
-                       textAlign: TextAlign.center,
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),
@@ -88,7 +96,10 @@ class _MorePageState extends State<MorePage> {
               InkWell(
                 onTap: () {
                   AppNavigator.pushAndStackPage(context,
-                      page:  ProfilePage(studentProfile: widget.studentProfile, currentClass: widget.classModel,));
+                      page: ProfilePage(
+                        studentProfile: widget.studentProfile,
+                        currentClass: widget.classModel,
+                      ));
                 },
                 child: itemContainer(
                   Icons.perm_identity,
@@ -97,7 +108,11 @@ class _MorePageState extends State<MorePage> {
               ),
               InkWell(
                 onTap: () {
-                  AppNavigator.pushAndStackPage(context, page:  StorePage(studentProfile: widget.studentProfile, classModel: widget.classModel,));
+                  AppNavigator.pushAndStackPage(context,
+                      page: StorePage(
+                        studentProfile: widget.studentProfile,
+                        classModel: widget.classModel,
+                      ));
                 },
                 child: itemContainer(
                   Icons.shopping_cart,
@@ -107,7 +122,13 @@ class _MorePageState extends State<MorePage> {
               InkWell(
                   onTap: () {
                     AppNavigator.pushAndStackPage(context,
-                        page:  StudentPerformanceScreen(studentProfile: widget.studentProfile, classModel: widget.classModel, schoolModel: widget.schoolModel, currentSessionModel: widget.currentSessionModel, sessionsList: widget.sessionsList,));//PerformancePage(studentProfile: widget.studentProfile, classModel: widget.classModel,));
+                        page: PerformancePage(
+                          studentProfile: widget.studentProfile,
+                          classModel: widget.classModel,
+                          schoolModel: widget.schoolModel,
+                          currentSessionModel: widget.currentSessionModel,
+                          sessionsList: widget.sessionsList,
+                        )); //PerformancePage(studentProfile: widget.studentProfile, classModel: widget.classModel,));
                   },
                   child: itemContainer(
                     Icons.pie_chart_outline,
@@ -115,7 +136,12 @@ class _MorePageState extends State<MorePage> {
                   )),
               InkWell(
                   onTap: () {
-                    AppNavigator.pushAndStackPage(context, page:  ResultPage(studentProfile: widget.studentProfile, classModel: widget.classModel, schoolModel: widget.schoolModel,));
+                    AppNavigator.pushAndStackPage(context,
+                        page: ResultPage(
+                          studentProfile: widget.studentProfile,
+                          classModel: widget.classModel,
+                          schoolModel: widget.schoolModel,
+                        ));
                   },
                   child: itemContainer(
                     Icons.archive_outlined,
@@ -123,7 +149,11 @@ class _MorePageState extends State<MorePage> {
                   )),
               InkWell(
                 onTap: () {
-                  AppNavigator.pushAndStackPage(context, page:  LibraryPage(studentProfile: widget.studentProfile, classModel: widget.classModel,));
+                  AppNavigator.pushAndStackPage(context,
+                      page: LibraryPage(
+                        studentProfile: widget.studentProfile,
+                        classModel: widget.classModel,
+                      ));
                 },
                 child: itemContainer(
                   Icons.menu_book_sharp,
