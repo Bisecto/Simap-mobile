@@ -18,7 +18,6 @@ class StudentPerformanceRepository {
     required AppRepository appRepository,
   }) : _appRepository = appRepository;
 String baseUrl='https://uhs.myeduportal.net';
-  // Get student performance compared to last term
   Future<StudentPerformanceComparison> getStudentPerformance() async {
     try {
       String token =
@@ -77,12 +76,12 @@ String baseUrl='https://uhs.myeduportal.net';
       await SharedPref.getString(SharedPreferenceKey().accessTokenKey);
       final apiUrl = '$baseUrl/student-performance-by-session/?session_id=$sessionId';
       final response = await _appRepository.getRequestWithToken(token, apiUrl);
-      print(response.statusCode);
-      print(response.body);
+
 
       if (response.statusCode == 200) {
         final jsonData = json.decode(response.body);
-        // Assuming the response returns a list of performance data
+        print('Failed to load student performance by session: ${json.decode(response.body)}');
+
         return (jsonData as List)
             .map((item) => OverallPerformance.fromJson(item))
             .toList();

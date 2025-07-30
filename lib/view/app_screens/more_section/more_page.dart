@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simap/model/class_model.dart';
 import 'package:simap/model/school_model.dart';
 import 'package:simap/model/session_model.dart';
@@ -12,6 +13,8 @@ import 'package:simap/view/app_screens/more_section/child_pages/profile_page.dar
 import 'package:simap/view/app_screens/onbaording_screens/setup.dart';
 import 'package:simap/view/app_screens/store_section/store_page.dart';
 
+import '../../../app_repository/store_service.dart';
+import '../../../bloc/store_bloc/store_bloc.dart';
 import '../../../res/apis.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/shared_preferenceKey.dart';
@@ -109,9 +112,11 @@ class _MorePageState extends State<MorePage> {
               InkWell(
                 onTap: () {
                   AppNavigator.pushAndStackPage(context,
-                      page: StorePage(
-                        studentProfile: widget.studentProfile,
-                        classModel: widget.classModel,
+                      page: BlocProvider(
+                        create: (context) => StoreBloc(
+                          storeService: StoreService(),
+                        ),
+                        child: const StoreScreen(), // This was missing!
                       ));
                 },
                 child: itemContainer(

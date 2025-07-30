@@ -66,6 +66,8 @@ class StudentPerformanceBloc extends Bloc<StudentPerformanceEvent, StudentPerfor
           currentFilters: _currentFilters,
         ));
       } else {
+        print('Cpoty with debug');
+
         emit(StudentPerformanceLoaded(
           studentsPerformanceInSchool: studentsPerformance,
           currentFilters: _currentFilters,

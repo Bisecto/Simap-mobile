@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simap/model/class_model.dart';
 import 'package:simap/model/student_profile.dart';
 import 'package:simap/res/app_images.dart';
@@ -8,6 +9,8 @@ import 'package:simap/view/app_screens/library_section/library_page.dart';
 import 'package:simap/view/app_screens/quiz_section/available_quiz_subject.dart';
 import 'package:simap/view/widgets/app_custom_text.dart';
 
+import '../../../app_repository/store_service.dart';
+import '../../../bloc/store_bloc/store_bloc.dart';
 import '../../../res/app_colors.dart';
 import '../../widgets/appBar_widget.dart';
 import '../assignment_section/assignment_page.dart';
@@ -86,9 +89,11 @@ class _HomePageState extends State<HomePage> {
                         GestureDetector(
                           onTap: () {
                             AppNavigator.pushAndStackPage(context,
-                                page: StorePage(
-                                  studentProfile: widget.studentProfile,
-                                  classModel: widget.classModel,
+                                page: BlocProvider(
+                                  create: (context) => StoreBloc(
+                                    storeService: StoreService(),
+                                  ),
+                                  child: const StoreScreen(), // This was missing!
                                 ));
                           },
                           child: const QuickAccessContainer(

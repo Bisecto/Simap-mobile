@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:dio/dio.dart';
+import 'package:simap/model/result_model/result_current_data.dart';
 import 'package:simap/view/app_screens/more_section/child_pages/performance/session_performance_chart.dart';
 import 'package:simap/view/app_screens/more_section/child_pages/performance/subject_improvement_chart.dart';
 import 'package:simap/view/app_screens/more_section/child_pages/performance/top_student_list.dart';
@@ -36,6 +37,7 @@ class PerformancePage extends StatefulWidget {
   final StudentProfile studentProfile;
   final ClassModel classModel;
   final SchoolModel schoolModel;
+ /// final Session selectedSession;
   final SessionModel currentSessionModel;
   final List<SessionModel> sessionsList;
 
@@ -57,17 +59,18 @@ class _PerformancePageState extends State<PerformancePage>
   late TabController _tabController;
   final StudentPerformanceBloc _performanceBloc = StudentPerformanceBloc(
       repository: StudentPerformanceRepository(appRepository: AppRepository()));
+  final String selectedTerm='First';
 
   @override
   void initState() {
     super.initState();
     _performanceBloc.add(const LoadStudentPerformance());
     _performanceBloc.add(LoadStudentsPerformanceInSchool(
-      term: 'Second',
+      term: selectedTerm,
       sessionId: widget.currentSessionModel.id.toString(),
       classId: widget.classModel.id.toString(),
     ));
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
@@ -86,13 +89,14 @@ class _PerformancePageState extends State<PerformancePage>
       )
         ..add(const LoadStudentPerformance())
         ..add(LoadStudentsPerformanceInSchool(
-          term: 'Second',
+          term: selectedTerm,
           sessionId: widget.currentSessionModel.id.toString(),
           classId: widget.classModel.id.toString(),
         ))
-        ..add(LoadStudentPerformanceBySession(
-          sessionId: widget.currentSessionModel.id.toString(),
-        )),
+        // ..add(LoadStudentPerformanceBySession(
+        //   sessionId: widget.currentSessionModel.id.toString(),
+        // )),
+        ,
       child: Scaffold(
         backgroundColor: const Color(0xFFFCFCFC),
         body: SafeArea(
@@ -136,7 +140,7 @@ class _PerformancePageState extends State<PerformancePage>
                             tabs: const [
                               Tab(text: 'Overview'),
                               Tab(text: 'Rankings'),
-                              Tab(text: 'Analysis'),
+                             // Tab(text: 'Analysis'),
                             ],
                           ),
                         ),
@@ -172,7 +176,7 @@ class _PerformancePageState extends State<PerformancePage>
                                   children: [
                                     _buildOverviewTab(state),
                                     _buildSchoolPerformanceTab(state),
-                                    _buildSessionAnalysisTab(state),
+                                   // _buildSessionAnalysisTab(state),
                                   ],
                                 );
                               }
@@ -250,6 +254,8 @@ class _PerformancePageState extends State<PerformancePage>
   }
 
   Widget _buildSchoolPerformanceTab(StudentPerformanceLoaded state) {
+    print('Rebuilding _buildSchoolPerformanceTab...');
+    print('studentsPerformanceInSchool: ${state.studentsPerformanceInSchool}');
     return Column(
       children: [
         if (state.studentsPerformanceInSchool != null)
@@ -257,6 +263,7 @@ class _PerformancePageState extends State<PerformancePage>
             filters: state.studentsPerformanceInSchool!.filters,
             availableSessions: widget.sessionsList,
             onFiltersChanged: (term, sessionId, classId) {
+              //print()
               _performanceBloc.add(
                 LoadStudentsPerformanceInSchool(
                   term: term,

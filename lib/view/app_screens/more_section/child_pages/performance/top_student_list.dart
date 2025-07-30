@@ -80,7 +80,7 @@ class TopStudentsList extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '${topStudents.length} students',
+                  'Top ${topStudents.length} students',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Colors.white70,
                   ),
