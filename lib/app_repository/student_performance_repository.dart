@@ -1,4 +1,3 @@
-// repositories/student_performance_repository.dart
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -40,7 +39,6 @@ String baseUrl='https://uhs.myeduportal.net';
     }
   }
 
-  // Get students performance in school with filters
   Future<StudentsPerformanceInSchool> getStudentsPerformanceInSchool({
     required String term,
     required String sessionId,
@@ -67,7 +65,6 @@ String baseUrl='https://uhs.myeduportal.net';
     }
   }
 
-  // Get student performance by session
   Future<List<OverallPerformance>> getStudentPerformanceBySession({
     required String sessionId,
   }) async {
