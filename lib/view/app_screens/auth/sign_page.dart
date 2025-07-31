@@ -28,11 +28,11 @@ class SignPage extends StatefulWidget {
 
 class _SignPageState extends State<SignPage> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _schoolIdController = TextEditingController();
+  final _emailController = TextEditingController(text:'UHS20220156');
+  final _schoolIdController = TextEditingController(text: 'uhs');
   final AuthBloc authBloc = AuthBloc();
 
-  final _passwordController = TextEditingController(text: 'gabmbapass');
+  final _passwordController = TextEditingController(text: 'angumepass');
   String appSchoolName = '';
   String appLogo = '';
 
@@ -253,10 +253,10 @@ class _SignPageState extends State<SignPage> {
                                     FormButton(
                                       onPressed: () async {
                                         authBloc.add(SignInEventClick(
-                                            'uhs',
+                                            _schoolIdController.text,
                                             // _schoolIdController.text,
-                                            'UHS20220156',
-                                            'angumepass'));
+                                            _emailController.text,
+                                            _passwordController.text));
                                         // AppNavigator.pushAndStackPage(context,
                                         //     page: LandingPage(selectedIndex: 0));
                                       },
