@@ -9,11 +9,15 @@ import 'package:simap/view/app_screens/library_section/library_page.dart';
 import 'package:simap/view/app_screens/quiz_section/available_quiz_subject.dart';
 import 'package:simap/view/widgets/app_custom_text.dart';
 
+import '../../../app_repository/fee_repository.dart';
 import '../../../app_repository/store_service.dart';
+import '../../../bloc/fee_bloc/fee_bloc.dart';
+import '../../../bloc/fee_bloc/fee_event.dart';
 import '../../../bloc/store_bloc/store_bloc.dart';
 import '../../../res/app_colors.dart';
 import '../../widgets/appBar_widget.dart';
 import '../assignment_section/assignment_page.dart';
+import '../fee_section/fee_overview.dart';
 import '../learn_section/learn_page.dart';
 import '../store_section/store_page.dart';
 import 'home_page_components/billboard.dart';
@@ -82,9 +86,20 @@ class _HomePageState extends State<HomePage> {
                             img: AppImages.learn,
                           ),
                         ),
-                        const QuickAccessContainer(
-                          text: 'Fees',
-                          img: AppImages.fees,
+                        GestureDetector(
+                          onTap: (){
+                            AppNavigator.pushAndStackPage(context, page:  BlocProvider(
+                              create: (context) => FeeBloc(
+                                repository: FeeRepository(),
+                              )..add(LoadFees()),
+                              child: const FeeOverviewScreen(),
+                            ));
+
+                        },
+                          child: const QuickAccessContainer(
+                            text: 'Fees',
+                            img: AppImages.fees,
+                          ),
                         ),
                         GestureDetector(
                           onTap: () {
