@@ -11,11 +11,28 @@ class FeeRepository {
    // required this.baseUrl,
     http.Client? httpClient,
   }) : _httpClient = httpClient ?? http.Client();
-  String baseUrl='https://uhs.myeduportal.net';
+  String baseUrl='https://uhs.myeduportal.net/endpoint/get-student-fees/';
+
 
   // Mock data for demo - replace with actual API calls
-  Future<List<FeeItem>> getFees() async {
+  Future<List<FeeItem>> getFees(token) async {
     // Simulate API delay
+    final headers = {
+      'Authorization': 'JWT $token',
+
+      'Content-Type': 'application/json',
+      // 'Cookie':
+      //     'csrftoken=NxxWk8uudx18TvEsVgQzS8ArEeXGBfZO; sessionid=sd1e20jiuf512uqc9lwj9s8iueyo6muu',
+    };
+    var response = await http.post(
+      Uri.parse(baseUrl),
+      headers: headers,
+    );
+    print(response.body);
+    print(response.body);
+    print(response.body);
+
+
     await Future.delayed(const Duration(seconds: 1));
 
     // Mock data matching your UI

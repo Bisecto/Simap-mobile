@@ -2,6 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../app_repository/fee_repository.dart';
 import '../../model/fee/fee_item.dart';
+import '../../res/shared_preferenceKey.dart';
+import '../../utills/shared_preferences.dart';
 import 'fee_event.dart';
 import 'fee_state.dart';
 
@@ -20,7 +22,10 @@ class FeeBloc extends Bloc<FeeEvent, FeeState> {
   Future<void> _onLoadFees(LoadFees event, Emitter<FeeState> emit) async {
     emit(FeeLoading());
     try {
-      final fees = await _repository.getFees();
+      String accessToken =
+      await SharedPref.getString(SharedPreferenceKey().accessTokenKey);
+
+      final fees = await _repository.getFees(accessToken);
       final paymentHistory = await _repository.getPaymentHistory();
 
       final totalPaid = paymentHistory
