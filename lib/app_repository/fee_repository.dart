@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../model/fee/fee_item.dart';
+import '../model/fee/fee_summary.dart';
 import '../model/fee/payment_transaction.dart';
 
 class FeeRepository {
@@ -11,100 +12,93 @@ class FeeRepository {
    // required this.baseUrl,
     http.Client? httpClient,
   }) : _httpClient = httpClient ?? http.Client();
-  String baseUrl='https://uhs.myeduportal.net/endpoint/get-student-fees/';
+  String baseUrl='https://demo.myeduportal.net/endpoint/get-student-fees/';
+  String feehistory='https://demo.myeduportal.net/endpoint/payment-history/';
 
 
   // Mock data for demo - replace with actual API calls
-  Future<List<FeeItem>> getFees(token) async {
-    // Simulate API delay
-    final headers = {
-      'Authorization': 'JWT $token',
+  Future<FeesResponse> getFees(String token) async {
+    try {
+      final headers = {
+        'Authorization': 'JWT $token',
+        'Content-Type': 'application/json',
+      };
 
-      'Content-Type': 'application/json',
-      // 'Cookie':
-      //     'csrftoken=NxxWk8uudx18TvEsVgQzS8ArEeXGBfZO; sessionid=sd1e20jiuf512uqc9lwj9s8iueyo6muu',
-    };
-    var response = await http.post(
-      Uri.parse(baseUrl),
-      headers: headers,
-    );
-    print(response.body);
-    print(response.body);
-    print(response.body);
+      var response = await http.get(
+        Uri.parse(baseUrl),
+        headers: headers,
+      );
+      print('API URI: $baseUrl');
+      print('API Response: ${response.body}');
+      print('Status Code: ${response.statusCode}');
 
-
-    await Future.delayed(const Duration(seconds: 1));
-
-    // Mock data matching your UI
-    return [
-      FeeItem(
-        id: '1',
-        type: 'Tuition Fee',
-        amount: 15000,
-        session: '2023/2024',
-        term: 'First Term',
-        status: PaymentStatus.pending,
-        reference: 'Xmtw00ac7V14gqH3182V',
-        dueDate: DateTime.now().add(const Duration(days: 30)),
-      ),
-      FeeItem(
-        id: '2',
-        type: 'Books Payment',
-        amount: 7500,
-        session: '2023/2024',
-        term: 'First Term',
-        status: PaymentStatus.pending,
-        reference: 'RhJpUrCN',
-        dueDate: DateTime.now().add(const Duration(days: 15)),
-      ),
-    ];
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> jsonData = json.decode(response.body);
+        return FeesResponse.fromJson(jsonData);
+      } else {
+        throw Exception('Failed to load fees. Status: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error fetching fees: $error');
+      throw Exception('Failed to fetch fees: $error');
+    }
   }
+  Future<PaymentHistoryResponse> getPaymentHistory({
+    required String token,
+    int page = 1,
+    int perPage = 20,
+  }) async {
+    try {
+      final headers = {
+        'Authorization': 'JWT $token',
+        'Content-Type': 'application/json',
+      };
+      final uri = Uri.parse(feehistory)
+          .replace(queryParameters: {
+        'page': page.toString(),
+        'per_page': perPage.toString(),
+      });
+      var response = await http.get(
+        uri,
+        headers: headers,
+      );
+      print('API URI: $feehistory');
+      print('API Response: ${response.body}');
+      print('Status Code: ${response.statusCode}');
+      print('Payment History API Response: ${response.body}');
+      print('Status Code: ${response.statusCode}');
 
-  Future<List<PaymentTransaction>> getPaymentHistory() async {
-    await Future.delayed(const Duration(seconds: 1));
-
-    return [
-      PaymentTransaction(
-        id: '1',
-        reference: 'Xmtw00ac7V14gqH3182V',
-        amount: 15000,
-        status: PaymentStatus.successful,
-        date: DateTime(2025, 7, 7, 10, 45),
-        description: 'Tuition Fee',
-        paymentId: '#PAY_20250707172133_4EA6E4B2',
-      ),
-      PaymentTransaction(
-        id: '2',
-        reference: 'RhJpUrCN',
-        amount: 7500,
-        status: PaymentStatus.failed,
-        date: DateTime(2025, 7, 7, 11, 45),
-        description: 'Books Payment',
-        paymentId: '#PAY_20250707174533_5FB7F5C3',
-      ),
-    ];
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> jsonData = json.decode(response.body);
+        return PaymentHistoryResponse.fromJson(jsonData);
+      } else {
+        throw Exception('Failed to load payment history. Status: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error fetching payment history: $error');
+      throw Exception('Failed to fetch payment history: $error');
+    }
   }
-
   Future<String> initiatePayment(FeeItem fee) async {
     // Simulate API call to payment gateway
     await Future.delayed(const Duration(seconds: 2));
 
     // Return mock payment URL - replace with actual payment gateway URL
-    return 'https://checkout.paystack.com/v3/${fee.reference}';
+    return 'https://checkout.paystack.com/v3/';
   }
 
-  Future<PaymentTransaction> verifyPayment(String reference) async {
-    await Future.delayed(const Duration(seconds: 1));
-
-    // Mock successful payment verification
-    return PaymentTransaction(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      reference: reference,
-      amount: 15000,
-      status: PaymentStatus.successful,
-      date: DateTime.now(),
-      description: 'Payment',
-      paymentId: '#PAY_${DateTime.now().millisecondsSinceEpoch}_${reference.substring(0, 8).toUpperCase()}',
-    );
-  }
+  // Future<PaymentTransaction> verifyPayment(String reference) async {
+  //   await Future.delayed(const Duration(seconds: 1));
+  //
+  //   // Mock successful payment verification
+  //   return PaymentTransaction(
+  //     id: DateTime.now().millisecondsSinceEpoch.toString(),
+  //     reference: reference,
+  //     amount: 15000,
+  //     status: PaymentStatus.successful,
+  //     date: DateTime.now(),
+  //     description: 'Payment',
+  //     paymentId: '#PAY_${DateTime.now().millisecondsSinceEpoch}_${reference.substring(0, 8).toUpperCase()}',
+  //   );
+  // }
 }

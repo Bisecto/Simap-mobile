@@ -9,6 +9,9 @@ import '../../../model/fee/fee_item.dart';
 import '../../../model/fee/payment_transaction.dart';
 
 
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 class FeeDetailScreen extends StatelessWidget {
   final FeeItem fee;
 
@@ -341,190 +344,432 @@ class FeeDetailScreen extends StatelessWidget {
 
 
 
+
 class PaymentHistoryItem extends StatelessWidget {
   final PaymentTransaction transaction;
+  final VoidCallback? onTap;
+  final VoidCallback? onReceiptTap;
 
-  const PaymentHistoryItem({super.key, required this.transaction});
+  const PaymentHistoryItem({
+    super.key,
+    required this.transaction,
+    this.onTap,
+    this.onReceiptTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.08),
-            spreadRadius: 1,
-            blurRadius: 8,
+            spreadRadius: 0,
+            blurRadius: 12,
             offset: const Offset(0, 4),
           ),
         ],
       ),
-      child: Row(
-        children: [
-          // Status Icon
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: _getStatusColor(transaction.status),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(
-              _getStatusIcon(transaction.status),
-              color: Colors.white,
-              size: 24,
-            ),
-          ),
-
-          const SizedBox(width: 16),
-
-          // Transaction Details
-          Expanded(
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(20),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  transaction.description,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black87,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  transaction.reference,
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(height: 4),
+                // Main transaction info
                 Row(
                   children: [
-                    Text(
-                      'Online',
-                      style: TextStyle(
-                        color: Colors.grey[500],
-                        fontSize: 12,
+                    // Status Icon with animation
+                    Hero(
+                      tag: 'transaction_${transaction.id}',
+                      child: Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: _getStatusColor(transaction.status),
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: _getStatusColor(transaction.status).withOpacity(0.3),
+                              spreadRadius: 0,
+                              blurRadius: 8,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Icon(
+                          _getStatusIcon(transaction.status),
+                          color: Colors.white,
+                          size: 24,
+                        ),
                       ),
                     ),
+
+                    const SizedBox(width: 16),
+
+                    // Transaction Details
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Fee description
+                          Text(
+                            _getTransactionDescription(),
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          const SizedBox(height: 6),
+
+                          // Transaction ID with copy functionality
+                          GestureDetector(
+                            onTap: _copyTransactionId,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.receipt_outlined,
+                                  size: 14,
+                                  color: Colors.grey[500],
+                                ),
+                                const SizedBox(width: 4),
+                                Flexible(
+                                  child: Text(
+                                    transaction.transactionId,
+                                    style: TextStyle(
+                                      color: Colors.grey[600],
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                const SizedBox(width: 4),
+                                Icon(
+                                  Icons.copy,
+                                  size: 12,
+                                  color: Colors.grey[400],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // Amount
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          '₦${NumberFormat('#,##0').format(transaction.amount)}',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: _getAmountColor(),
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        _buildStatusChip(),
+                      ],
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 16),
+
+                // Additional details row
+                Row(
+                  children: [
+                    // Payment method
+                    _buildInfoChip(
+                      icon: Icons.payment,
+                      text: transaction.paymentMethod,
+                      color: Colors.blue,
+                    ),
+
                     const SizedBox(width: 8),
-                    Container(
-                      width: 4,
-                      height: 4,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[400],
-                        borderRadius: BorderRadius.circular(2),
-                      ),
+
+                    // Date
+                    _buildInfoChip(
+                      icon: Icons.access_time,
+                      text: _formatDateTime(transaction.datePaid),
+                      color: Colors.grey,
                     ),
-                    const SizedBox(width: 8),
-                    Text(
-                      _formatDateTime(transaction.date),
-                      style: TextStyle(
-                        color: Colors.grey[500],
-                        fontSize: 12,
-                      ),
-                    ),
+
+                    const Spacer(),
+
+                    // Receipt button (if available)
+                    if (transaction.receiptUrl.isNotEmpty)
+                      _buildReceiptButton(),
                   ],
                 ),
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
 
-          // Amount and Status
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                '₦${transaction.amount.toStringAsFixed(0)}',
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
-              ),
-              const SizedBox(height: 6),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                decoration: BoxDecoration(
-                  color: _getStatusColor(transaction.status).withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: _getStatusColor(transaction.status).withOpacity(0.3),
-                    width: 1,
-                  ),
-                ),
-                child: Text(
-                  _getStatusText(transaction.status),
-                  style: TextStyle(
-                    color: _getStatusColor(transaction.status),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ],
+  Widget _buildStatusChip() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration: BoxDecoration(
+        color: _getStatusColor(transaction.status).withOpacity(0.1),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: _getStatusColor(transaction.status).withOpacity(0.3),
+          width: 1,
+        ),
+      ),
+      child: Text(
+        _getDisplayStatus(),
+        style: TextStyle(
+          color: _getStatusColor(transaction.status),
+          fontSize: 10,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 0.5,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInfoChip({
+    required IconData icon,
+    required String text,
+    required Color color,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            size: 12,
+            color: color,
+          ),
+          const SizedBox(width: 4),
+          Text(
+            text,
+            style: TextStyle(
+              color: color,
+              fontSize: 11,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ],
       ),
     );
   }
 
-  Color _getStatusColor(PaymentStatus status) {
-    switch (status) {
-      case PaymentStatus.successful:
+  Widget _buildReceiptButton() {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(8),
+        onTap: onReceiptTap,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+          decoration: BoxDecoration(
+            color: Colors.green.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              color: Colors.green.withOpacity(0.3),
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: const [
+              Icon(
+                Icons.download_outlined,
+                size: 14,
+                color: Colors.green,
+              ),
+              SizedBox(width: 4),
+              Text(
+                'Receipt',
+                style: TextStyle(
+                  color: Colors.green,
+                  fontSize: 10,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  String _getTransactionDescription() {
+    if (transaction.fees.isNotEmpty) {
+      return transaction.fees.map((fee) => fee.fee).join(', ');
+    }
+    return transaction.description;
+  }
+
+  String _getDisplayStatus() {
+    switch (transaction.status.toLowerCase()) {
+      case 'successful and completed':
+        return 'COMPLETED';
+      case 'successful':
+        return 'SUCCESS';
+      case 'failed':
+        return 'FAILED';
+      case 'pending':
+        return 'PENDING';
+      case 'processing':
+        return 'PROCESSING';
+      default:
+        return transaction.status.toUpperCase();
+    }
+  }
+
+  Color _getAmountColor() {
+    switch (transaction.status.toLowerCase()) {
+      case 'successful':
+      case 'successful and completed':
+        return Colors.green[700]!;
+      case 'failed':
+        return Colors.red[700]!;
+      default:
+        return Colors.black87;
+    }
+  }
+
+  void _copyTransactionId() {
+    Clipboard.setData(ClipboardData(text: transaction.transactionId));
+    // You might want to show a snackbar here
+  }
+
+  Color _getStatusColor(String status) {
+    switch (status.toLowerCase().trim()) {
+      case 'successful':
+      case 'successful and completed':
+      case 'completed':
         return Colors.green;
-      case PaymentStatus.failed:
+      case 'failed':
+      case 'error':
         return Colors.red;
-      case PaymentStatus.pending:
+      case 'pending':
+      case 'processing':
         return Colors.orange;
-
-
+      default:
+        return Colors.grey;
     }
   }
 
-  IconData _getStatusIcon(PaymentStatus status) {
-    switch (status) {
-      case PaymentStatus.successful:
-        return Icons.check_circle;
-      case PaymentStatus.failed:
-        return Icons.cancel;
-      case PaymentStatus.pending:
-        return Icons.schedule;
-
+  IconData _getStatusIcon(String status) {
+    switch (status.toLowerCase().trim()) {
+      case 'successful':
+      case 'successful and completed':
+      case 'completed':
+        return Icons.check_circle_rounded;
+      case 'failed':
+      case 'error':
+        return Icons.error_rounded;
+      case 'pending':
+        return Icons.schedule_rounded;
+      case 'processing':
+        return Icons.sync_rounded;
+      default:
+        return Icons.help_outline_rounded;
     }
   }
 
-  String _getStatusText(PaymentStatus status) {
-    switch (status) {
-      case PaymentStatus.successful:
-        return 'Successful';
-      case PaymentStatus.failed:
-        return 'Failed';
-      case PaymentStatus.pending:
-        return 'Pending';
+  String _formatDateTime(DateTime? dateTime) {
+    if (dateTime == null) return 'N/A';
+
+    final now = DateTime.now();
+    final difference = now.difference(dateTime);
+
+    // Show relative time for recent transactions
+    if (difference.inDays == 0) {
+      return 'Today, ${DateFormat('h:mm a').format(dateTime)}';
+    } else if (difference.inDays == 1) {
+      return 'Yesterday, ${DateFormat('h:mm a').format(dateTime)}';
+    } else if (difference.inDays < 7) {
+      return DateFormat('E, h:mm a').format(dateTime); // Mon, 2:30 PM
+    } else {
+      return DateFormat('MMM d, h:mm a').format(dateTime); // Sep 14, 2:30 PM
     }
   }
+}
 
-  String _formatDateTime(DateTime dateTime) {
-    const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
+// Enhanced usage example
+class PaymentHistoryList extends StatelessWidget {
+  final List<PaymentTransaction> transactions;
+  final Function(PaymentTransaction)? onTransactionTap;
+  final Function(PaymentTransaction)? onReceiptDownload;
 
-    final day = dateTime.day;
-    final month = months[dateTime.month - 1];
-    final year = dateTime.year;
-    final hour = dateTime.hour;
-    final minute = dateTime.minute.toString().padLeft(2, '0');
-    final period = hour >= 12 ? 'AM' : 'PM';
-    final displayHour = hour > 12 ? hour - 12 : hour == 0 ? 12 : hour;
+  const PaymentHistoryList({
+    super.key,
+    required this.transactions,
+    this.onTransactionTap,
+    this.onReceiptDownload,
+  });
 
-    return '$month $day, $year/$displayHour:$minute $period';
+  @override
+  Widget build(BuildContext context) {
+    if (transactions.isEmpty) {
+      return _buildEmptyState();
+    }
+
+    return ListView.builder(
+      padding: const EdgeInsets.all(16),
+      itemCount: transactions.length,
+      itemBuilder: (context, index) {
+        final transaction = transactions[index];
+        return PaymentHistoryItem(
+          transaction: transaction,
+          onTap: () => onTransactionTap?.call(transaction),
+          onReceiptTap: () => onReceiptDownload?.call(transaction),
+        );
+      },
+    );
+  }
+
+  Widget _buildEmptyState() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.receipt_long_outlined,
+            size: 64,
+            color: Colors.grey[400],
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'No Payment History',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: Colors.grey[700],
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Your payment transactions will appear here',
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey[500],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

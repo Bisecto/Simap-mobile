@@ -25,38 +25,62 @@ class FeeBloc extends Bloc<FeeEvent, FeeState> {
       String accessToken =
       await SharedPref.getString(SharedPreferenceKey().accessTokenKey);
 
-      final fees = await _repository.getFees(accessToken);
-      final paymentHistory = await _repository.getPaymentHistory();
+      final feesResponse = await _repository.getFees(accessToken);
 
-      final totalPaid = paymentHistory
-          .where((t) => t.status == PaymentStatus.successful)
-          .fold(0.0, (sum, t) => sum + t.amount);
+      // Handle case where API call succeeds but success is false
+      if (!feesResponse.success) {
+        emit(FeeError('Failed to load fees data'));
+        return;
+      }
 
-      final totalDue = fees
-          .where((f) => f.status == PaymentStatus.pending)
-          .fold(0.0, (sum, f) => sum + f.amount);
+      // Handle empty fees list
+      if (feesResponse.fees.isEmpty) {
+        emit(FeeLoaded(
+          fees: [],
+          paymentHistory: [], // You might need to get this from another endpoint
+          totalPaid: feesResponse.financialSummary.totalPaid,
+          totalDue: feesResponse.financialSummary.totalDue,
+          financialSummary: feesResponse.financialSummary,
+          student: feesResponse.student,
+          activeTerm: feesResponse.activeTerm,
+          activeSession: feesResponse.activeSession,
+        ));
+        return;
+      }
+
+      final paymentHistory = await _repository.getPaymentHistory(token: accessToken);
+
+      final totalPaid = feesResponse.financialSummary.totalPaid;
+      final totalDue = feesResponse.financialSummary.totalOutstanding;
 
       emit(FeeLoaded(
-        fees: fees,
-        paymentHistory: paymentHistory,
+        fees: feesResponse.fees,
+        paymentHistory: paymentHistory.paymentHistory,
         totalPaid: totalPaid,
         totalDue: totalDue,
+        financialSummary: feesResponse.financialSummary,
+        student: feesResponse.student,
+        activeTerm: feesResponse.activeTerm,
+        activeSession: feesResponse.activeSession,
       ));
     } catch (error) {
+      print('Error in _onLoadFees: $error');
       emit(FeeError(error.toString()));
     }
   }
 
   Future<void> _onLoadPaymentHistory(LoadPaymentHistory event, Emitter<FeeState> emit) async {
     try {
-      final paymentHistory = await _repository.getPaymentHistory();
+      String accessToken =
+      await SharedPref.getString(SharedPreferenceKey().accessTokenKey);
+      final paymentHistory = await _repository.getPaymentHistory(token:accessToken );
       if (state is FeeLoaded) {
         final currentState = state as FeeLoaded;
         emit(FeeLoaded(
           fees: currentState.fees,
-          paymentHistory: paymentHistory,
+          paymentHistory: paymentHistory.paymentHistory,
           totalPaid: currentState.totalPaid,
-          totalDue: currentState.totalDue,
+          totalDue: currentState.totalDue, financialSummary: currentState.financialSummary, student: currentState.student, activeTerm: currentState.activeTerm, activeSession: currentState.activeSession,
         ));
       }
     } catch (error) {
@@ -77,7 +101,7 @@ class FeeBloc extends Bloc<FeeEvent, FeeState> {
   Future<void> _onVerifyPayment(VerifyPayment event, Emitter<FeeState> emit) async {
     emit(FeeLoading());
     try {
-      final transaction = await _repository.verifyPayment(event.reference);
+      final transaction =null;
       emit(PaymentVerified(transaction));
     } catch (error) {
       emit(FeeError(error.toString()));

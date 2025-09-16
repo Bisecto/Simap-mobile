@@ -1,7 +1,9 @@
 import 'package:equatable/equatable.dart';
 
 import '../../model/fee/fee_item.dart';
+import '../../model/fee/fee_summary.dart';
 import '../../model/fee/payment_transaction.dart';
+import '../../view/app_screens/fee_section/fee_detail.dart';
 
 abstract class FeeState extends Equatable {
   const FeeState();
@@ -19,18 +21,22 @@ class FeeLoaded extends FeeState {
   final List<PaymentTransaction> paymentHistory;
   final double totalPaid;
   final double totalDue;
+  final FinancialSummary financialSummary;
+  final StudentInfo student;
+  final String activeTerm;
+  final String activeSession;
 
-  const FeeLoaded({
+  FeeLoaded({
     required this.fees,
     required this.paymentHistory,
     required this.totalPaid,
     required this.totalDue,
+    required this.financialSummary,
+    required this.student,
+    required this.activeTerm,
+    required this.activeSession,
   });
-
-  @override
-  List<Object> get props => [fees, paymentHistory, totalPaid, totalDue];
 }
-
 class PaymentInitiated extends FeeState {
   final String paymentUrl;
   final FeeItem fee;

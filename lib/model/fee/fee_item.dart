@@ -1,81 +1,77 @@
 import 'package:equatable/equatable.dart';
 
 enum PaymentStatus { pending, successful, failed }
-
-class FeeItem extends Equatable {
+class FeeItem {
   final String id;
-  final String type;
+  final String fee; // Changed from 'type' to 'fee' to match API
   final double amount;
+  final double paid;
+  final double outstanding;
+  final String status;
+  final DateTime? dateAssigned;
+  final DateTime? dueDate;
+  final bool isOverdue;
+  final bool isMandatory;
+  final String description;
   final String session;
   final String term;
-  final PaymentStatus status;
-  final String reference;
-  final DateTime? dueDate;
-  final DateTime? paidDate;
+  final String feeType;
 
-  const FeeItem({
+  FeeItem({
     required this.id,
-    required this.type,
+    required this.fee,
     required this.amount,
+    required this.paid,
+    required this.outstanding,
+    required this.status,
+    this.dateAssigned,
+    this.dueDate,
+    required this.isOverdue,
+    required this.isMandatory,
+    required this.description,
     required this.session,
     required this.term,
-    required this.status,
-    required this.reference,
-    this.dueDate,
-    this.paidDate,
+    required this.feeType,
   });
-
-  @override
-  List<Object?> get props => [
-    id,
-    type,
-    amount,
-    session,
-    term,
-    status,
-    reference,
-    dueDate,
-    paidDate,
-  ];
-
-  FeeItem copyWith({
-    String? id,
-    String? type,
-    double? amount,
-    String? session,
-    String? term,
-    PaymentStatus? status,
-    String? reference,
-    DateTime? dueDate,
-    DateTime? paidDate,
-  }) {
-    return FeeItem(
-      id: id ?? this.id,
-      type: type ?? this.type,
-      amount: amount ?? this.amount,
-      session: session ?? this.session,
-      term: term ?? this.term,
-      status: status ?? this.status,
-      reference: reference ?? this.reference,
-      dueDate: dueDate ?? this.dueDate,
-      paidDate: paidDate ?? this.paidDate,
-    );
-  }
 
   factory FeeItem.fromJson(Map<String, dynamic> json) {
     return FeeItem(
-      id: json['id'],
-      type: json['type'],
-      amount: json['amount'].toDouble(),
-      session: json['session'],
-      term: json['term'],
-      status: PaymentStatus.values.firstWhere(
-            (e) => e.toString().split('.').last == json['status'],
-        orElse: () => PaymentStatus.pending,
-      ),
-      reference: json['reference'],
-      dueDate: json['dueDate'] != null ? DateTime.parse(json['dueDate']) : null,
-      paidDate: json['paidDate'] != null ? DateTime.parse(json['paidDate']) : null,
+      id: json['id']?.toString() ?? '',
+      fee: json['Fee'] ?? '',
+      amount: (json['amount'] ?? 0).toDouble(),
+      paid: (json['paid'] ?? 0).toDouble(),
+      outstanding: (json['outstanding'] ?? 0).toDouble(),
+      status: json['status'] ?? 'pending',
+      dateAssigned: json['date_assigned'] != null
+          ? DateTime.tryParse(json['date_assigned'])
+          : null,
+      dueDate: json['due_date'] != null
+          ? DateTime.tryParse(json['due_date'])
+          : null,
+      isOverdue: json['is_overdue'] ?? false,
+      isMandatory: json['is_mandatory'] ?? true,
+      description: json['description'] ?? '',
+      session: json['session'] ?? '',
+      term: json['term'] ?? '',
+      feeType: json['fee_type'] ?? '',
     );
+  }
+
+  // Helper getter for backward compatibility
+  String get type => fee;
+
+  // Helper getter to convert status to PaymentStatus enum if you have one
+  PaymentStatus get paymentStatus {
+    switch (status.toLowerCase()) {
+      case 'pending':
+        return PaymentStatus.pending;
+      case 'successful':
+      case 'paid':
+        return PaymentStatus.successful;
+      case 'failed':
+        return PaymentStatus.failed;
+      default:
+        return PaymentStatus.pending;
+    }
   }
 }
