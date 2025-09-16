@@ -15,6 +15,7 @@ import '../../../../../bloc/student_performance_bloc/student_performance_bloc.da
 import '../../../../../bloc/student_performance_bloc/student_performance_event.dart';
 import '../../../../../bloc/student_performance_bloc/student_performance_state.dart';
 import '../../../../../model/class_model.dart';
+import '../../../../../model/perfomance/overall_performance.dart';
 import '../../../../../model/perfomance/student_performance.dart';
 import '../../../../../model/school_model.dart';
 import '../../../../../model/session_model.dart';
@@ -422,14 +423,113 @@ class _PerformancePageState extends State<PerformancePage>
     );
   }
 
-  Widget _buildPerformanceSummaryCard(
-      StudentPerformanceComparison performance) {
+  // Widget _buildPerformanceSummaryCard(
+  //     StudentPerformanceComparison performance) {
+  //   final currentPerformance = performance.overallPerformance.first;
+  //   final previousPerformance = performance.overallPerformance.last;
+  //   final improvement =
+  //       currentPerformance.average - previousPerformance.average;
+  //   final positionChange =
+  //       previousPerformance.position - currentPerformance.position;
+  //
+  //   return Container(
+  //     decoration: BoxDecoration(
+  //       boxShadow: [
+  //         BoxShadow(
+  //           color: Colors.black.withOpacity(0.15),
+  //           spreadRadius: 0,
+  //           blurRadius: 10,
+  //           offset: const Offset(0, 4),
+  //         ),
+  //       ],
+  //       color: AppColors.white,
+  //       borderRadius: BorderRadius.circular(10),
+  //     ),
+  //     child: Padding(
+  //       padding: const EdgeInsets.all(16),
+  //       child: Column(
+  //         crossAxisAlignment: CrossAxisAlignment.start,
+  //         children: [
+  //           Text(
+  //             'Performance Summary',
+  //             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+  //                   fontWeight: FontWeight.bold,
+  //                   color: AppColors.primaryColor,
+  //                 ),
+  //           ),
+  //           const SizedBox(height: 16),
+  //           Row(
+  //             children: [
+  //               Expanded(
+  //                 child: _buildSummaryItem(
+  //                   'Current Average',
+  //                   '${currentPerformance.average.toStringAsFixed(1)}%',
+  //                   AppColors.primaryColor,
+  //                   Icons.trending_up,
+  //                 ),
+  //               ),
+  //               Expanded(
+  //                 child: _buildSummaryItem(
+  //                   'Current Position',
+  //                   '#${currentPerformance.position}',
+  //                   Colors.green,
+  //                   Icons.emoji_events,
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //           const SizedBox(height: 12),
+  //           Row(
+  //             children: [
+  //               Expanded(
+  //                 child: _buildSummaryItem(
+  //                   'Improvement',
+  //                   '${improvement >= 0 ? '+' : ''}${improvement.toStringAsFixed(1)}%',
+  //                   improvement >= 0 ? Colors.green : Colors.red,
+  //                   improvement >= 0
+  //                       ? Icons.arrow_upward
+  //                       : Icons.arrow_downward,
+  //                 ),
+  //               ),
+  //               Expanded(
+  //                 child: _buildSummaryItem(
+  //                   'Position Change',
+  //                   '${positionChange > 0 ? '+' : ''}$positionChange',
+  //                   positionChange > 0 ? Colors.green : Colors.red,
+  //                   positionChange > 0
+  //                       ? Icons.arrow_upward
+  //                       : Icons.arrow_downward,
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
+  Widget _buildPerformanceSummaryCard(StudentPerformanceComparison performance) {
+    // Check if overallPerformance list is empty
+    if (performance.overallPerformance.isEmpty) {
+      return _buildEmptyPerformanceSummaryCard();
+    }
+
+    // Check if we have at least one performance record
+    if (performance.overallPerformance.length < 1) {
+      return _buildEmptyPerformanceSummaryCard();
+    }
+
     final currentPerformance = performance.overallPerformance.first;
+
+    // Handle case where we only have one performance record (no comparison possible)
+    if (performance.overallPerformance.length == 1) {
+      return _buildSinglePerformanceSummaryCard(currentPerformance);
+    }
+
+    // Safe to access both first and last now
     final previousPerformance = performance.overallPerformance.last;
-    final improvement =
-        currentPerformance.average - previousPerformance.average;
-    final positionChange =
-        previousPerformance.position - currentPerformance.position;
+    final improvement = currentPerformance.average - previousPerformance.average;
+    final positionChange = previousPerformance.position - currentPerformance.position;
 
     return Container(
       decoration: BoxDecoration(
@@ -452,9 +552,9 @@ class _PerformancePageState extends State<PerformancePage>
             Text(
               'Performance Summary',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primaryColor,
-                  ),
+                fontWeight: FontWeight.bold,
+                color: AppColors.primaryColor,
+              ),
             ),
             const SizedBox(height: 16),
             Row(
@@ -485,9 +585,7 @@ class _PerformancePageState extends State<PerformancePage>
                     'Improvement',
                     '${improvement >= 0 ? '+' : ''}${improvement.toStringAsFixed(1)}%',
                     improvement >= 0 ? Colors.green : Colors.red,
-                    improvement >= 0
-                        ? Icons.arrow_upward
-                        : Icons.arrow_downward,
+                    improvement >= 0 ? Icons.arrow_upward : Icons.arrow_downward,
                   ),
                 ),
                 Expanded(
@@ -495,12 +593,148 @@ class _PerformancePageState extends State<PerformancePage>
                     'Position Change',
                     '${positionChange > 0 ? '+' : ''}$positionChange',
                     positionChange > 0 ? Colors.green : Colors.red,
-                    positionChange > 0
-                        ? Icons.arrow_upward
-                        : Icons.arrow_downward,
+                    positionChange > 0 ? Icons.arrow_upward : Icons.arrow_downward,
                   ),
                 ),
               ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  Widget _buildEmptyPerformanceSummaryCard() {
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.15),
+            spreadRadius: 0,
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Performance Summary',
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: AppColors.primaryColor,
+              ),
+            ),
+            const SizedBox(height: 32),
+            Center(
+              child: Column(
+                children: [
+                  Icon(
+                    Icons.assessment_outlined,
+                    size: 64,
+                    color: Colors.grey[400],
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'No Performance Data Available',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey[700],
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Performance data will appear here once available',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey[500],
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 32),
+          ],
+        ),
+      ),
+    );
+  }
+  Widget _buildSinglePerformanceSummaryCard(OverallPerformance currentPerformance) {
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.15),
+            spreadRadius: 0,
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Performance Summary',
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: AppColors.primaryColor,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: _buildSummaryItem(
+                    'Current Average',
+                    '${currentPerformance.average.toStringAsFixed(1)}%',
+                    AppColors.primaryColor,
+                    Icons.trending_up,
+                  ),
+                ),
+                Expanded(
+                  child: _buildSummaryItem(
+                    'Current Position',
+                    '#${currentPerformance.position}',
+                    Colors.green,
+                    Icons.emoji_events,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.blue[50],
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: Colors.blue[200]!),
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.info_outline, color: Colors.blue[600], size: 20),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Comparison data will be available with more performance records',
+                      style: TextStyle(
+                        color: Colors.blue[700],
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
