@@ -4,7 +4,6 @@ abstract class StoreEvent {}
 
 class LoadHomeProducts extends StoreEvent {}
 
-class LoadRecommendedProducts extends StoreEvent {}
 
 class LoadAllProducts extends StoreEvent {}
 

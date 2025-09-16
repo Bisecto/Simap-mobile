@@ -14,32 +14,14 @@ class StoreScreen extends StatefulWidget {
 }
 
 class _StoreScreenState extends State<StoreScreen> {
-  int _selectedTabIndex = 0;
-  String _selectedCategory = 'All Categories';
+  final int _selectedTabIndex = 0;
+  final String _selectedCategory = 'All Products';
 
   @override
   void initState() {
     super.initState();
     // Load recommended products by default
-    context.read<StoreBloc>().add(LoadRecommendedProducts());
-  }
-
-  void _onTabSelected(int index) {
-    setState(() {
-      _selectedTabIndex = index;
-    });
-
-    switch (index) {
-      case 0:
-        context.read<StoreBloc>().add(LoadRecommendedProducts());
-        break;
-      case 1:
-        context.read<StoreBloc>().add(LoadAllProducts());
-        break;
-      case 2:
-        context.read<StoreBloc>().add(LoadNewProducts());
-        break;
-    }
+    context.read<StoreBloc>().add(LoadAllProducts());
   }
 
   @override
@@ -78,21 +60,6 @@ class _StoreScreenState extends State<StoreScreen> {
       ),
       body: Column(
         children: [
-          // Tab Bar
-          Container(
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              children: [
-                _buildTab('Recommended', 0),
-                const SizedBox(width: 12),
-                _buildTab('All', 1),
-                const SizedBox(width: 12),
-                _buildTab('Newly', 2),
-              ],
-            ),
-          ),
-
-          // Category Selector and Cart Button
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
@@ -194,9 +161,7 @@ class _StoreScreenState extends State<StoreScreen> {
                         const SizedBox(height: 8),
                         ElevatedButton(
                           onPressed: () {
-                            context
-                                .read<StoreBloc>()
-                                .add(LoadRecommendedProducts());
+                            context.read<StoreBloc>().add(LoadAllProducts());
                           },
                           child: const Text('Retry'),
                         ),
@@ -212,37 +177,6 @@ class _StoreScreenState extends State<StoreScreen> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildTab(String title, int index) {
-    final isSelected = _selectedTabIndex == index;
-    return GestureDetector(
-      onTap: () => _onTabSelected(index),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        decoration: BoxDecoration(
-          color: isSelected ? Colors.white : Colors.transparent,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: isSelected
-              ? [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
-                  ),
-                ]
-              : null,
-        ),
-        child: Text(
-          title,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-            color: isSelected ? Colors.black : Colors.grey[600],
-          ),
-        ),
       ),
     );
   }

@@ -9,7 +9,6 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
 
   StoreBloc({required this.storeService}) : super(StoreInitial()) {
     on<LoadHomeProducts>(_onLoadHomeProducts);
-    on<LoadRecommendedProducts>(_onLoadRecommendedProducts);
     on<LoadAllProducts>(_onLoadAllProducts);
     on<LoadNewProducts>(_onLoadNewProducts);
     on<AddToCart>(_onAddToCart);
@@ -33,23 +32,7 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
     }
   }
 
-  Future<void> _onLoadRecommendedProducts(
-      LoadRecommendedProducts event,
-      Emitter<StoreState> emit,
-      ) async {
-    emit(StoreLoading());
-    try {
-      final response = await storeService.getRecommendedProducts();
-      emit(StoreLoaded(
-        products: response.pageObj.objectList,
-        pageName: response.pageName,
-        hasNext: response.pageObj.hasNext,
-        hasPrevious: response.pageObj.hasPrevious,
-      ));
-    } catch (e) {
-      emit(StoreError(e.toString()));
-    }
-  }
+
 
   Future<void> _onLoadAllProducts(
       LoadAllProducts event,
