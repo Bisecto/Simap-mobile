@@ -61,7 +61,7 @@ print(widget.sessionModel);
     views = [
       HomePage(
         studentProfile: widget.studentProfile,
-        classModel: widget.classModel,
+        classModel: widget.classModel, subjectList: widget.subjectList,
       ),
       SingleSessionResult(
         currentSessionModel: widget.sessionModel,

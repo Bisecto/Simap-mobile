@@ -52,9 +52,16 @@ class ResultBloc extends Bloc<ResultEvent, ResultState> {
     //AppUtils().debuglog(resultRespomse.body);
     if (resultRespomse.statusCode == 200 || resultRespomse.statusCode == 201) {
       print(json.decode(resultRespomse.body));
-      ResultModel resultModel =
-          ResultModel.fromJson(jsonDecode(resultRespomse.body));
-      emit(InitialSuccessState("Successful", resultModel));
+      if(jsonDecode(resultRespomse.body)['message_archive']==null){
+        ResultModel resultModel =
+        ResultModel.fromJson(jsonDecode(resultRespomse.body));
+        emit(InitialSuccessState("Successful", resultModel));
+      } else{
+        emit(ErrorState(
+            jsonDecode(resultRespomse.body)['message_archive']));
+        emit(ResultInitial());
+      }
+
     } else if (resultRespomse.statusCode == 401) {
       emit(AccessTokenExpireState());
     } else if (resultRespomse.statusCode == 500 ||

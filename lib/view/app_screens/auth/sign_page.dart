@@ -28,11 +28,11 @@ class SignPage extends StatefulWidget {
 
 class _SignPageState extends State<SignPage> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController(text:'UHS20220156');
-  final _schoolIdController = TextEditingController(text: 'uhs');
+  final _emailController = TextEditingController(text:'amanda.kalu');
+  final _schoolIdController = TextEditingController(text: 'demo');
   final AuthBloc authBloc = AuthBloc();
 
-  final _passwordController = TextEditingController(text: 'angumepass');
+  final _passwordController = TextEditingController(text: 'Qwerty123@');
   String appSchoolName = '';
   String appLogo = '';
 

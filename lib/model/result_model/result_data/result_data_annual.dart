@@ -17,7 +17,7 @@ class ResultDataAnnual {
     subjectResults: List<AnnualSubjectResult>.from(json["subject_results"].map((x) => AnnualSubjectResult.fromJson(x))),
     annualTotal: json["annual_total"],
     annualAverage: json["annual_average"],
-    annualPosition: json["annual_position"],
+    annualPosition: json["annual_position"]??'',
   );
 
   Map<String, dynamic> toJson() => {

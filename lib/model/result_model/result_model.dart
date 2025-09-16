@@ -21,7 +21,7 @@ class ResultModel {
   ResultTemplate resultTemplate;
  // Controls controls;
   CurrentData currentData;
-  TermsIdDic termsIdDic;
+  //TermsIdDic termsIdDic;
   dynamic thirdId;
 
   ResultModel({
@@ -30,7 +30,7 @@ class ResultModel {
     required this.resultTemplate,
    // required this.controls,
     required this.currentData,
-    required this.termsIdDic,
+    //required this.termsIdDic,
     required this.thirdId,
   });
 
@@ -40,7 +40,7 @@ class ResultModel {
     resultTemplate: ResultTemplate.fromJson(json["result_template"]),
     //controls: Controls.fromJson(json["controls"]),
     currentData: CurrentData.fromJson(json["current_data"]),
-    termsIdDic: TermsIdDic.fromJson(json["terms_id_dic"]),
+    //termsIdDic: TermsIdDic.fromJson(json["terms_id_dic"]),
     thirdId: json["third_id"],
   );
 
@@ -50,7 +50,7 @@ class ResultModel {
     "result_template": resultTemplate.toJson(),
    // "controls": controls.toJson(),
     "current_data": currentData.toJson(),
-    "terms_id_dic": termsIdDic.toJson(),
+    //"terms_id_dic": termsIdDic.toJson(),
     "third_id": thirdId,
   };
 }

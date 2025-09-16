@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 import '../../../../../model/perfomance/filter_option.dart';
 import '../../../../../model/session_model.dart';
 
-
 class FilterSection extends StatefulWidget {
   final FilterOptions filters;
-  final Function(String term, String sessionId, String classId) onFiltersChanged;
-  final List<SessionModel>? availableSessions; // Add support for your SessionModel
+  final Function(String term, String sessionId, String classId)
+      onFiltersChanged;
+  final List<SessionModel>?
+      availableSessions; // Add support for your SessionModel
 
   const FilterSection({
     Key? key,
@@ -60,28 +61,12 @@ class _FilterSectionState extends State<FilterSection> {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.only(bottom: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Icon(
-                  Icons.filter_list,
-                  color: Colors.indigo,
-                  size: 20,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  'Filter Performance Data',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.indigo,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
+
+            const SizedBox(height: 10),
             Row(
               children: [
                 Expanded(
@@ -110,12 +95,13 @@ class _FilterSectionState extends State<FilterSection> {
         Text(
           'Term',
           style: Theme.of(context).textTheme.labelMedium?.copyWith(
-            fontWeight: FontWeight.w600,
-            color: Colors.grey[700],
-          ),
+                fontWeight: FontWeight.w600,
+                color: Colors.grey[700],
+              ),
         ),
         const SizedBox(height: 8),
         Container(
+          height: 35,
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey[300]!),
             borderRadius: BorderRadius.circular(8),
@@ -125,13 +111,13 @@ class _FilterSectionState extends State<FilterSection> {
               value: selectedTerm,
               isExpanded: true,
               padding: const EdgeInsets.symmetric(horizontal: 12),
-              icon: Icon(Icons.keyboard_arrow_down, color: Colors.indigo),
+              icon: const Icon(Icons.keyboard_arrow_down, color: Colors.indigo),
               items: widget.filters.terms.map((term) {
                 return DropdownMenuItem(
                   value: term,
                   child: Text(
                     term,
-                    style: const TextStyle(fontSize: 14),
+                    style: const TextStyle(fontSize: 12),
                   ),
                 );
               }).toList(),
@@ -153,19 +139,23 @@ class _FilterSectionState extends State<FilterSection> {
   Widget _buildSessionFilter() {
     // Use available sessions if provided, otherwise use filter sessions
     final sessionsToShow = widget.availableSessions ??
-        widget.filters.sessions.map((s) => SessionModel(
-          id: s.id,
-          session: s.session,
-          sessionSlug: s.session.toLowerCase().replaceAll('/', '-'),
-          activeSession: false,
-          branch: 1,
-        )).toList();
+        widget.filters.sessions
+            .map((s) => SessionModel(
+                  id: s.id,
+                  session: s.session,
+                  sessionSlug: s.session.toLowerCase().replaceAll('/', '-'),
+                  activeSession: false,
+                  branch: 1,
+                ))
+            .toList();
 
     // Extract all available session IDs
-    final availableSessionIds = sessionsToShow.map((s) => s.id.toString()).toSet();
+    final availableSessionIds =
+        sessionsToShow.map((s) => s.id.toString()).toSet();
 
     // Validate selectedSessionId - set to null if it doesn't exist in available options
-    final validatedSessionId = (selectedSessionId != null && availableSessionIds.contains(selectedSessionId))
+    final validatedSessionId = (selectedSessionId != null &&
+            availableSessionIds.contains(selectedSessionId))
         ? selectedSessionId
         : null;
 
@@ -175,23 +165,30 @@ class _FilterSectionState extends State<FilterSection> {
         Text(
           'Session',
           style: Theme.of(context).textTheme.labelMedium?.copyWith(
-            fontWeight: FontWeight.w600,
-            color: Colors.grey[700],
-          ),
+                fontWeight: FontWeight.w600,
+                color: Colors.grey[700],
+              ),
         ),
         const SizedBox(height: 8),
         Container(
+          height: 35,
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey[300]!),
             borderRadius: BorderRadius.circular(8),
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
-              value: validatedSessionId, // Use validated value
+              value: validatedSessionId,
+              // Use validated value
               isExpanded: true,
               padding: const EdgeInsets.symmetric(horizontal: 12),
-              icon: Icon(Icons.keyboard_arrow_down, color: Colors.indigo),
-              hint: Text('Select Session'), // Add hint for when value is null
+              icon: const Icon(Icons.keyboard_arrow_down, color: Colors.indigo),
+              hint: const Text('Select',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.normal,
+                  )),
+              // Add hint for when value is null
               items: sessionsToShow.map((session) {
                 return DropdownMenuItem(
                   value: session.id.toString(),
@@ -211,7 +208,7 @@ class _FilterSectionState extends State<FilterSection> {
                         child: Text(
                           session.session,
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 12,
                             fontWeight: session.activeSession
                                 ? FontWeight.w600
                                 : FontWeight.normal,
@@ -236,6 +233,7 @@ class _FilterSectionState extends State<FilterSection> {
       ],
     );
   }
+
   Widget _buildClassFilter() {
     // Group classes by type
     final classGroups = <String, List<ClassFilter>>{};
@@ -252,12 +250,13 @@ class _FilterSectionState extends State<FilterSection> {
         Text(
           'Class',
           style: Theme.of(context).textTheme.labelMedium?.copyWith(
-            fontWeight: FontWeight.w600,
-            color: Colors.grey[700],
-          ),
+                fontWeight: FontWeight.w600,
+                color: Colors.grey[700],
+              ),
         ),
         const SizedBox(height: 8),
         Container(
+          height: 35,
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey[300]!),
             borderRadius: BorderRadius.circular(8),
@@ -267,26 +266,12 @@ class _FilterSectionState extends State<FilterSection> {
               value: selectedClassId,
               isExpanded: true,
               padding: const EdgeInsets.symmetric(horizontal: 7),
-              icon: Icon(Icons.keyboard_arrow_down, color: Colors.indigo),
+              icon: const Icon(Icons.keyboard_arrow_down, color: Colors.indigo),
               items: widget.filters.classes.map((classFilter) {
                 return DropdownMenuItem(
                   value: classFilter.id.toString(),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 10,
-                        height: 10,
-                        decoration: BoxDecoration(
-                          color: _getClassColor(classFilter.nameOfClassType),
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        classFilter.nameOfClassType,
-                        style: const TextStyle(fontSize: 12),
-                      ),
-                    ],
+                  child: Text(
+                    classFilter.nameOfClassType, style: const TextStyle(fontSize: 10),
                   ),
                 );
               }).toList(),
@@ -327,7 +312,6 @@ class _FilterSectionState extends State<FilterSection> {
   }
 }
 
-
 class FilterChip extends StatelessWidget {
   final String label;
   final bool isSelected;
@@ -350,9 +334,8 @@ class FilterChip extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected
-              ? (selectedColor ?? Colors.indigo)
-              : Colors.grey[100],
+          color:
+              isSelected ? (selectedColor ?? Colors.indigo) : Colors.grey[100],
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: isSelected
@@ -397,9 +380,9 @@ class QuickFilterBar extends StatelessWidget {
           child: Text(
             title,
             style: Theme.of(context).textTheme.titleSmall?.copyWith(
-              fontWeight: FontWeight.w600,
-              color: Colors.grey[700],
-            ),
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey[700],
+                ),
           ),
         ),
         SizedBox(

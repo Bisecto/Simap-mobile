@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:simap/res/app_icons.dart';
 import 'package:simap/utills/app_navigator.dart';
+import 'package:simap/utills/app_utils.dart';
 import 'package:simap/view/app_screens/quiz_section/quiz_summary.dart';
 
 import '../../../model/class_model.dart';
 import '../../../model/student_profile.dart';
+import '../../../model/subject.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_images.dart';
 import '../../widgets/appBar_widget.dart';
@@ -15,8 +17,16 @@ import '../home_section/home_page_components/welcome_container.dart';
 class AvailableSubjects extends StatefulWidget {
   StudentProfile studentProfile;
   ClassModel classModel;
+  final List<Subject> subjectList;
 
-   AvailableSubjects({super.key,required this.studentProfile,required this.classModel});
+  AvailableSubjects(
+      {super.key,
+      required this.studentProfile,
+      required this.classModel,
+      required this.subjectList}) {
+    // TODO: implement AvailableSubjects
+    //throw UnimplementedError();
+  }
 
   @override
   State<AvailableSubjects> createState() => _AvailableSubjectsState();
@@ -26,36 +36,55 @@ class _AvailableSubjectsState extends State<AvailableSubjects> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFFCFCFC),
+      backgroundColor: const Color(0xFFFCFCFC),
       body: SafeArea(
           child: Padding(
-        padding: EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(10.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
               MainAppBar(
-                isBackKey: true,studentProfile: widget.studentProfile, classModel: widget.classModel,
+                isBackKey: true,
+                studentProfile: widget.studentProfile,
+                classModel: widget.classModel,
               ),
               Padding(
-                padding: EdgeInsets.all(15.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    WelcomeContainer(
-                      welcomeMsg: 'Hello Champ 👋',
-                      mainText: 'Study Hard\nOkafor Precious',
-                      subText: '',
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    assignmentSubjectsContainer("English Language"),
-                    assignmentSubjectsContainer("Mathematics"),
-                    assignmentSubjectsContainer("Physics"),
-                    assignmentSubjectsContainer("Chemistry"),
-                    assignmentSubjectsContainer("Biology"),
-                    assignmentSubjectsContainer("Agricultural science"),
-                  ],
+                padding: const EdgeInsets.all(15.0),
+                child: SingleChildScrollView(
+                  physics:const NeverScrollableScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      WelcomeContainer(
+                        welcomeMsg: 'Hello Champ 👋',
+                        mainText:
+                            'Study Hard\n${widget.studentProfile.studentFullname}',
+                        subText: '',
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      SizedBox(
+                        height:widget.subjectList.length* 110,
+                        child: ListView.builder(
+                          physics:const NeverScrollableScrollPhysics(),
+
+                          itemCount: widget.subjectList.length,
+                          itemBuilder: (context, index) {
+                            return assignmentSubjectsContainer(
+                                widget.subjectList[index].subject.name);
+                          },
+                        ),
+                      ),
+
+                      // assignmentSubjectsContainer("English Language"),
+                      // assignmentSubjectsContainer("Mathematics"),
+                      // assignmentSubjectsContainer("Physics"),
+                      // assignmentSubjectsContainer("Chemistry"),
+                      // assignmentSubjectsContainer("Biology"),
+                      // assignmentSubjectsContainer("Agricultural science"),
+                    ],
+                  ),
                 ),
               )
             ],
@@ -70,7 +99,12 @@ class _AvailableSubjectsState extends State<AvailableSubjects> {
       padding: const EdgeInsets.only(top: 10.0),
       child: GestureDetector(
         onTap: () {
-          AppNavigator.pushAndStackPage(context, page: QuizSummary(subject: subject, studentProfile: widget.studentProfile, classModel: widget.classModel,));
+          AppNavigator.pushAndStackPage(context,
+              page: QuizSummary(
+                subject: subject,
+                studentProfile: widget.studentProfile,
+                classModel: widget.classModel,
+              ));
         },
         child: Container(
           height: 100,
@@ -90,17 +124,21 @@ class _AvailableSubjectsState extends State<AvailableSubjects> {
           child: Row(
             children: [
               CircleAvatar(
-                radius: 30,
+                radius: 25,
                 child: SvgPicture.asset(AppIcons.book),
               ),
               const SizedBox(
                 width: 10,
               ),
-              CustomText(
-                text: subject,
-                size: 16,
-                weight: FontWeight.w400,
-                color: AppColors.black,
+              SizedBox(
+                width: AppUtils.deviceScreenSize(context).width/2,
+                child: CustomText(
+                  text: subject,
+                  size: 14,
+                  weight: FontWeight.w400,
+                  color: AppColors.black,
+                  maxLines: 2,
+                ),
               ),
             ],
           ),

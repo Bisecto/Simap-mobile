@@ -36,108 +36,122 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<FutureOr<void>> signInEventClick(
       SignInEventClick event, Emitter<AuthState> emit) async {
     emit(LoadingState());
+
+    // Prepare login form data
     Map<String, String> formData = {
       'username': event.userData,
       'password': event.password,
     };
+
     AppUtils().debuglog(formData);
     AppRepository appRepository = AppRepository();
 
-    print(AppApis.http + event.schoolId + AppApis.loginStudent);
-    //try {
-    final loginResponse = await appRepository.postRequest(
-        formData, AppApis.http + event.schoolId + AppApis.loginStudent);
-
-    AppUtils().debuglog('Response status: ${loginResponse.statusCode}');
-    AppUtils().debuglog('Response body: ${loginResponse.body}');
-    AppUtils().debuglog(loginResponse.statusCode);
-
-    AppUtils().debuglog(loginResponse.body);
-    AppUtils().debuglog("loginResponse.body");
-    AppUtils().debuglog(loginResponse.headers);
-
-    if (loginResponse.statusCode == 200 || loginResponse.statusCode == 201) {
-      SchoolModel schoolModel =
-          SchoolModel.fromJson(json.decode(loginResponse.body)['school'][0]);
-
-      await SharedPref.putString(
-          SharedPreferenceKey().schoolIdKey, event.schoolId);
-      await SharedPref.putString(SharedPreferenceKey().accessTokenKey,
-          json.decode(loginResponse.body)['access']);
-      await SharedPref.putString(SharedPreferenceKey().refreshTokenKey,
-          json.decode(loginResponse.body)['refresh']);
-
-      final studentDashboardResponse = await appRepository.getRequestWithToken(
-        json.decode(loginResponse.body)['access'],
-        AppApis.http + event.schoolId + AppApis.dashboard,
+    try {
+      final loginResponse = await appRepository.postRequest(
+        formData,
+        AppApis.http + event.schoolId + AppApis.loginStudent,
       );
 
-      AppUtils()
-          .debuglog('se status: ${json.decode(loginResponse.body)['access']}');
-      AppUtils().debuglog(
-          'Dashboard Response status: ${studentDashboardResponse.statusCode}');
-      //AppUtils().debuglog('Dashboard Response body: ${studentDashboardResponse.body}');
+      AppUtils().debuglog('Response status: ${loginResponse.statusCode}');
+      AppUtils().debuglog('Response body: ${loginResponse.body}');
+      AppUtils().debuglog('Response headers: ${loginResponse.headers}');
 
-      if (studentDashboardResponse.statusCode == 200 ||
-          studentDashboardResponse.statusCode == 201) {
-        AppUtils().debuglog(studentDashboardResponse.body);
-        StudentProfile studentProfile = StudentProfile.fromJson(json
-            .decode(studentDashboardResponse.body)['current_data']['student']);
-        ClassModel classModel = ClassModel.fromJson(
-            json.decode(studentDashboardResponse.body)['current_data']
-                ['current_class']);
-        SessionModel sessionModel = SessionModel.fromJson(json
-            .decode(studentDashboardResponse.body)['current_data']['session']);
+      if (loginResponse.statusCode == 200 || loginResponse.statusCode == 201) {
+        final responseJson = json.decode(loginResponse.body);
 
-        AppUtils().debuglog(studentProfile);
-        AppUtils().debuglog(studentProfile);
-        List<dynamic> subjectJsonResponse =
-            json.decode(studentDashboardResponse.body)['subjects'];
+        // Parse school
+        SchoolModel schoolModel =
+        SchoolModel.fromJson(responseJson['school'][0]);
 
-        List<Subject> subjectList =
-            subjectJsonResponse.map((item) => Subject.fromJson(item)).toList();
-        final sessionRespomse = await appRepository.getRequestWithToken(
-            json.decode(loginResponse.body)['access'],
-            // formData,
-            '${AppApis.http}${event.schoolId}${AppApis.resultsArchive}');
+        // Save schoolId, tokens
+        await SharedPref.putString(
+            SharedPreferenceKey().schoolIdKey, event.schoolId);
+        await SharedPref.putString(
+            SharedPreferenceKey().accessTokenKey, responseJson['access']);
+        await SharedPref.putString(
+            SharedPreferenceKey().refreshTokenKey, responseJson['refresh']);
 
-        AppUtils().debuglog(sessionRespomse.statusCode);
-        //AppUtils().debuglog(resultRespomse.body);
+        // Save sessionid + csrftoken from headers (cookies)
+        if (loginResponse.headers['set-cookie'] != null) {
+          String rawCookies = loginResponse.headers['set-cookie']!;
+          List<String> cookieList = rawCookies.split(',');
+          for (var cookie in cookieList) {
+            if (cookie.contains("sessionid")) {
+              String sessionId = cookie.split(";").first.split("=").last;
+              await SharedPref.putString(
+                  SharedPreferenceKey().sessionIdKey, sessionId);
+            }
+            if (cookie.contains("csrftoken")) {
+              String csrf = cookie.split(";").first.split("=").last;
+              await SharedPref.putString(
+                  SharedPreferenceKey().csrftokenKey, csrf);
+            }
+          }
+        }
 
-          print(json.decode(sessionRespomse.body));
-          List<dynamic> sessionsJsonResponse = json.decode(sessionRespomse.body)['sessions'];
+        // Fetch dashboard
+        final studentDashboardResponse =
+        await appRepository.getRequestWithToken(
+          responseJson['access'],
+          AppApis.http + event.schoolId + AppApis.dashboard,
+        );
 
-          List<SessionModel> sessionsList = sessionsJsonResponse
-              .map((item) => SessionModel.fromJson(item))
+        AppUtils().debuglog(
+            'Dashboard status: ${studentDashboardResponse.statusCode}');
+
+        if (studentDashboardResponse.statusCode == 200 ||
+            studentDashboardResponse.statusCode == 201) {
+          final dashboardJson = json.decode(studentDashboardResponse.body);
+
+          StudentProfile studentProfile =
+          StudentProfile.fromJson(dashboardJson['current_data']['student']);
+          ClassModel classModel = ClassModel.fromJson(
+              dashboardJson['current_data']['current_class']);
+          SessionModel sessionModel =
+          SessionModel.fromJson(dashboardJson['current_data']['session']);
+
+          List<Subject> subjectList = (dashboardJson['subjects'] as List)
+              .map((item) => Subject.fromJson(item))
               .toList();
-        emit(SuccessState("Login Successful", studentProfile, schoolModel,
-            subjectList, sessionModel,classModel,sessionsList));
-      } else if (studentDashboardResponse.statusCode == 401) {
-        emit(AccessTokenExpireState());
+
+          // Fetch results archive (sessions)
+          final sessionResponse = await appRepository.getRequestWithToken(
+            responseJson['access'],
+            '${AppApis.http}${event.schoolId}${AppApis.resultsArchive}',
+          );
+
+          List<SessionModel> sessionsList = [];
+          if (sessionResponse.statusCode == 200) {
+            final sessionsJson = json.decode(sessionResponse.body)['sessions'];
+            sessionsList =
+                (sessionsJson as List).map((e) => SessionModel.fromJson(e)).toList();
+          }
+
+          emit(SuccessState("Login Successful", studentProfile, schoolModel,
+              subjectList, sessionModel, classModel, sessionsList));
+        } else if (studentDashboardResponse.statusCode == 401) {
+          emit(AccessTokenExpireState());
+        } else {
+          emit(ErrorState(
+              json.decode(studentDashboardResponse.body)['detail'] ??
+                  "Dashboard error"));
+          emit(AuthInitial());
+        }
+      } else if (loginResponse.statusCode == 500 ||
+          loginResponse.statusCode == 501) {
+        emit(ErrorState(
+            "There was a problem logging user in please try again later."));
+        emit(AuthInitial());
       } else {
-        emit(ErrorState(json.decode(loginResponse.body)['detail']));
-        //AppUtils().debuglog(json.decode(loginResponse.body));
+        emit(ErrorState(json.decode(loginResponse.body)['error'] ??
+            "Unknown login error"));
         emit(AuthInitial());
       }
-    } else if (loginResponse.statusCode == 500 ||
-        loginResponse.statusCode == 501) {
-      emit(ErrorState(
-          "There was a problem logging user in please try again later."));
-      emit(AuthInitial());
-    } else {
-      emit(ErrorState(json.decode(loginResponse.body)['error']));
-      //AppUtils().debuglog(event.password);
-      AppUtils().debuglog(json.decode(loginResponse.body));
+    } catch (e) {
+      AppUtils().debuglog(e.toString());
+      emit(ErrorState("There was a problem logging you in. Please try again."));
       emit(AuthInitial());
     }
-    // } catch (e) {
-    //   AppUtils().debuglog(e);
-    //   emit(ErrorState("There was a problem login you in please try again."));
-    //
-    //   AppUtils().debuglog(e);
-    //   emit(AuthInitial());
-    //   AppUtils().debuglog(12345678);
-    // }
   }
 
   FutureOr<void> initialEvent(InitialEvent event, Emitter<AuthState> emit) {

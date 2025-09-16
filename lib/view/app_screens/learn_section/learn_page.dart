@@ -3,6 +3,7 @@ import 'package:simap/model/student_profile.dart';
 import 'package:simap/view/app_screens/learn_section/learn_components/tutorial_list.dart';
 
 import '../../../model/class_model.dart';
+import '../../../model/subject.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_images.dart';
 import '../../../utills/app_navigator.dart';
@@ -15,8 +16,13 @@ import '../quiz_section/available_quiz_subject.dart';
 class LearnPage extends StatefulWidget {
   StudentProfile studentProfile;
   ClassModel classModel;
+  List<Subject> subjectList;
 
-  LearnPage({super.key,required this.studentProfile,required this.classModel});
+  LearnPage(
+      {super.key,
+      required this.studentProfile,
+      required this.classModel,
+      required this.subjectList});
 
   @override
   State<LearnPage> createState() => _LearnPageState();
@@ -25,54 +31,84 @@ class LearnPage extends StatefulWidget {
 class _LearnPageState extends State<LearnPage> {
   @override
   Widget build(BuildContext context) {
-    return       Scaffold(
+    return Scaffold(
       backgroundColor: const Color(0xFFFCFCFC),
       body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                   MainAppBar(isBackKey: true,studentProfile: widget.studentProfile, classModel:  widget.classModel,),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const WelcomeContainer(
-                          welcomeMsg: 'Hello Champ 👋',
-                          mainText: 'Okafor\nPrecious Chiemerie', subText: '',
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-
-
-                        ...[
-                          moreActionsContainer(AppImages.book, "Library", '40'),
-                          InkWell(onTap:(){AppNavigator.pushAndStackPage(context, page:  AvailableSubjects(studentProfile: widget.studentProfile, classModel: widget.classModel,));},child: moreActionsContainer(AppImages.quiz, "Quiz", '5')),
-                          InkWell(
-                            onTap: (){
-                              AppNavigator.pushAndStackPage(context, page:  AssignmentPage(studentProfile:widget.studentProfile, classModel: widget.classModel,));
-                            },
-                            child: moreActionsContainer(
-                                AppImages.assignment, "Assignment", '2'),
-                          ),
-                        ],
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        TutorialListPage(studentProfile: widget.studentProfile, classModel: widget.classModel,)
-
-                      ],
-                    ),
-                  )
-                ],
+        padding: const EdgeInsets.all(10.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              MainAppBar(
+                isBackKey: true,
+                studentProfile: widget.studentProfile,
+                classModel: widget.classModel,
               ),
-            ),
-          )),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    WelcomeContainer(
+                      welcomeMsg: 'Hello Champ 👋',
+                      mainText: widget.studentProfile.studentFullname,
+                      subText: '',
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ...[
+                      InkWell(
+                        onTap: (){
+                          AppNavigator.pushAndStackPage(context,
+                              page: AvailableSubjects(
+                                studentProfile: widget.studentProfile,
+                                classModel: widget.classModel,
+                                  subjectList:widget.subjectList
+                              ));
+                        },
+                        child: moreActionsContainer(AppImages.book, "Subjects",
+                            widget.subjectList.length.toString()),
+                      ),
+                      InkWell(
+                          onTap: () {
+                            AppNavigator.pushAndStackPage(context,
+                                page: AvailableSubjects(
+                                  studentProfile: widget.studentProfile,
+                                  classModel: widget.classModel, subjectList: widget.subjectList,
+                                ));
+                          },
+                          child: moreActionsContainer(
+                              AppImages.quiz, "Quiz", '5')),
+                      InkWell(
+                        onTap: () {
+                          AppNavigator.pushAndStackPage(context,
+                              page: AssignmentPage(
+                                studentProfile: widget.studentProfile,
+                                classModel: widget.classModel,
+                              ));
+                        },
+                        child: moreActionsContainer(
+                            AppImages.assignment, "Assignment", '2'),
+                      ),
+                    ],
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TutorialListPage(
+                      studentProfile: widget.studentProfile,
+                      classModel: widget.classModel,
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      )),
     );
   }
+
   Widget moreActionsContainer(String img, String text, String num) {
     return Padding(
       padding: const EdgeInsets.only(top: 10.0),
@@ -128,5 +164,4 @@ class _LearnPageState extends State<LearnPage> {
       ),
     );
   }
-
 }

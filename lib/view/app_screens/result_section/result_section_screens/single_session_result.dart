@@ -82,17 +82,24 @@ class _SingleSessionResultState extends State<SingleSessionResult> {
                   } else if (state is AccessTokenExpireState) {
                     AppNavigator.pushAndRemovePreviousPages(context,
                         page: const SignPage());
-                  } else if (state is ErrorState) {
-                    MSG.warningSnackBar(context, state.error);
                   }
+                  // else if (state is ErrorState) {
+                  //   MSG.warningSnackBar(context, state.error);
+                  // }
                 },
                 builder: (context, state) {
                   switch (state.runtimeType) {
                     case const (InitialSuccessState):
                       final initialSuccessState = state as InitialSuccessState;
                       terms = initialSuccessState.resultModel.resultData.terms;
-                      ResultDataTerm selectedResultTerm = terms[0];
 
+                      /// ResultDataTerm selectedResultTerm = terms[0];
+                      ResultDataTerm? selectedResultTerm;
+                      if (terms.isNotEmpty) {
+                        selectedResultTerm = terms[0];
+                      } else {
+                        selectedResultTerm = null; // or handle empty case
+                      }
                       for (int i = 0; i < terms.length; i++) {
                         print(terms[i]);
                         if (terms[i].term.toLowerCase() ==
@@ -103,423 +110,448 @@ class _SingleSessionResultState extends State<SingleSessionResult> {
 
                       ResultDataAnnual resultDataAnnual =
                           initialSuccessState.resultModel.resultData.annual;
-                      return Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            //crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // GestureDetector(
-                              //   onTap: () {
-                              //     Navigator.pop(context);
-                              //   },
-                              //   child: const Row(
-                              //     children: [
-                              //       Icon(Icons.arrow_back_ios),
-                              //       CustomText(
-                              //         text: 'Back',
-                              //         color: AppColors.black,
-                              //       ),
-                              //     ],
-                              //   ),
-                              // ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              CustomText(
-                                text:
-                                    "${widget.currentSessionModel.session} Result",
-                                size: 18,
-                                weight: FontWeight.bold,
-                                color: AppColors.black,
-                              ),
-                              const CustomText(
-                                text: "Select term to view result",
-                                size: 16,
-                                weight: FontWeight.w400,
-                                color: AppColors.textColor,
-                              ),
-                              TermList(
-                                selectedTerm: (term) {
-                                  //setState(() {
-                                  setState(() {
-                                    selectedTerm = term;
-                                    // for (int i = 0; i < terms.length; i++) {
-                                    //   print(terms[i]);
-                                    //   if (terms[i].term.toLowerCase() == selectedTerm.toLowerCase()) {
-                                    //     selectedResultTerm = terms[i];
-                                    //   }
-                                    // }
-                                  });
-                                  // });
-                                },
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              if (selectedTerm.toLowerCase() == 'annual') ...[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                      return terms.isEmpty
+                          ? _buildEmptyState()
+                          : Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  //crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    // GestureDetector(
+                                    //   onTap: () {
+                                    //     Navigator.pop(context);
+                                    //   },
+                                    //   child: const Row(
+                                    //     children: [
+                                    //       Icon(Icons.arrow_back_ios),
+                                    //       CustomText(
+                                    //         text: 'Back',
+                                    //         color: AppColors.black,
+                                    //       ),
+                                    //     ],
+                                    //   ),
+                                    // ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
                                     CustomText(
-                                      text: "$selectedTerm Term Result",
+                                      text:
+                                          "${widget.currentSessionModel.session} Result",
                                       size: 18,
                                       weight: FontWeight.bold,
                                       color: AppColors.black,
                                     ),
-                                    GestureDetector(
-                                      onTap: () async {
-                                        if (selectedTerm.toLowerCase() ==
-                                            'annual') {
-                                          await StudentResultPdfGenerator
-                                              .generatePdf(
-                                            studentProfile:
-                                                widget.studentProfile,
-                                            school: widget.schoolModel,
-                                            academicSession: widget
-                                                .currentSessionModel.session,
-                                            className: widget
-                                                .classModel.className.className,
-                                            termName: selectedTerm,
-                                            annualData: resultDataAnnual,
-                                          );
-                                        } else {
-                                          await StudentResultPdfGenerator
-                                              .generatePdf(
-                                            studentProfile:
-                                                widget.studentProfile,
-                                            school: widget.schoolModel,
-                                            academicSession: widget
-                                                .currentSessionModel.session,
-                                            className: widget
-                                                .classModel.className.className,
-                                            termName: selectedTerm,
-                                            termData: selectedResultTerm,
-                                          );
-                                        }
+                                    const CustomText(
+                                      text: "Select term to view result",
+                                      size: 16,
+                                      weight: FontWeight.w400,
+                                      color: AppColors.textColor,
+                                    ),
+                                    TermList(
+                                      selectedTerm: (term) {
+                                        //setState(() {
+                                        setState(() {
+                                          selectedTerm = term;
+                                          // for (int i = 0; i < terms.length; i++) {
+                                          //   print(terms[i]);
+                                          //   if (terms[i].term.toLowerCase() == selectedTerm.toLowerCase()) {
+                                          //     selectedResultTerm = terms[i];
+                                          //   }
+                                          // }
+                                        });
+                                        // });
                                       },
-                                      child: Container(
-                                        height: 40,
-                                        width: 120,
-                                        decoration: BoxDecoration(
-                                          color: AppColors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.black
-                                                  .withOpacity(0.15),
-                                              spreadRadius: 0,
-                                              blurRadius: 10,
-                                              offset: const Offset(0, 4),
+                                    ),
+                                    const SizedBox(
+                                      height: 15,
+                                    ),
+                                    if (selectedTerm.toLowerCase() ==
+                                        'annual') ...[
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          CustomText(
+                                            text: "$selectedTerm Term Result",
+                                            size: 18,
+                                            weight: FontWeight.bold,
+                                            color: AppColors.black,
+                                          ),
+                                          GestureDetector(
+                                            onTap: () async {
+                                              if (selectedTerm.toLowerCase() ==
+                                                  'annual') {
+                                                await StudentResultPdfGenerator
+                                                    .generatePdf(
+                                                  studentProfile:
+                                                      widget.studentProfile,
+                                                  school: widget.schoolModel,
+                                                  academicSession: widget
+                                                      .currentSessionModel
+                                                      .session,
+                                                  className: widget.classModel
+                                                      .className.className,
+                                                  termName: selectedTerm,
+                                                  annualData: resultDataAnnual,
+                                                );
+                                              } else {
+                                                await StudentResultPdfGenerator
+                                                    .generatePdf(
+                                                  studentProfile:
+                                                      widget.studentProfile,
+                                                  school: widget.schoolModel,
+                                                  academicSession: widget
+                                                      .currentSessionModel
+                                                      .session,
+                                                  className: widget.classModel
+                                                      .className.className,
+                                                  termName: selectedTerm,
+                                                  termData: selectedResultTerm,
+                                                );
+                                              }
+                                            },
+                                            child: Container(
+                                              height: 40,
+                                              width: 120,
+                                              decoration: BoxDecoration(
+                                                color: AppColors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.black
+                                                        .withOpacity(0.15),
+                                                    spreadRadius: 0,
+                                                    blurRadius: 10,
+                                                    offset: const Offset(0, 4),
+                                                  ),
+                                                ],
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: const Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  CustomText(
+                                                    text: 'Download',
+                                                    size: 16,
+                                                    weight: FontWeight.w600,
+                                                    color:
+                                                        AppColors.mainAppColor,
+                                                  ),
+                                                  Icon(Icons.download)
+                                                ],
+                                              ),
                                             ),
-                                          ],
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        child: const Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            CustomText(
-                                              text: 'Download',
-                                              size: 16,
-                                              weight: FontWeight.w600,
-                                              color: AppColors.mainAppColor,
-                                            ),
-                                            Icon(Icons.download)
-                                          ],
-                                        ),
+                                          )
+                                        ],
                                       ),
-                                    )
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        scoreContainer(
-                                          term: 'Total',
-                                          isTitle: true,
-                                        ),
-                                        CustomText(
-                                          text: resultDataAnnual.annualTotal,
-                                          size: 18,
-                                          weight: FontWeight.w400,
-                                          color: AppColors.black,
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        scoreContainer(
-                                          term: 'Average',
-                                          isTitle: true,
-                                        ),
-                                        CustomText(
-                                          text: resultDataAnnual.annualAverage,
-                                          size: 18,
-                                          weight: FontWeight.w400,
-                                          color: AppColors.black,
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                AnnualGradesTable(
-                                    subjectResults:
-                                        resultDataAnnual.subjectResults),
-                                FormButton(
-                                  onPressed: () {
-                                    AppNavigator.pushAndStackPage(context,
-                                        page: AnnualFullResultPage(
-                                          resultDataAnnual: resultDataAnnual,
-                                        ));
-                                  },
-                                  bgColor: AppColors.mainAppColor,
-                                  text: "View full result",
-                                ),
-                                const SizedBox(
-                                  height: 30,
-                                ),
-                              ] else ...[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    CustomText(
-                                      text: "$selectedTerm Term Result",
-                                      size: 18,
-                                      weight: FontWeight.bold,
-                                      color: AppColors.black,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () async {
-                                        if (selectedTerm.toLowerCase() ==
-                                            'annual') {
-                                          await StudentResultPdfGenerator
-                                              .generatePdf(
-                                            studentProfile:
-                                                widget.studentProfile,
-                                            school: widget.schoolModel,
-                                            academicSession: widget
-                                                .currentSessionModel.session,
-                                            className: widget
-                                                .classModel.className.className,
-                                            termName: selectedTerm,
-                                            annualData: resultDataAnnual,
-                                          );
-                                        } else {
-                                          await StudentResultPdfGenerator
-                                              .generatePdf(
-                                            studentProfile:
-                                                widget.studentProfile,
-                                            school: widget.schoolModel,
-                                            academicSession: widget
-                                                .currentSessionModel.session,
-                                            className: widget
-                                                .classModel.className.className,
-                                            termName: selectedTerm,
-                                            termData: selectedResultTerm,
-                                          );
-                                        }
-                                      },
-                                      child: Container(
-                                        height: 40,
-                                        width: 120,
-                                        decoration: BoxDecoration(
-                                          color: AppColors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.black
-                                                  .withOpacity(0.15),
-                                              spreadRadius: 0,
-                                              blurRadius: 10,
-                                              offset: const Offset(0, 4),
-                                            ),
-                                          ],
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        child: const Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            CustomText(
-                                              text: 'Download',
-                                              size: 16,
-                                              weight: FontWeight.w600,
-                                              color: AppColors.mainAppColor,
-                                            ),
-                                            Icon(Icons.download)
-                                          ],
-                                        ),
+                                      const SizedBox(
+                                        height: 15,
                                       ),
-                                    )
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        scoreContainer(
-                                          term: 'Total',
-                                          isTitle: true,
-                                        ),
-                                        CustomText(
-                                          text: selectedResultTerm.totalScore,
-                                          size: 18,
-                                          weight: FontWeight.w400,
-                                          color: AppColors.black,
-                                        ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              scoreContainer(
+                                                term: 'Total',
+                                                isTitle: true,
+                                              ),
+                                              CustomText(
+                                                text: resultDataAnnual
+                                                    .annualTotal,
+                                                size: 18,
+                                                weight: FontWeight.w400,
+                                                color: AppColors.black,
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              scoreContainer(
+                                                term: 'Average',
+                                                isTitle: true,
+                                              ),
+                                              CustomText(
+                                                text: resultDataAnnual
+                                                    .annualAverage,
+                                                size: 18,
+                                                weight: FontWeight.w400,
+                                                color: AppColors.black,
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 15,
+                                      ),
+                                      AnnualGradesTable(
+                                          subjectResults:
+                                              resultDataAnnual.subjectResults),
+                                      FormButton(
+                                        onPressed: () {
+                                          AppNavigator.pushAndStackPage(context,
+                                              page: AnnualFullResultPage(
+                                                resultDataAnnual:
+                                                    resultDataAnnual,
+                                              ));
+                                        },
+                                        bgColor: AppColors.mainAppColor,
+                                        text: "View full result",
+                                      ),
+                                      const SizedBox(
+                                        height: 30,
+                                      ),
+                                    ] else ...[
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          CustomText(
+                                            text: "$selectedTerm Term Result",
+                                            size: 18,
+                                            weight: FontWeight.bold,
+                                            color: AppColors.black,
+                                          ),
+                                          GestureDetector(
+                                            onTap: () async {
+                                              if (selectedTerm.toLowerCase() ==
+                                                  'annual') {
+                                                await StudentResultPdfGenerator
+                                                    .generatePdf(
+                                                  studentProfile:
+                                                      widget.studentProfile,
+                                                  school: widget.schoolModel,
+                                                  academicSession: widget
+                                                      .currentSessionModel
+                                                      .session,
+                                                  className: widget.classModel
+                                                      .className.className,
+                                                  termName: selectedTerm,
+                                                  annualData: resultDataAnnual,
+                                                );
+                                              } else {
+                                                await StudentResultPdfGenerator
+                                                    .generatePdf(
+                                                  studentProfile:
+                                                      widget.studentProfile,
+                                                  school: widget.schoolModel,
+                                                  academicSession: widget
+                                                      .currentSessionModel
+                                                      .session,
+                                                  className: widget.classModel
+                                                      .className.className,
+                                                  termName: selectedTerm,
+                                                  termData: selectedResultTerm,
+                                                );
+                                              }
+                                            },
+                                            child: Container(
+                                              height: 40,
+                                              width: 120,
+                                              decoration: BoxDecoration(
+                                                color: AppColors.white,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.black
+                                                        .withOpacity(0.15),
+                                                    spreadRadius: 0,
+                                                    blurRadius: 10,
+                                                    offset: const Offset(0, 4),
+                                                  ),
+                                                ],
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: const Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  CustomText(
+                                                    text: 'Download',
+                                                    size: 16,
+                                                    weight: FontWeight.w600,
+                                                    color:
+                                                        AppColors.mainAppColor,
+                                                  ),
+                                                  Icon(Icons.download)
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 15,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              scoreContainer(
+                                                term: 'Total',
+                                                isTitle: true,
+                                              ),
+                                              CustomText(
+                                                text: selectedResultTerm!
+                                                    .totalScore,
+                                                size: 18,
+                                                weight: FontWeight.w400,
+                                                color: AppColors.black,
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              scoreContainer(
+                                                term: 'Average',
+                                                isTitle: true,
+                                              ),
+                                              CustomText(
+                                                text: selectedResultTerm
+                                                    .averageScore,
+                                                size: 18,
+                                                weight: FontWeight.w400,
+                                                color: AppColors.black,
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 15,
+                                      ),
+                                      GradesTable(
+                                        subjectResults:
+                                            selectedResultTerm.subjectResults,
+                                      ),
+                                      FormButton(
+                                        onPressed: () {
+                                          AppNavigator.pushAndStackPage(context,
+                                              page: FullResultPage(
+                                                fullResults: selectedResultTerm!
+                                                    .subjectResults,
+                                              ));
+                                        },
+                                        bgColor: AppColors.mainAppColor,
+                                        text: "View full result",
+                                      ),
+                                      const SizedBox(
+                                        height: 30,
+                                      ),
+                                      const Row(
+                                        children: [
+                                          CustomText(
+                                            text: "Student Behavior",
+                                            size: 16,
+                                            color: AppColors.mainAppColor,
+                                            weight: FontWeight.bold,
+                                          ),
+                                        ],
+                                      ),
+                                      ...[
+                                        remarkContainer(
+                                            "Punctuality",
+                                            selectedResultTerm
+                                                .behaviour.data.punctuality),
+                                        remarkContainer(
+                                            "Class Attendance",
+                                            selectedResultTerm.behaviour.data
+                                                .classAttendance),
+                                        remarkContainer(
+                                            "Honesty",
+                                            selectedResultTerm
+                                                .behaviour.data.honesty),
+                                        remarkContainer(
+                                            "Relationship With Peers",
+                                            selectedResultTerm.behaviour.data
+                                                .relationshipWithPeers),
                                       ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        scoreContainer(
-                                          term: 'Average',
-                                          isTitle: true,
-                                        ),
-                                        CustomText(
-                                          text: selectedResultTerm.averageScore,
-                                          size: 18,
-                                          weight: FontWeight.w400,
-                                          color: AppColors.black,
-                                        ),
+                                      const SizedBox(
+                                        height: 30,
+                                      ),
+                                      const Row(
+                                        children: [
+                                          CustomText(
+                                            text: "Student Psychomotor",
+                                            size: 16,
+                                            color: AppColors.mainAppColor,
+                                            weight: FontWeight.bold,
+                                          ),
+                                        ],
+                                      ),
+                                      ...[
+                                        remarkContainer(
+                                            "Reading",
+                                            selectedResultTerm
+                                                .psychomotor.data.reading),
+                                        remarkContainer(
+                                            "Creative Arts",
+                                            selectedResultTerm
+                                                .psychomotor.data.creativeArts),
+                                        remarkContainer(
+                                            "Public Speaking",
+                                            selectedResultTerm.psychomotor.data
+                                                .publicSpeaking),
+                                        remarkContainer(
+                                            "Sports",
+                                            selectedResultTerm
+                                                .psychomotor.data.sports),
                                       ],
-                                    ),
+                                      const SizedBox(
+                                        height: 30,
+                                      ),
+                                      const Row(
+                                        children: [
+                                          CustomText(
+                                            text: "Comments",
+                                            size: 16,
+                                            color: AppColors.mainAppColor,
+                                            weight: FontWeight.bold,
+                                          ),
+                                        ],
+                                      ),
+                                      ...[
+                                        remarkContainer("Class Teacher", ""),
+                                        CustomText(
+                                          text: selectedResultTerm
+                                              .comments.classTeacher,
+                                          size: 14,
+                                          color: AppColors.black,
+                                          weight: FontWeight.w400,
+                                          maxLines: 10,
+                                        ),
+                                        remarkContainer("Principals", ""),
+                                        CustomText(
+                                          text: selectedResultTerm
+                                              .comments.principal,
+                                          size: 14,
+                                          color: AppColors.black,
+                                          weight: FontWeight.w400,
+                                          maxLines: 10,
+                                        ),
+                                      ]
+                                    ]
                                   ],
                                 ),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                GradesTable(
-                                  subjectResults:
-                                      selectedResultTerm.subjectResults,
-                                ),
-                                FormButton(
-                                  onPressed: () {
-                                    AppNavigator.pushAndStackPage(context,
-                                        page: FullResultPage(
-                                          fullResults:
-                                              selectedResultTerm.subjectResults,
-                                        ));
-                                  },
-                                  bgColor: AppColors.mainAppColor,
-                                  text: "View full result",
-                                ),
-                                const SizedBox(
-                                  height: 30,
-                                ),
-                                const Row(
-                                  children: [
-                                    CustomText(
-                                      text: "Student Behavior",
-                                      size: 16,
-                                      color: AppColors.mainAppColor,
-                                      weight: FontWeight.bold,
-                                    ),
-                                  ],
-                                ),
-                                ...[
-                                  remarkContainer(
-                                      "Punctuality",
-                                      selectedResultTerm
-                                          .behaviour.data.punctuality),
-                                  remarkContainer(
-                                      "Class Attendance",
-                                      selectedResultTerm
-                                          .behaviour.data.classAttendance),
-                                  remarkContainer(
-                                      "Honesty",
-                                      selectedResultTerm
-                                          .behaviour.data.honesty),
-                                  remarkContainer(
-                                      "Relationship With Peers",
-                                      selectedResultTerm.behaviour.data
-                                          .relationshipWithPeers),
-                                ],
-                                const SizedBox(
-                                  height: 30,
-                                ),
-                                const Row(
-                                  children: [
-                                    CustomText(
-                                      text: "Student Psychomotor",
-                                      size: 16,
-                                      color: AppColors.mainAppColor,
-                                      weight: FontWeight.bold,
-                                    ),
-                                  ],
-                                ),
-                                ...[
-                                  remarkContainer(
-                                      "Reading",
-                                      selectedResultTerm
-                                          .psychomotor.data.reading),
-                                  remarkContainer(
-                                      "Creative Arts",
-                                      selectedResultTerm
-                                          .psychomotor.data.creativeArts),
-                                  remarkContainer(
-                                      "Public Speaking",
-                                      selectedResultTerm
-                                          .psychomotor.data.publicSpeaking),
-                                  remarkContainer(
-                                      "Sports",
-                                      selectedResultTerm
-                                          .psychomotor.data.sports),
-                                ],
-                                const SizedBox(
-                                  height: 30,
-                                ),
-                                const Row(
-                                  children: [
-                                    CustomText(
-                                      text: "Comments",
-                                      size: 16,
-                                      color: AppColors.mainAppColor,
-                                      weight: FontWeight.bold,
-                                    ),
-                                  ],
-                                ),
-                                ...[
-                                  remarkContainer("Class Teacher", ""),
-                                  CustomText(
-                                    text: selectedResultTerm
-                                        .comments.classTeacher,
-                                    size: 14,
-                                    color: AppColors.black,
-                                    weight: FontWeight.w400,
-                                    maxLines: 10,
-                                  ),
-                                  remarkContainer("Principals", ""),
-                                  CustomText(
-                                    text: selectedResultTerm.comments.principal,
-                                    size: 14,
-                                    color: AppColors.black,
-                                    weight: FontWeight.w400,
-                                    maxLines: 10,
-                                  ),
-                                ]
-                              ]
-                            ],
-                          ),
-                        ),
-                      );
+                              ),
+                            );
+                    case ErrorState:
+                      final errorState = state as ErrorState;
 
+                      return ErrorMessageWidget(
+                        message: errorState.error,
+                        onRetry: () {
+                          resultBloc.add(FetchSessionResult(
+                              widget.currentSessionModel.session,
+                              widget.currentSessionModel.id.toString()));
+                        },
+                      );
                     case LoadingState:
                       return const Center(
                           child: AppLoadingPage(
@@ -569,6 +601,48 @@ class _SingleSessionResultState extends State<SingleSessionResult> {
     );
   }
 
+  Widget _buildEmptyState() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.inbox_outlined,
+            size: 64,
+            color: Colors.grey[400],
+          ),
+          SizedBox(height: 16),
+          Text(
+            'No result terms available',
+            style: TextStyle(
+              fontSize: 18,
+              color: Colors.grey[600],
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          SizedBox(height: 8),
+          Text(
+            'Please try again later or contact support',
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey[500],
+            ),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 24),
+          ElevatedButton(
+            onPressed: () {
+              resultBloc.add(FetchSessionResult(
+                  widget.currentSessionModel.session,
+                  widget.currentSessionModel.id.toString()));
+            },
+            child: Text('Retry'),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget remarkContainer(title, sub) {
     return Padding(
       padding: const EdgeInsets.only(top: 10.0),
@@ -594,6 +668,70 @@ class _SingleSessionResultState extends State<SingleSessionResult> {
               color: AppColors.textColor,
               weight: FontWeight.w400,
             )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ErrorMessageWidget extends StatelessWidget {
+  final String message;
+  final VoidCallback? onRetry;
+  final IconData? icon;
+
+  const ErrorMessageWidget({
+    Key? key,
+    required this.message,
+    this.onRetry,
+    this.icon,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              icon ?? Icons.error_outline,
+              size: 64,
+              color: Colors.red[400],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Oops! Something went wrong',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey[800],
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              message,
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[600],
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+            if (onRetry != null)
+              ElevatedButton.icon(
+                onPressed: onRetry,
+                icon: const Icon(Icons.refresh),
+                label: const Text('Try Again'),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
+                ),
+              ),
           ],
         ),
       ),

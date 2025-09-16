@@ -14,6 +14,7 @@ import '../../../app_repository/store_service.dart';
 import '../../../bloc/fee_bloc/fee_bloc.dart';
 import '../../../bloc/fee_bloc/fee_event.dart';
 import '../../../bloc/store_bloc/store_bloc.dart';
+import '../../../model/subject.dart';
 import '../../../res/app_colors.dart';
 import '../../widgets/appBar_widget.dart';
 import '../assignment_section/assignment_page.dart';
@@ -26,8 +27,10 @@ import 'home_page_components/welcome_container.dart';
 class HomePage extends StatefulWidget {
   StudentProfile studentProfile;
   ClassModel classModel;
+  final List<Subject> subjectList;
 
-  HomePage({super.key, required this.studentProfile, required this.classModel});
+
+  HomePage({super.key, required this.studentProfile, required this.classModel, required this.subjectList});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -78,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                             AppNavigator.pushAndStackPage(context,
                                 page: LearnPage(
                                   studentProfile: widget.studentProfile,
-                                  classModel: widget.classModel,
+                                  classModel: widget.classModel, subjectList: widget.subjectList,
                                 ));
                           },
                           child: const QuickAccessContainer(
@@ -151,7 +154,7 @@ class _HomePageState extends State<HomePage> {
                             AppNavigator.pushAndStackPage(context,
                                 page: AvailableSubjects(
                                   studentProfile: widget.studentProfile,
-                                  classModel: widget.classModel,
+                                  classModel: widget.classModel, subjectList: widget.subjectList,
                                 ));
                           },
                           child: moreActionsContainer(

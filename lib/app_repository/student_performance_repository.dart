@@ -16,7 +16,7 @@ class StudentPerformanceRepository {
   StudentPerformanceRepository({
     required AppRepository appRepository,
   }) : _appRepository = appRepository;
-String baseUrl='https://uhs.myeduportal.net';
+String baseUrl='https://demo.myeduportal.net';
   Future<StudentPerformanceComparison> getStudentPerformance() async {
     try {
       String token =

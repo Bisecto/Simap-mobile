@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   google_fonts:
   lottie: any
+  intl:
   flutter_typeahead: any
   http: any
   tuple: ^2.0.2
